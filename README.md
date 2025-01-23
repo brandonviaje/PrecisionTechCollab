@@ -1,7 +1,9 @@
 # PrecisionTechCollab
-
 ## Name: Precision Technology Inc. ™
-Members:
+
+![Logo](https://github.com/brandonviaje/PrecisionTechCollab/blob/5867fd0fe9006781672719e38b504dcba4cdfc80/precisiontech.png)
+
+<u>**Members:**</u>
 
 - Imran Abdi
 
@@ -14,17 +16,17 @@ Members:
 - Richard Wu
 
 ## Roles:
-Project Manager: Jason
+Project Manager: **Jason Mong**
 
-Technical Manager: Brandon Viaje
+Technical Manager: **Brandon Viaje**
 
-Front-End Lead: Richard Wu
+Front-End Lead: **Richard Wu**
 
-Back-End Lead: Ethan Warriner
+Back-End Lead: **Ethan Warriner**
 
-Software Quality Lead: Imran Abdi 
+Software Quality Lead: **Imran Abdi** 
 
-Developers: All
+Developers: **All**
 
 ## Pipeline
 - Primary Language: Java
