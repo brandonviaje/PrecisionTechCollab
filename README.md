@@ -2,18 +2,28 @@
 
 ## Name: Precision Technology Inc. ™
 Members:
-Imran Abdi
-Jason Mong
-Brandon Viaje
-Ethan Warriner
-Richard Wu
+
+- Imran Abdi
+
+- Jason Mong
+
+- Brandon Viaje
+
+- Ethan Warriner
+
+- Richard Wu
 
 ## Roles:
 Project Manager: Jason
+
 Technical Manager: Brandon Viaje
+
 Front-End Lead: Richard Wu
+
 Back-End Lead: Ethan Warriner
+
 Software Quality Lead: Imran Abdi 
+
 Developers: All
 
 ## Pipeline
