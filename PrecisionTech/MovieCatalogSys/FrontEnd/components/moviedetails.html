@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Details</title>
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/header.css">
+  </head>
+
+  <body>
+
+    <div class="header">
+
+      <div class="left-section">
+        
+        <div class="dropdown">
+
+          <button class="dropbtn" onclick="myFunction()">
+            <img class = "menu-icon"src="../image/hamburger-menu.svg">
+          </button>
+
+          <div id="myDropdown" class="dropdown-content">
+            <a href="insertMovie.html">Add</a>
+            <a href="#update">Update</a>
+            <a href="#remove">Remove</a>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="middle-section">
+        <a href="home.html" class="homePage"><h1> FilmFlix </h1></a>
+      </div>
+        
+      <div class="right-section">
+
+        <input class="search-bar" type="textbox" placeholder="Search Movies">
+        <button class="search-button">
+          <img class = "search-icon"src="../image/search.svg">
+        </button>
+      </div>
+
+    </div>
+
+    <div class="movie-container">
+      <div class="poster-section">
+        <img id="movie-poster" src="" alt="Movie Poster">
+      </div>
+    
+      <div class="movie-details">
+        <div class="movie-name">
+          <h1 id="movie-title"></h1>
+        </div>
+        <p> Overview: </p> 
+        <p id="movie-overview"></p>
+        <p> Release Date:</p>
+        <p id="movie-release-date"></p>
+      </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../scripts/movieDetails.js"></script>
+    <script src="../scripts/onClick.js"></script>
+  </body>
+
+</html>

@@ -2,10 +2,48 @@
 
 <html>
   <head>
-    <title> FilmFlex - Home </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> FilmFlix - Home </title>
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/header.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
   </head>
 
   <body>
-    <p> Hello Skippy</p>
+    <div class="header">
+      <div class="left-section">
+        <div class="dropdown">
+          <button class="dropbtn" onclick="myFunction()">
+            <img class = "menu-icon"src="../image/hamburger-menu.svg">
+          </button>
+          <div id="myDropdown" class="dropdown-content">
+              <a href="insertMovie.html">Add</a>
+              <a href="#update">Update</a>
+              <a href="#remove">Remove</a>
+          </div>
+      </div>
+      
+      </div>
+      <div class="middle-section">
+        <h1> FilmFlix </h1>
+      </div>     
+      <div class="right-section">
+        <input class="search-bar" type="textbox" placeholder="Search Movies">
+        <button class="search-button">
+          <img class = "search-icon"src="../image/search.svg">
+        </button>
+      </div>
+    </div>
+
+    <div class="container">
+      <h1> Trending Movies</h1>
+      <div class="movies"></div>
+    </div>
+   
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <script src="../scripts/createMoviesHome.js"></script>
+   <script src="../scripts/onClick.js"></script>
   </body>
 </html>

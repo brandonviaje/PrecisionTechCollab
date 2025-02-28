@@ -1,0 +1,108 @@
+*{
+  margin: 0;
+  padding: 0;
+  font-family: Inter, Arial;
+  font-weight: 600;
+  box-sizing: border-box;
+}
+
+.movies {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  row-gap: 30px;
+  column-gap: 16px;
+  justify-content: center;
+}
+
+.movie_item {
+  margin-top: 50px;
+  text-align: center;
+  color: #272635; 
+  font-weight: 600;
+  letter-spacing: 1px; /* Adds a bit of space between letters for a clean look */
+  text-transform: uppercase; 
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+}
+
+.title{
+  padding-top: 16px;
+  display: flex;
+  align-items: center;
+}
+
+body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #E8E9F3;
+}
+
+.movie_img_rounded{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.movies h1{
+  margin-top: 80px;
+  color: white;
+  flex-wrap: wrap;
+  display: inline-block;
+}
+
+#movie-poster{
+  margin-top: 100px;
+}
+
+.home-link{
+  text-decoration: none;
+}
+
+.container h1{
+  margin-top: 80px; /* Keeps space from the top */
+  font-size: 3em; /* Increases the font size for a bolder look */
+  color: #272635; /* Dark color for the text */
+  text-align: center; /* Centers the text horizontally */
+  letter-spacing: 1px; /* Adds space between letters for better readability */
+  text-transform: uppercase; /* Makes the text uppercase for emphasis */
+  padding: 10px 20px; /* Adds padding inside the h1 */
+}
+
+.movie-container {
+  display: flex;
+  align-items: flex-start; 
+  gap: 200px;
+  padding: 20px;
+}
+
+.poster-section img {
+  height: auto;
+}
+
+.movie-details {
+  margin-top:  100px;
+  flex: 1; /* Takes remaining space */
+  max-width: 600px; /* Limit text width */
+}
+
+.movie-name h1 {
+  font-size: 42px;
+  text-transform: uppercase;
+}
+
+.movie-details p {
+  margin: 50px 0;
+  font-size: 34px;
+  color: #272635; 
+}
+
+#movie-overview,#movie-release-date{
+  font-size: 24px;
+  max-width: 500px;
+  text-align: center;
+  hyphens: auto;
+  word-spacing: 1px;
+  letter-spacing: 0.5px;
+}
+
+

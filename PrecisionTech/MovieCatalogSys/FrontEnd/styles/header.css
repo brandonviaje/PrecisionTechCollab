@@ -1,0 +1,119 @@
+.header {
+  height: 55px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 0 15px;
+  border-bottom: 1px solid #ddd;
+  background-color: #A6A6A8;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  z-index: 100;
+}
+
+.left-section{
+  display: flex;
+  align-items: center;
+}
+
+.middle-section {
+  width: 100%; 
+  display: flex;
+  justify-content: center; 
+  align-items: center;    
+  max-width: 500px;        
+  margin-left: auto;      
+  margin-right: auto;      
+  padding: 20px;           
+}
+
+.middle-section h1 {
+  color: #272635;
+  margin: 0;              
+  text-align: center;     
+}
+
+
+.right-section{
+  display: flex;
+  width: 300px;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 20px;
+  flex-shrink: 0;
+  max-width: 500px;
+}
+
+.menu-icon{
+  height: 40px;
+  margin-left: 20px;
+  margin-right: 24px;
+  pointer-events: none;
+}
+
+.search-button{
+  height: 36px;
+  width: 66px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(192,192,192);
+  margin-left: -1px;
+  margin-right: 10px;
+}
+
+.search-icon{
+  height: 25px;
+  margin-top: 4px;
+}
+
+.search-bar{
+  flex: 1;
+  height: 36px;
+  font-size: 16px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(192,192,192);
+  padding-left: 10px;
+  border-radius: 2px;
+  box-shadow: inset 1px 2px 3px rgb(0,0,0,0.05);
+  width: 0;
+}
+
+.search-bar::placeholder{
+  font-family: Inter, Arial;
+  font-size: 16px;
+}
+
+.homePage{
+  text-decoration: none;
+}
+
+.dropbtn {
+  background-color: #A6A6A8;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #dedbd2;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: flex;
+}
+
+.dropdown a:hover {background-color: seagreen;}
+
+.show {display: block;}
