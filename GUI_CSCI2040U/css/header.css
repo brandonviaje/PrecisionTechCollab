@@ -2,7 +2,9 @@ body {
     font-family: "Open Sans", serif;
     margin: 0;
     padding: 0;
+    padding-top: 80px; 
 }
+
 header {
     display: flex;
     align-items: center;
@@ -10,109 +12,114 @@ header {
     padding: 15px 20px;
     background: white;
     background-color: black;
+    position: fixed;
+    top: 0; 
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    margin-bottom: 100px;
 }
 
-/* Logo */
 #logo {
     width: 130px;
     height: auto;
     border-radius: 50%;
 }
-#menu-btn, #search-form,nav{
-    align-self: flex-end; /* Aligns these to the bottom */
-    margin-bottom: 10px; /* Optional: space below the elements */
 
+#menu-btn, #search-form, nav {
+    align-self: flex-end; 
+    margin-bottom: 10px; 
 }
-/* Menu Button */
-#menu-btn a {
+
+/* Specific to header elements */
+header #menu-btn a {
     text-decoration: none;
     color: black;
     font-weight: bold;
     font-size: 18px;
-    padding: 10px 15px;
+    padding: 10px 10px;
     border: 2px solid white;
     border-radius: 20px;
     display: inline-block;
     transition: all 0.3s ease-in-out;
     background-color: white;
-
-
 }
-#menu-btn a:hover {
+
+header #menu-btn a:hover {
     background-color: hwb(0 19% 81%);
     color: white;
-}
 
-.dropdown {
-    position: relative;
 }
+#menu_head {
+    color: white;
+    padding: 10px 10px 10px 10px;
 
-/* Dropdown content (hidden by default) */
-.content {
+}
+#menu_head a{
+    color:white;
+    padding: 10px 10px 10px 10px;
+    margin:10px 10px 10px 10px;
+    
+}
+.dropdown a{
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+}
+.dropdown .content{
     display: none;
     position: absolute;
-    background-color: black;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    border-radius: 10px;
-    padding: 10px;
-    color: white;
+    background-color: hsl(0, 0%, 0%);
+    min-width: 100px;
+    width:200px;
+    box-shadow: 2px 2px 2px black;
+
 }
 
-/* Show dropdown when hovering */
-.dropdown:hover .content {
+.dropdown:hover .content{
     display: block;
+
 }
 
-/* Styling for links in dropdown */
-.dropdown-content a {
-    color: white;
-    padding: 8px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown-content a:hover {
-    background-color: #ddd;
-    color: black;
-}
-
-/* Search Bar */
-#search-form {
+header #search-form {
     display: flex;
     justify-content: space-between;
     border-radius: 20px;
     border: 2px solid white;
     overflow: hidden;
-    width:500px;
+    width: 500px;
     background-color: white;
-
 }
 
-#search-form input {
+header #search-form input {
     border: none;
     padding: 8px 15px;
     font-size: 16px;
     outline: none;
+    flex-grow: 1;  /* The input will take up remaining space */
 }
 
-#search-form button {
+header #search-form button {
     background-color: white;
     color: white;
     border: none;
     padding: 8px 15px;
     cursor: pointer;
+    width: 12.5%;  /* Make the button take up about 1/8 of the width */
+    min-width: 40px;  /* Ensure the button is not too small */
+    max-width: 60px;  /* Ensure the button doesn't grow too large */
 }
 
-/* Navigation Links */
-nav ul {
+/* Nav styles inside header */
+header nav ul {
     display: flex;
     list-style: none;
     gap: 15px;
+    margin-right: 50px;
 }
 
-nav ul li a {
+header nav ul li a {
     text-decoration: none;
     background-color: white;
     color: black;
@@ -123,7 +130,7 @@ nav ul li a {
     transition: all 0.3s ease-in-out;
 }
 
-nav ul li a:hover {
+header nav ul li a:hover {
     background-color: hsl(0, 0%, 19%);
     color: white;
 }
