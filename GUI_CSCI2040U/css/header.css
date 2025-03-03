@@ -43,6 +43,41 @@ header {
     color: white;
 }
 
+.dropdown {
+    position: relative;
+}
+
+/* Dropdown content (hidden by default) */
+.content {
+    display: none;
+    position: absolute;
+    background-color: black;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 10px;
+    padding: 10px;
+    color: white;
+}
+
+/* Show dropdown when hovering */
+.dropdown:hover .content {
+    display: block;
+}
+
+/* Styling for links in dropdown */
+.dropdown-content a {
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
 /* Search Bar */
 #search-form {
     display: flex;
