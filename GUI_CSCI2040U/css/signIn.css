@@ -1,0 +1,56 @@
+body {
+    font-family: "Open Sans", serif;
+    margin: 0;
+    padding: 0;
+    background-color: hsla(45, 77%, 56%, 0.829);
+    display: flex;           /* Apply flexbox to body */
+    flex-direction: column;  /* Stack the elements vertically */
+    justify-content: space-between; /* Ensure footer stays at the bottom */
+    min-height: 80vh; 
+}
+
+main {
+    flex: 1; /* Allow main content to take up available space */
+}
+
+/* Style for the Sign In form */
+#signin-form {
+    width: 400px;
+    margin: auto; /* Center the form and remove top and bottom margins */
+    padding: 20px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    background-color: #ffffff;
+    margin-top: 180px; /* Adjusted for a smaller gap between the form and top */
+    margin-bottom: 150px; /* Adjusted for a smaller gap between form and footer */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: hsl(46, 61%, 49%);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: hsl(51, 76%, 51%);
+}
