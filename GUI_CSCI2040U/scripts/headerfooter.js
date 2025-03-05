@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(error => console.error("Error loading the header:", error));
 });
+
 document.addEventListener("DOMContentLoaded", function () {
     fetch("/partial/header.html")
         .then(response => response.text())

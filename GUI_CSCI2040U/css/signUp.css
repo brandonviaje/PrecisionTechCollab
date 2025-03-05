@@ -13,6 +13,10 @@ form {
     margin-bottom: 15px;
 }
 
+.signup_container{
+    margin-top: 100px;
+}
+
 #signup-form label {
     display: block;
     margin-bottom: 5px;
@@ -98,4 +102,9 @@ button:hover {
 
 a {
     text-decoration: none;
+}
+
+#click_here{
+    display: flex;
+    justify-content: center;
 }
