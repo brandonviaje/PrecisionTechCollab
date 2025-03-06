@@ -1,0 +1,6 @@
+com\precisiontech\moviecatalog\controller\MovieController.class
+com\precisiontech\moviecatalog\MoviecatalogApplication.class
+com\precisiontech\moviecatalog\config\WebConfig.class
+com\precisiontech\moviecatalog\controller\HomeController.class
+com\precisiontech\moviecatalog\service\MovieService.class
+com\precisiontech\moviecatalog\model\Movie.class
