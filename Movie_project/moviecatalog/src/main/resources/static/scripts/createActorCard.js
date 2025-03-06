@@ -18,7 +18,7 @@ function createActorCard(media) {
   return `
     <div class="actor-item">
         <div class="actor-photo-container">
-          <a href="/components/actorDetails.html?id=${id}">
+          <a href="../components/actorDetails.html?id=${id}">
             <img src="https://image.tmdb.org/t/p/w300/${profile_path}" class="actor_img_rounded" alt="${name}">
           </a>
         </div>

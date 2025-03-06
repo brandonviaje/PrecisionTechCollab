@@ -18,7 +18,7 @@ function createMovieCard(media) {
   return `
     <div class="movie_item">
     <div class = movie-photo-container>
-      <a href="/components/movieDetails.html?id=${id}">
+      <a href="../components/movieDetails.html?id=${id}">
         <img src="https://image.tmdb.org/t/p/w300/${poster_path}" class="movie_img_rounded" alt="${title || name}">
       </a>
     </div>
