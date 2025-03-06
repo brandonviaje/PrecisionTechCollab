@@ -4,10 +4,6 @@ $(document).ready(function() {
 
         // Get JWT token from localStorage
         const token = localStorage.getItem("jwtToken");
-        if (!token) {
-            alert("You are not authenticated. Please log in again.");
-            return;
-        }
 
         // Prepare movie data object
         const movieData = {
