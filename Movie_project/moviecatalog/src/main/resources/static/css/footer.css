@@ -1,0 +1,35 @@
+footer {
+    background-color: #000000;
+    color: white; /* Change the footer text to white */
+    padding: 20px 0; /* Reduced padding for less space */
+    text-align: center;
+    display: flex;
+    align-items: flex-end;
+    /* No need for position: relative or bottom: 0 anymore */
+}
+
+.footer_container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+footer nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-evenly;
+    gap:50px;
+}
+
+footer nav ul li {
+    margin: auto;
+}
+
+footer nav ul li a {
+    text-decoration: none;
+    color: white; /* Change the color of links to white */
+    font-weight: normal; /* Optional: Remove bold */
+}
+
