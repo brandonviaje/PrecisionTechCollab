@@ -5,7 +5,7 @@ function fetchActors() {
     .done(function (data) {
       data.results.forEach(function (media) {
         const actorCard = createActorCard(media);
-        $(".actors").append(actorCard); // Append to movies div
+        $(".actors").append(actorCard); // Append to actors div
       });
     })
     .fail(function (error) {

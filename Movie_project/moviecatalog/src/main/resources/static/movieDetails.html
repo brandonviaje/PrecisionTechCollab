@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Details</title>
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/movieDetail.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <div id="header-container"></div>
+
+    <div class="movie-container">
+      <div class="poster-section">
+        <img id="movie-poster" src="" alt="Movie Poster">
+      </div>
+    
+      <div class="movie-details">
+        <div class="movie-name">
+          <h1 id="movie-title"></h1>
+        </div>
+        <p> Overview: </p> 
+        <p id="movie-overview"></p>
+        <p> Release Date:</p>
+        <p id="movie-release-date"></p>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="scripts/movieDetails.js"></script>
+    <script src="scripts/headerfooter.js"></script>
+
+  </body>
+
+</html>

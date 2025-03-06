@@ -22,4 +22,5 @@ public class MovieController {
             return ResponseEntity.status(500).body("Error adding movie: " + e.getMessage());
         }
     }
+
 }

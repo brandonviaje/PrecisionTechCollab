@@ -254,9 +254,9 @@ footer {
 .actors {
     display: flex;
     justify-content: center;
-    gap: 20px; /* Space between actor cards */
-    max-width: 1300px; /* Set a maximum width */
-    margin: 0 auto; /* Center it horizontally */
+    gap: 20px;
+    max-width: 1300px;
+    margin: 0 auto;
     overflow: hidden; /* Ensure that anything outside of the max-width is hidden */
 }
 
