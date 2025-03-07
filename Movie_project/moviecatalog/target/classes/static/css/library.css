@@ -1,0 +1,34 @@
+.movie_show_container {
+    margin: 100px;
+    padding: 50px;
+}
+
+.movie_show_container h1 {
+    margin: 0 0 20px 0;
+}
+
+.filter_container label {
+    margin: 0;
+}
+
+.movies {
+    margin: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    justify-items: center;
+}
+
+.movie_item {
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.movie-photo-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
