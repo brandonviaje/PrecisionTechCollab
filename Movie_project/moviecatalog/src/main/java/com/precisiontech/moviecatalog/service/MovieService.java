@@ -74,4 +74,39 @@ public class MovieService {
     public List<Movie> getAllMovies() {
         return movies;
     }
+
+    public List<Movie> getMoviesByGenre(String genre) {
+        List<Movie> allMovies;
+
+        //if there is nothing in searched genre, keep all movies displayed
+        if(genre == null || genre.isEmpty()){
+            allMovies = webClient.get()
+                    .uri("/rest/v1/movies")
+                    .header("apikey", supabaseApiKey)
+                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                    .retrieve()
+                    .bodyToFlux(Movie.class)
+                    .collectList()
+                    .block();
+        }else {
+            //if found genre then display movies
+            allMovies = webClient.get().uri(uriBuilder -> uriBuilder
+                            .path("/rest/v1/movies")
+                            .queryParam("genres", "ilike." + genre)
+                            .build())
+                    .header("apikey", supabaseApiKey)
+                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                    .retrieve()
+                    .bodyToFlux(Movie.class)//retrieves multiple objects
+                    .collectList()//collects the objects into a list
+                    .block();
+        }
+
+        List<Movie> filteredMovies = new ArrayList<>();
+        //first 50 movies
+        for (int i = 0; i < Math.min(50,allMovies.size()); i++){
+            filteredMovies.add(allMovies.get(i));
+        }
+        return filteredMovies;
+    }//genre
 }
