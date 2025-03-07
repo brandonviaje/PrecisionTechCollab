@@ -23,11 +23,11 @@ function fetchMovies(genre = "") {
 }
 
 function createMovieCard(movie) {
-    const { title, releaseDate, genres, synopsis, id } = movie;
+    const { title, runtime, genres, synopsis, id } = movie;
     return `
     <div class="movie-card">
       <h2>${title}</h2>
-      <p><strong>Release Date:</strong> ${releaseDate}</p>
+      <p><strong>Runtime:</strong> ${runtime}</p>
       <p><strong>Genre:</strong> ${genres}</p>
       <p><strong>Synopsis:</strong> ${synopsis}</p>
     </div>
