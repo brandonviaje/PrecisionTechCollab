@@ -8,6 +8,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -33,18 +34,18 @@ public class MovieService {
 
         // Create JSON payload
         String jsonPayload = String.format("""
-                {
-                    "title": "%s",
-                    "release_date": "%s",
-                    "pg_rating": "%s",
-                    "synopsis": "%s",
-                    "genres": "%s",
-                    "production_companies": "%s",
-                    "runtime": %d,
-                    "production_countries": "%s",
-                    "spoken_languages": "%s"
-                }
-                """,
+                        {
+                            "title": "%s",
+                            "release_date": "%s",
+                            "pg_rating": "%s",
+                            "synopsis": "%s",
+                            "genres": "%s",
+                            "production_companies": "%s",
+                            "runtime": %d,
+                            "production_countries": "%s",
+                            "spoken_languages": "%s"
+                        }
+                        """,
                 movie.getTitle(),
                 movie.getReleaseDate(),
                 movie.getPgRating(),
@@ -78,35 +79,42 @@ public class MovieService {
     public List<Movie> getMoviesByGenre(String genre) {
         List<Movie> allMovies;
 
-        //if there is nothing in searched genre, keep all movies displayed
-        if(genre == null || genre.isEmpty()){
+        // If no genre is specified, return all movies ordered by the automatic ID (ascending)
+        if (genre == null || genre.isEmpty()) {
             allMovies = webClient.get()
-                    .uri("/rest/v1/movies")
+                    .uri(uriBuilder -> uriBuilder
+                            .path("/rest/v1/movies")
+                            .queryParam("order", "id.asc") // Sort by the ID in ascending order
+                            .build())
                     .header("apikey", supabaseApiKey)
                     .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                     .retrieve()
                     .bodyToFlux(Movie.class)
                     .collectList()
                     .block();
-        }else {
-            //if found genre then display movies
-            allMovies = webClient.get().uri(uriBuilder -> uriBuilder
+        } else {
+            // If a genre is specified, filter by genre and order by ID (ascending)
+            allMovies = webClient.get()
+                    .uri(uriBuilder -> uriBuilder
                             .path("/rest/v1/movies")
-                            .queryParam("genres", "ilike." + genre)
+                            .queryParam("genres", "ilike." + genre) // Filter by genre
+                            .queryParam("order", "id.asc") // Sort by the ID in ascending order
                             .build())
                     .header("apikey", supabaseApiKey)
                     .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                     .retrieve()
-                    .bodyToFlux(Movie.class)//retrieves multiple objects
-                    .collectList()//collects the objects into a list
+                    .bodyToFlux(Movie.class)
+                    .collectList()
                     .block();
         }
 
+        // Limit the result to the first 50 movies
         List<Movie> filteredMovies = new ArrayList<>();
-        //first 50 movies
-        for (int i = 0; i < Math.min(50,allMovies.size()); i++){
+        for (int i = 0; i < Math.min(50, allMovies.size()); i++) {
             filteredMovies.add(allMovies.get(i));
         }
+
         return filteredMovies;
-    }//genre
+    }
+
 }

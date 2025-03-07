@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add A Movie</title>
+    <link rel="stylesheet" href="../css/addMovies.css">
+    <link rel="stylesheet" href="../css/header.css">
+</head>
+<body>
+
+
+    <div id ="header-container"></div>
+    <!--This div holds a form where the user can submit movie details,
+    I was using it to make sure my code worked-->
+    <div id="container">
+        <h1>Add Movie to Catalog</h1>
+        <form id="movieForm">
+            <label for="title">Movie Title:</label>
+            <input type="text" id="title" name="title" required><br><br>
+
+            <label for="releaseDate">Release Date:</label>
+            <input type="date" id="releaseDate" name="releaseDate" required><br><br>
+
+            <label for="pgRating">PG Rating:</label>
+            <input type="text" id="pgRating" name="pgRating" required><br><br>
+
+            <label for="synopsis">Synopsis:</label>
+            <textarea id="synopsis" name="synopsis" rows="4" required></textarea><br><br>
+
+            <label for="genres">Genres:</label>
+            <input type="text" id="genres" name="genres" required><br><br>
+
+            <label for="productionCompanies">Production Companies:</label>
+            <input type="text" id="productionCompanies" name="productionCompanies" required><br><br>
+
+            <label for="runtime">Runtime (in minutes):</label>
+            <input type="number" id="runtime" name="runtime" min="1" required><br><br>
+
+            <label for="productionCountries">Production Countries:</label>
+            <input type="text" id="productionCountries" name="productionCountries" required><br><br>
+
+            <label for="spokenLanguages">Spoken Languages:</label>
+            <input type="text" id="spokenLanguages" name="spokenLanguages" required><br><br>
+
+            <button type="submit">Add Movie</button>
+        </form>
+
+        <div id="responseMessage"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src ="../scripts/addMovie.js"></script>
+    <script src = "../scripts/headerfooter.js"></script>
+</body>
+</html>

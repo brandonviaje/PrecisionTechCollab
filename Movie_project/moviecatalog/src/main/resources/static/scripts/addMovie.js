@@ -1,6 +1,7 @@
 $(document).ready(function() {
     $('#movieForm').submit(function(event) {
         event.preventDefault(); // Prevent default form submission
+        $('#submitButton').prop('disabled', true); // Disable submit button
 
         // Get JWT token from localStorage
         const token = localStorage.getItem("jwtToken");
@@ -18,7 +19,6 @@ $(document).ready(function() {
             spokenLanguages: $('#spokenLanguages').val()
         };
 
-        // Send AJAX request to backend
         $.ajax({
             url: 'http://localhost:8080/api/movies', // Ensure this matches your backend API endpoint
             type: 'POST',
