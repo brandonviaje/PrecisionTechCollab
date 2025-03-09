@@ -2,6 +2,8 @@ body {
     font-family: "Open Sans", serif;
     margin: 0;
     padding: 0;
+    /*background-color: white;*/
+
 }
 /* Header Styling */
 
@@ -16,7 +18,8 @@ main {
     flex-direction: column;
     text-align: center;
     background-color: hsla(45, 77%, 56%, 0.829);
-    /* background-color: hsla(0, 1%, 24%, 0.397); */
+    /*background-color: white;*/
+     /*background-color: hsla(0, 1%, 24%, 0.397); */
 }
 
 #carasol{
