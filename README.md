@@ -12,13 +12,13 @@ Before running the project, ensure you have the following installed:
 ## Step-by-Step Guide
 
 ### 1. Open the Project in IntelliJ
-- First click on ##code##
-- Launch **IntelliJ IDEA**.
+- Click on **code** and click on download zip
+- Unzip the folder and launch **IntelliJ IDEA**.
 - Load the project into the IDE.
 
 ### 2. Run Maven Lifecycle Commands
-- Locate the **Maven** tool window (usually on the right sidebar in IntelliJ).
-- Expand the **Lifecycle** section.
+- Locate the **Maven** tool window (usually on the right sidebar).
+- Search for **Lifecycle** and expand the section.
 - Click **Clean** and wait for the process to complete.
 - Then, click **Install** and allow Maven to build the project.
 
@@ -28,6 +28,6 @@ Before running the project, ensure you have the following installed:
   - Click **spring-boot:run** to start the application.
 
 ### 4. Access the Application
-- Once the application is running, open a web browser.
-- Enter the following URL:
+- Allow the application to start and once the application is running, open a web browser.
+- Enter the following URL: http://localhost:8080/index.html
   
