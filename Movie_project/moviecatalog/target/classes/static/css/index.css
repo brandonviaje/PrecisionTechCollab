@@ -245,13 +245,13 @@ footer{
 }
 
 .container h1{
-    margin-top: 80px; /* Keeps space from the top */
-    font-size: 3em; /* Increases the font size for a bolder look */
-    color: #272635; /* Dark color for the text */
-    text-align: center; /* Centers the text horizontally */
-    letter-spacing: 1px; /* Adds space between letters for better readability */
-    text-transform: uppercase; /* Makes the text uppercase for emphasis */
-    padding: 10px 20px; /* Adds padding inside the h1 */
+    margin-top: 80px;
+    font-size: 3em;
+    color: #272635;
+    text-align: center;
+    letter-spacing: 1px;
+    text-transform: uppercase; /
+    padding: 10px 20px;
 }
 
 /* Footer Styling */
@@ -268,14 +268,14 @@ footer {
 /* Actor Section Styling */
 .actors {
     display: flex;
-    justify-content: flex-start; /* Aligns the actors from the left */
+    justify-content: flex-start;
     gap: 20px;
-    max-width: 1300px; /* Maximum width for the actor section */
+    max-width: 1300px;
     margin: 0 auto;
-    overflow-x: auto; /* Enables horizontal scrolling */
-    overflow-y: hidden; /* Prevents vertical scrolling */
-    white-space: nowrap; /* Prevents wrapping of the actor items */
-    padding-bottom: 20px; /* Optional: space at the bottom to ensure scroll visibility */
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    padding-bottom: 20px;
 }
 
 /* Ensures the actor items stay in a row and don't wrap */
@@ -288,45 +288,45 @@ footer {
     letter-spacing: 1px;
     text-transform: uppercase;
     text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
-    display: inline-block; /* Ensures the items stay in a row */
+    display: inline-block;
 }
 /* Customize the horizontal scrollbar with arrows */
 .actors {
-    overflow-x: scroll; /* Enable horizontal scroll */
-    scroll-behavior: smooth; /* Smooth scroll transition */
+    overflow-x: scroll;
+    scroll-behavior: smooth;
 }
 
 .actor-item img {
-    width: 100px; /* Adjust the size of the image */
-    height: 100px; /* Make height equal to width for a circle */
-    border-radius: 50%; /* Circular border radius */
-    object-fit: cover; /* Ensure the image covers the circle */
-    margin-bottom: 10px; /* Optional: space between the image and name */
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
 }
 
 /* Horizontal scrollbar */
 .actors::-webkit-scrollbar {
-    height: 8px; /* Height of the scrollbar */
+    height: 8px;
 }
 
 .actors::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.7); /* White thumb */
-    border-radius: 10px; /* Rounded corners */
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
 }
 
 .actors::-webkit-scrollbar-track {
-    background-color: rgba(0, 0, 0, 0.1); /* Light gray track */
-    border-radius: 10px; /* Rounded corners */
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
 }
 
 /* Show arrows on the scrollbar */
 .actors::-webkit-scrollbar-button {
-    background-color: rgba(255, 255, 255, 0.7); /* Subtle white arrow buttons */
+    background-color: rgba(255, 255, 255, 0.7);
     width: 10px;
     height: 10px;
     border-radius: 50%; /* Make the arrows round for a modern look */
 }
 
 .actors::-webkit-scrollbar-button:horizontal {
-    display: block; /* Show horizontal arrows */
+    display: block;
 }
