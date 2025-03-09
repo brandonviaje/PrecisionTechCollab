@@ -154,14 +154,26 @@ footer{
 
 .icon-cards {
     position: relative;
-    width: 90vw; 
-    height: 40vw; 
-    max-width: 800px; 
-    max-height: 350px; 
-    margin: 0 auto; 
-    perspective: 1000px;
+    width: 686px;  /* Set to 686px */
+    height: 386px; /* Set to 386px */
+    margin: 0 auto; /* Centers the carousel horizontally */
+    perspective: 1000px; /* Adds 3D perspective */
     transform-origin: center;
 }
+
+.icon-cards__item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 686px;  /* Set to 686px */
+    height: 386px; /* Set to 386px */
+    box-shadow: 0 5px 20px rgba(0,0,0,.1);
+    border-radius: 6px;
+    transform-origin: center;
+}
+
 
 .icon-cards__content {
     position: absolute;
@@ -233,13 +245,13 @@ footer{
 }
 
 .container h1{
-    margin-top: 80px; /* Keeps space from the top */
-    font-size: 3em; /* Increases the font size for a bolder look */
-    color: #272635; /* Dark color for the text */
-    text-align: center; /* Centers the text horizontally */
-    letter-spacing: 1px; /* Adds space between letters for better readability */
-    text-transform: uppercase; /* Makes the text uppercase for emphasis */
-    padding: 10px 20px; /* Adds padding inside the h1 */
+    margin-top: 80px;
+    font-size: 3em;
+    color: #272635;
+    text-align: center;
+    letter-spacing: 1px;
+    text-transform: uppercase; /
+    padding: 10px 20px;
 }
 
 /* Footer Styling */
@@ -256,13 +268,17 @@ footer {
 /* Actor Section Styling */
 .actors {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 20px;
     max-width: 1300px;
     margin: 0 auto;
-    overflow: hidden; /* Ensure that anything outside of the max-width is hidden */
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    padding-bottom: 20px;
 }
 
+/* Ensures the actor items stay in a row and don't wrap */
 .actor-item {
     margin-top: 50px;
     text-align: center;
@@ -272,17 +288,45 @@ footer {
     letter-spacing: 1px;
     text-transform: uppercase;
     text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+    display: inline-block;
+}
+/* Customize the horizontal scrollbar with arrows */
+.actors {
+    overflow-x: scroll;
+    scroll-behavior: smooth;
 }
 
-.actor_img_rounded {
+.actor-item img {
     width: 100px;
     height: 100px;
     border-radius: 50%;
     object-fit: cover;
+    margin-bottom: 10px;
 }
 
-.actor-name {
-    margin-top: 10px; /* Space between image and name */
-    font-size: 1rem; /* Adjust the size of the name text */
-    font-weight: 500; /* You can adjust the font weight if needed */
+/* Horizontal scrollbar */
+.actors::-webkit-scrollbar {
+    height: 8px;
+}
+
+.actors::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+}
+
+.actors::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+/* Show arrows on the scrollbar */
+.actors::-webkit-scrollbar-button {
+    background-color: rgba(255, 255, 255, 0.7);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%; /* Make the arrows round for a modern look */
+}
+
+.actors::-webkit-scrollbar-button:horizontal {
+    display: block;
 }
