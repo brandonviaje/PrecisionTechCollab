@@ -30,4 +30,9 @@ Before running the project, ensure you have the following installed:
 ### 4. Access the Application
 - Allow the application to start and once the application is running, open a web browser.
 - Enter the following URL: http://localhost:8080/index.html
+
+### Recording
+<p align="center">
+  <img src="./iteration1demo.gif"  alt="SetUp Demo"/>
+</p>
   
