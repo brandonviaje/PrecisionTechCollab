@@ -35,4 +35,11 @@ Before running the project, ensure you have the following installed:
 <p align="center">
   <img src="./iteration1demo.gif"  alt="SetUp Demo"/>
 </p>
-  
+
+# Sources 
+This project uses the dataset by **TMDB Movies Dataset (2023)**. Details, including metadata, genres, release data, and other relevant information seen in the project, are from the dataset.
+
+- **Name:** TMDB Movies Dataset (2023)
+- **Dataset Source:** [Kaggle Dataset](https://www.kaggle.com/datasets/asaniczka/tmdb-movies-dataset-2023-930k-movies)
+- **Provider:** Asaniczka and themoviedb.org
+- **License:** ODC Attribution License
