@@ -1,5 +1,7 @@
 package com.precisiontech.moviecatalog.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Movie {
 
     private String title;
@@ -11,6 +13,8 @@ public class Movie {
     private int runtime;
     private String productionCountries;
     private String spokenLanguages;
+    @JsonProperty("poster_path") // Ensure correct mapping
+    private String posterPath;
 
     // Getters and setters
     public String getTitle() {
@@ -84,4 +88,8 @@ public class Movie {
     public void setSpokenLanguages(String spokenLanguages) {
         this.spokenLanguages = spokenLanguages;
     }
+
+    public String getPosterPath() {return posterPath;}
+
+    public void setPosterPath(String posterPath) {this.posterPath = posterPath;}
 }

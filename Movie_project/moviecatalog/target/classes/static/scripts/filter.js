@@ -5,7 +5,6 @@ function fetchMovies(genre = "") {
 
     $.getJSON(url)
         .done(function (movies) {
-            $(".movies").empty(); // Clear existing movies
 
             if (movies.length === 0) {
                 $(".movies").append("<p>No movies found.</p>");
@@ -23,15 +22,19 @@ function fetchMovies(genre = "") {
 }
 
 function createMovieCard(movie) {
-    const { title, runtime, genres, synopsis, id } = movie;
+    const { title, poster_path, movie_id } = movie;
+    console.log("Poster Path:", poster_path); // Debugging line
+
     return `
-    <div class="movie-card">
-      <h2>${title}</h2>
-      <p><strong>Runtime:</strong> ${runtime}</p>
-      <p><strong>Genre:</strong> ${genres}</p>
-      <p><strong>Synopsis:</strong> ${synopsis}</p>
+    <div class="movie_item">
+        <div class="movie-photo-container">
+            <a href="../components/movieDetails.html?id=${movie_id}">
+                <img src="https://image.tmdb.org/t/p/original/${poster_path}" class="movie_img_rounded" alt="${title}">
+            </a>
+        </div>
+        <div class="title">${title}</div>
     </div>
-  `;
+    `;
 }
 
 function fetchGenres() {
@@ -58,8 +61,8 @@ function fetchGenres() {
 }
 
 $(document).ready(function () {
-    fetchMovies(); // Load all movies on page load
-    fetchGenres(); // Populate genre dropdown
+    fetchMovies();
+    fetchGenres();
 
     // Event listener for genre selection
     $("#genre-filter").change(function () {

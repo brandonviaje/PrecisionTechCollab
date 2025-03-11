@@ -1,6 +1,5 @@
 body{
     background-color: hsla(45, 77%, 56%, 0.829);
-
 }
 .movie_show_container {
 
@@ -16,12 +15,13 @@ body{
     margin: 0;
 }
 
+
 .movies {
-    margin: 30px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-    justify-items: center;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    row-gap: 30px;
+    column-gap: 16px;
+    justify-content: center;
 }
 
 .movie_item {
