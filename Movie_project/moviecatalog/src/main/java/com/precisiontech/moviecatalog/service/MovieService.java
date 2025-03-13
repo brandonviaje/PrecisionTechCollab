@@ -70,6 +70,7 @@ public class MovieService {
         return movie;
     }
 
+
     public List<Movie> getAllMovies() {
         return movies;
     }

@@ -1,7 +1,6 @@
 $(document).ready(function() {
     $('#movieForm').submit(function(event) {
         event.preventDefault();
-        $('#submitButton').prop('disabled', true);  // Disable button - prevents multiple submits
 
         // Get JWT token from localStorage
         const token = localStorage.getItem("jwtToken");
