@@ -1,10 +1,13 @@
 const apiUrl = '/api/movies';
 
 function fetchMovies(genre = "") {
-    const url = genre ? `${apiUrl}?genre=${genre}` : apiUrl;
+    const url = genre ? `${apiUrl}?genre=${encodeURIComponent(genre)}` : apiUrl;
 
     $.getJSON(url)
         .done(function (movies) {
+
+            // Clear the existing movies before appending new ones
+            $(".movies").empty();  // This line clears the previous movie list
 
             if (movies.length === 0) {
                 $(".movies").append("<p>No movies found.</p>");
@@ -13,7 +16,7 @@ function fetchMovies(genre = "") {
 
             movies.forEach(function (movie) {
                 const movieCard = createMovieCard(movie);
-                $(".movies").append(movieCard); // Append to movies div
+                $(".movies").append(movieCard); // Append the new movie cards
             });
         })
         .fail(function (error) {
@@ -40,26 +43,29 @@ function createMovieCard(movie) {
 function fetchGenres() {
     $.getJSON(apiUrl)
         .done(function (movies) {
-            const genres = new Set();
+            const genres = new Set();  // Defined in the correct scope
             movies.forEach(function (movie) {
-                movie.genres.split(",").forEach(function (genre) {
-                    genres.add(genre.trim());
+                console.log("Genres in movie:", movie.genres); // Log the genre field
+                movie.genres.split(",").forEach(function (genre) { // Split genres if they're in a comma-separated string
+                    genres.add(genre.trim()); // Add each genre to the set
                 });
             });
 
+            console.log("Unique genres:", [...genres]); // Log all unique genres
+
             const genreFilter = $("#genre-filter");
             genreFilter.empty();
-            genreFilter.append('<option value="">All</option>');
+            genreFilter.append('<option value="">All</option>'); // Default option
 
+            // Add genres to dropdown
             genres.forEach(function (genre) {
-                genreFilter.append(`<option value="${genre}">${genre}</option>`);
+                genreFilter.append(`<option value="${genre}">${genre}</option>`); // Add each genre
             });
         })
         .fail(function (error) {
             console.error("Error Fetching genres:", error);
         });
 }
-
 $(document).ready(function () {
     fetchMovies();
     fetchGenres();
