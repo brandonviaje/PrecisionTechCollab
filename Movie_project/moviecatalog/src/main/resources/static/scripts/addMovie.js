@@ -4,34 +4,39 @@ $(document).ready(function() {
 
         // Get JWT token from localStorage
         const token = localStorage.getItem("jwtToken");
+        var formData = new FormData();
 
-        // Prepare movie data object
-        const movieData = {
-            title: $('#title').val(),
-            releaseDate: $('#releaseDate').val(),
-            pgRating: $('#pgRating').val(),
-            synopsis: $('#synopsis').val(),
-            genres: $('#genres').val(),
-            productionCompanies: $('#productionCompanies').val(),
-            runtime: $('#runtime').val(),
-            productionCountries: $('#productionCountries').val(),
-            spokenLanguages: $('#spokenLanguages').val()
-        };
+        // Add movie details to FormData object
+        formData.append('title', $('#title').val());
+        formData.append('releaseDate', $('#releaseDate').val());
+        formData.append('pgRating', $('#pgRating').val());
+        formData.append('synopsis', $('#synopsis').val());
+        formData.append('genres', $('#genres').val());
+        formData.append('productionCompanies', $('#productionCompanies').val());
+        formData.append('runtime', $('#runtime').val());
+        formData.append('productionCountries', $('#productionCountries').val());
+        formData.append('spokenLanguages', $('#spokenLanguages').val());
 
-        // Send AJAX request to backend
+        // append the movie poster file to the FormData object
+        var posterFile = $('#poster')[0].files[0];
+        if (posterFile) {
+            formData.append('poster', posterFile);
+        }
+
+        // Send AJAX request to backend for movie data and poster upload
         $.ajax({
-            url: 'http://localhost:8080/api/movies',
+            url: 'http://localhost:8080/api/movies',  // API endpoint for movie submission
             type: 'POST',
-            contentType: 'application/json',
+            data: formData,
+            processData: false,  // Don't let jQuery process the data
+            contentType: false,
             headers: {
-                'Authorization': `Bearer ${token}`, // Send JWT token in Authorization header
-                'Content-Type': 'application/json'
+                'Authorization': `Bearer ${token}` // Send JWT token in Authorization header
             },
-            data: JSON.stringify(movieData),
             success: function(response) {
                 console.log('Movie added:', response);
                 $('#responseMessage').text('Movie added successfully!').css('color', 'green');
-                $('#movieForm')[0].reset();
+                $('#movieForm')[0].reset();  // Clear form fields on success
             },
             error: function(xhr) {
                 console.log('Error adding movie:', xhr.responseText);

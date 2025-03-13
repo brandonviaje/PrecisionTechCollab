@@ -6,8 +6,8 @@ function fetchMovies(genre = "") {
     $.getJSON(url)
         .done(function (movies) {
 
-            // Clear the existing movies before appending new ones
-            $(".movies").empty();  // This line clears the previous movie list
+            // Clear existing movies before appending new ones
+            $(".movies").empty();
 
             if (movies.length === 0) {
                 $(".movies").append("<p>No movies found.</p>");
@@ -26,7 +26,6 @@ function fetchMovies(genre = "") {
 
 function createMovieCard(movie) {
     const { title, poster_path, movie_id } = movie;
-    console.log("Poster Path:", poster_path); // Debugging line
 
     return `
     <div class="movie_item">
@@ -51,15 +50,13 @@ function fetchGenres() {
                 });
             });
 
-            console.log("Unique genres:", [...genres]); // Log all unique genres
-
             const genreFilter = $("#genre-filter");
             genreFilter.empty();
             genreFilter.append('<option value="">All</option>'); // Default option
 
             // Add genres to dropdown
             genres.forEach(function (genre) {
-                genreFilter.append(`<option value="${genre}">${genre}</option>`); // Add each genre
+                genreFilter.append(`<option value="${genre}">${genre}</option>`);
             });
         })
         .fail(function (error) {

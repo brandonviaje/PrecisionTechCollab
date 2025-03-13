@@ -13,8 +13,10 @@ public class Movie {
     private int runtime;
     private String productionCountries;
     private String spokenLanguages;
-    @JsonProperty("poster_path") // Ensure correct mapping
+    @JsonProperty("poster_path")
     private String posterPath;
+    @JsonProperty("movie_id")
+    private String movieId;
 
     // Getters and setters
     public String getTitle() {
@@ -57,13 +59,9 @@ public class Movie {
         this.genres = genres;
     }
 
-    public String getProductionCompanies() {
-        return productionCompanies;
-    }
+    public String getProductionCompanies() {return productionCompanies;}
 
-    public void setProductionCompanies(String productionCompanies) {
-        this.productionCompanies = productionCompanies;
-    }
+    public void setProductionCompanies(String productionCompanies) {this.productionCompanies = productionCompanies;}
 
     public int getRuntime() {
         return runtime;
@@ -92,4 +90,9 @@ public class Movie {
     public String getPosterPath() {return posterPath;}
 
     public void setPosterPath(String posterPath) {this.posterPath = posterPath;}
+
+    public String getMovieId() {return movieId;}
+
+    public void setMovieId(String movieId) {this.movieId = movieId;}
+
 }
