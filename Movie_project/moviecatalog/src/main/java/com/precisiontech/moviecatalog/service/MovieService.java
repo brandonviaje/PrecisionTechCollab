@@ -103,8 +103,29 @@ public class MovieService {
                     .collectList()
                     .block();
         }
-
         return allMovies;
+    }
+
+    public List<Movie> searchMoviesByTitle(String title) {
+        List<Movie> searchedMovies;
+
+        if (title == null || title.isEmpty()) {
+            searchedMovies = new ArrayList<>(); // Return empty list if no title is provided
+        } else {
+            searchedMovies = webClient.get()
+                    .uri(uriBuilder -> uriBuilder
+                            .path("/rest/v1/movies")
+                            .queryParam("title", "ilike.%" + title + "%")
+                            .queryParam("order", "id.asc")
+                            .build())
+                    .header("apikey", supabaseApiKey)
+                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                    .retrieve()
+                    .bodyToFlux(Movie.class)
+                    .collectList()
+                    .block();
+        }
+        return searchedMovies;
     }
 
 }
