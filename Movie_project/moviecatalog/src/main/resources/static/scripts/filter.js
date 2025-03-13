@@ -63,6 +63,7 @@ function fetchGenres() {
             console.error("Error Fetching genres:", error);
         });
 }
+
 $(document).ready(function () {
     fetchMovies();
     fetchGenres();
