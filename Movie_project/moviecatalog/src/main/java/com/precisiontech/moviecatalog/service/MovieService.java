@@ -78,7 +78,6 @@ public class MovieService {
         List<Movie> allMovies;
 
         if (genre == null || genre.isEmpty()) {
-            // Fetch all movies when no genre is specified
             allMovies = webClient.get()
                     .uri(uriBuilder -> uriBuilder
                             .path("/rest/v1/movies")
@@ -91,11 +90,10 @@ public class MovieService {
                     .collectList()
                     .block();
         } else {
-            // Filter movies by genre when genre is specified
             allMovies = webClient.get()
                     .uri(uriBuilder -> uriBuilder
                             .path("/rest/v1/movies")
-                            .queryParam("genres", "ilike." + genre) // Filter by genre
+                            .queryParam("genres", "ilike.%"+ genre +"%")
                             .queryParam("order", "id.asc")
                             .build())
                     .header("apikey", supabaseApiKey)
@@ -106,12 +104,6 @@ public class MovieService {
                     .block();
         }
 
-        // Limit the result to the first 50 movies
-        List<Movie> filteredMovies = new ArrayList<>();
-        for (int i = 0; i < Math.min(50, allMovies.size()); i++) {
-            filteredMovies.add(allMovies.get(i));
-        }
-
-        return filteredMovies;
+        return allMovies;
     }
 }
