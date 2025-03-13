@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $('#movieForm').submit(function(event) {
-        event.preventDefault(); // Prevent default form submission
+        event.preventDefault();
 
         // Get JWT token from localStorage
         const token = localStorage.getItem("jwtToken");
@@ -20,7 +20,7 @@ $(document).ready(function() {
 
         // Send AJAX request to backend
         $.ajax({
-            url: 'http://localhost:8080/api/movies', // Ensure this matches your backend API endpoint
+            url: 'http://localhost:8080/api/movies',
             type: 'POST',
             contentType: 'application/json',
             headers: {
@@ -31,9 +31,9 @@ $(document).ready(function() {
             success: function(response) {
                 console.log('Movie added:', response);
                 $('#responseMessage').text('Movie added successfully!').css('color', 'green');
-                $('#movieForm')[0].reset(); // Reset form after successful submission
+                $('#movieForm')[0].reset();
             },
-            error: function(xhr, status, error) {
+            error: function(xhr) {
                 console.log('Error adding movie:', xhr.responseText);
                 $('#responseMessage').text(`Error: ${xhr.responseText}`).css('color', 'red');
             }
