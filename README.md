@@ -1,62 +1,45 @@
 # PrecisionTechCollab
 ## Name: Precision Technology Inc. ™
 
-![Logo](https://github.com/brandonviaje/PrecisionTechCollab/blob/5867fd0fe9006781672719e38b504dcba4cdfc80/precisiontech.png)
+# How to Run the Project
 
-<u>**Members:**</u>
+## Prerequisites
+Before running the project, ensure you have the following installed:
+- **IntelliJ IDEA**
+- **Maven** (installed and configured)
+- **Spring Boot**
 
-- Imran Abdi
+## Step-by-Step Guide
 
-- Jason Mong
+### 1. Open the Project in IntelliJ
+- Click on **code** and click on download zip
+- Unzip the folder and launch **IntelliJ IDEA**.
+- Load the project into the IDE.
 
-- Brandon Viaje
+### 2. Run Maven Lifecycle Commands
+- Locate the **Maven** tool window (usually on the right sidebar).
+- Search for **Lifecycle** and expand the section.
+- Click **Clean** and wait for the process to complete.
+- Then, click **Install** and allow Maven to build the project.
 
-- Ethan Warriner
+### 3. Start the Spring Boot Application
+- In the **Maven** tool window, navigate to:
+  - **Plugins** → **Spring Boot**
+  - Click **spring-boot:run** to start the application.
 
-- Richard Wu
+### 4. Access the Application
+- Allow the application to start and once the application is running, open a web browser.
+- Enter the following URL: http://localhost:8080/index.html
 
-## Roles:
-Project Manager: **Jason Mong**
+### Recording
+<p align="center">
+  <img src="./iteration1demo.gif"  alt="SetUp Demo"/>
+</p>
 
-Technical Manager: **Brandon Viaje**
+# Sources 
+This project uses the dataset by **TMDB Movies Dataset (2023)**. Details, including metadata, genres, release data, and other relevant information seen in the project, are from the dataset.
 
-Front-End Lead: **Richard Wu**
-
-Back-End Lead: **Ethan Warriner**
-
-Software Quality Lead: **Imran Abdi** 
-
-Developers: **All**
-
-## Pipeline
-- Primary Language: Java
-
-- Repository: GitHub
-
-- Version Control: GitHub
-
-- Project Planning Board: GitHub Boards
-
-- Database Technology: N/A
-
-- The group members identified above have discussed and agreed upon the following articles on completing and delivering their group project for CSCI 2040U.
-
-## Communication
-- We will create a server on Discord to communicate our plans and coordinate our work.
-- Group members are expected to reply to messages within 24 hours of it being sent.
-
-## Group Meetings
-- Meet weekly with group members to discuss our progress, goals, and challenges.
-- Virtual meetings will also be weekly as check-ins to help one another if needed. 
-- In-person meetings will be held a week prior to customer meeting
-
-
-## Work Methods
-- Code reviews will be completed by another team member who did not directly contribute to the development.
-- Code reviews will be completed before committing to the repo's main branch.
-- Weekly reports will be submitted to the server to ensure all members are on the right track. 
-
-## Additional Items
-- All decisions about the direction of the project will be made as a team in consultation with the customer.
-- We will be going for the bonus project.
-- All group members plan on learning SQL for backend and JQuery
+- **Name:** TMDB Movies Dataset (2023)
+- **Dataset Source:** [Kaggle Dataset](https://www.kaggle.com/datasets/asaniczka/tmdb-movies-dataset-2023-930k-movies)
+- **Provider:** Asaniczka and themoviedb.org
+- **License:** ODC Attribution License
