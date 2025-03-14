@@ -1,4 +1,3 @@
-// Handle form submission with file upload
 $('#movieForm').on('submit', function(e) {
     e.preventDefault();
 
@@ -13,6 +12,7 @@ $('#movieForm').on('submit', function(e) {
         success: function(response) {
             $('#responseMessage').text('Movie added successfully!').css('color', 'green');
             $('#movieForm')[0].reset();
+            $(document).trigger("movieAdded"); // trigger event for real-time update
         },
         error: function(xhr) {
             console.log('Error adding movie:', xhr.responseText);

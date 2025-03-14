@@ -18,7 +18,8 @@ public class Movie {
     @JsonProperty("movie_id")
     private String movieId;
 
-    public Movie(String title, String releaseDate, String posterPath) {
+    public Movie(String movieId,String title, String releaseDate, String posterPath) {
+        this.movieId = movieId;
         this.title = title;
         this.releaseDate = releaseDate;
         this.posterPath = posterPath;

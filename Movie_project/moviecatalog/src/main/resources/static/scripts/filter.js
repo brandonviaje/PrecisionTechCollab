@@ -28,7 +28,7 @@ function createMovieCard(movie) {
     const { title, poster_path, movie_id } = movie;
 
     // Check if the poster path is a file name or a full URL (indicating it's from TMDb)
-    const imageSrc = poster_path.startsWith("/userimg/") ? `..${poster_path}` : `https://image.tmdb.org/t/p/original/${poster_path}`;
+    const imageSrc = poster_path.startsWith("/userimg/") ? `..${poster_path}?v=${new Date().getTime()}` : `https://image.tmdb.org/t/p/original/${poster_path}`;
 
     return `
     <div class="movie_item">
@@ -45,29 +45,29 @@ function createMovieCard(movie) {
 function fetchGenres() {
     $.getJSON(apiUrl)
         .done(function (movies) {
-            const genres = new Set();  // A set to ensure no duplicate genres
+            const genres = new Set();  //set to ensure no duplicate genres
 
-            // Loop through each movie and extract genres
+            // go through each movie and extract genres
             movies.forEach(function (movie) {
-                console.log("Genres in movie:", movie.genres); // Log the genre field to inspect its structure
+                console.log("Genres in movie:", movie.genres); // log genre field to inspect its structure
 
-                // If genres is an array, you can directly loop through it
+                // if genres is an array,directly loop through it
                 if (Array.isArray(movie.genres)) {
                     movie.genres.forEach(function (genre) {
-                        genres.add(genre.trim()); // Add each genre to the set
+                        genres.add(genre.trim()); // add each genre to the set
                     });
                 } else if (typeof movie.genres === "string") {
-                    movie.genres.split(",").forEach(function (genre) { // Split if it's a string
+                    movie.genres.split(",").forEach(function (genre) { // split if it's a string
                         genres.add(genre.trim());
                     });
                 }
             });
 
             const genreFilter = $("#genre-filter");
-            genreFilter.empty(); // Clear the dropdown
+            genreFilter.empty(); // clear the dropdown
             genreFilter.append('<option value="">All</option>'); // Default option
 
-            // Add genres to dropdown
+            // add genres to dropdown
             genres.forEach(function (genre) {
                 genreFilter.append(`<option value="${genre}">${genre}</option>`);
             });
@@ -84,5 +84,11 @@ $(document).ready(function () {
     // Event listener for genre selection
     $("#genre-filter").change(function () {
         fetchMovies($(this).val());
+    });
+
+    // refresh movie list and genres when a new movie is added
+    $(document).on("movieAdded", function () {
+        fetchMovies();
+        fetchGenres();
     });
 });

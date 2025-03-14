@@ -34,7 +34,7 @@ public class MovieService {
     public Movie addMovie(Movie movie) {
         movies.add(movie);
 
-        // Prepare the movie data to send to Supabase
+        // prepare the movie data to send to Supabase
         Map<String, Object> movieData = new HashMap<>();
         movieData.put("title", movie.getTitle());
         movieData.put("release_date", movie.getReleaseDate());
@@ -48,11 +48,11 @@ public class MovieService {
         movieData.put("spoken_languages", movie.getSpokenLanguages());
 
         try {
-            // Serialize movie data to JSON string
+            // serialize movie data to JSON format
             ObjectMapper objectMapper = new ObjectMapper();
             String jsonPayload = objectMapper.writeValueAsString(movieData);
 
-            // Sends data to Supabase asynchronously
+            // send data to Supabase asynchronously
             String response = webClient.post()
                     .uri("/rest/v1/movies")
                     .header("apikey", supabaseApiKey)
@@ -60,13 +60,13 @@ public class MovieService {
                     .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                     .bodyValue(jsonPayload)
                     .retrieve()
-                    .bodyToMono(String.class)  // The response will be a JSON string
+                    .bodyToMono(String.class)  // response will be a JSON string
                     .block();  // Blocking here to wait for the response, this could be changed based on async behavior preference
 
-            // Log the response for debugging purposes
+            //for debugging purposes
             System.out.println("Supabase Response: " + response);
 
-            // Return the movie object (now saved with the poster path)
+            // return movie object (now saved with the poster path)
             return movie;
 
         } catch (Exception e) {
@@ -78,7 +78,7 @@ public class MovieService {
 
     public List<Movie> getMoviesByGenre(String genre) {
         List<Movie> allMovies;
-
+        //if genre is empty sort by first movies in the database
         if (genre == null || genre.isEmpty()) {
             allMovies = webClient.get()
                     .uri(uriBuilder -> uriBuilder
@@ -91,7 +91,7 @@ public class MovieService {
                     .bodyToFlux(Movie.class)
                     .collectList()
                     .block();
-        } else {
+        } else { //filter movies by the genre case insensitive
             allMovies = webClient.get()
                     .uri(uriBuilder -> uriBuilder
                             .path("/rest/v1/movies")

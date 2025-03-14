@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api") // Base path for all endpoints
@@ -25,9 +26,10 @@ public class MovieController {
 
         // Save the poster file and get the file path
         String posterPath = saveImage(poster);
+        String movieId = UUID.randomUUID().toString();
 
-        // Create the movie object with the poster path
-        Movie movie = new Movie(title, releaseDate, posterPath);
+        // create movie obj with the poster path and generated movieId
+        Movie movie = new Movie(movieId,title, releaseDate, posterPath);
 
         // Save the movie object to the database
         movieService.addMovie(movie);
@@ -35,7 +37,7 @@ public class MovieController {
         return ResponseEntity.ok("Movie added successfully with poster at " + posterPath);
     }
 
-    // Save the image to the userimg folder and return the relative path
+    // Save the image to the userimg folder and return  relative path
     private String saveImage(MultipartFile poster) {
         try {
             // Generate a unique filename for the image
@@ -44,11 +46,9 @@ public class MovieController {
 
             // Create the directory if it doesn't exist
             Files.createDirectories(path.getParent());
+            poster.transferTo(path); // Save the file to the specified path
 
-            // Save the file to the specified path
-            poster.transferTo(path);
-
-            // Return the relative path to the image (use forward slashes for URL compatibility)
+            // return relative path to the image
             return "/userimg/" + imageName;
         } catch (IOException e) {
             throw new RuntimeException("Error saving image: " + e.getMessage());
