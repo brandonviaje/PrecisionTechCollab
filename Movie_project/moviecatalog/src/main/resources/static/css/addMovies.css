@@ -7,8 +7,6 @@ body {
     justify-content: center; /* Horizontally center */
     align-items: center;     /* Vertically center */
     height: 100vh;           /* Full viewport height */
-    background-color: hsla(45, 77%, 56%, 0.829);
-
 }
 
 #container {
@@ -18,7 +16,8 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow */
     width: 100%;
     max-width: 600px; /* Limit max width */
-    margin-top: 1100px;
+    margin: 0 auto;  /* This ensures the container is centered horizontally */
+    margin-top: 700px;
 }
 
 h1 {
@@ -68,4 +67,46 @@ button:hover {
     text-align: center;
     font-size: 1.2em;
     color: green;
+}
+
+
+/* Sidebar */
+.sidebar {
+    position: fixed;      /* Fixed position on the screen */
+    top: 0;                /* Start from the top of the page */
+    left: 0;               /* Align to the left of the page */
+    width: 250px;
+    background: #2c3e50;
+    color: white;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    height: 100vh;         /* Full height of the viewport */
+    overflow-y: auto;      /* Make sidebar scrollable if content overflows */
+    flex-shrink: 0;        /* Prevent shrinking */
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 10px;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+.sidebar ul li a:hover {
+    background: #34495e;
+    padding-left: 10px;
+    transition: 0.3s;
 }

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <script src="../scripts/headerfooter.js" defer></script>
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/adminSignIn.css">
+</head>
+<body>
+<div id="header-container"></div>
+
+<form id="signin-form" onsubmit="return signInRedirect(event)">
+    <div class="form-group">
+        <label id="sub-head">Admin Sign In</label>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+    </div>
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+    </div>
+    <button type="submit">Sign In</button>
+</form>
+
+<script src="../scripts/adminSignIn.js"></script> <!-- Ensure this is correctly linked -->
+</body>
+</html>

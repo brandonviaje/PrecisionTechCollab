@@ -1,0 +1,112 @@
+body {
+    font-family: "Open Sans", serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center; /* Horizontally center */
+    align-items: center;     /* Vertically center */
+    height: 100vh;           /* Full viewport height */
+}
+
+#container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px; /* Optional for rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow */
+    width: 100%;
+    max-width: 600px; /* Limit max width */
+    margin: 0 auto;  /* This ensures the container is centered horizontally */
+    margin-top: 700px;
+}
+
+h1 {
+    font-size: 2em;
+    text-align: center; /* Center the header */
+    margin-bottom: 20px;
+}
+
+#container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    font-weight: bold;
+}
+
+input, textarea {
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+textarea {
+    resize: vertical; /* Allow vertical resize */
+}
+
+button {
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+#responseMessage {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 1.2em;
+    color: green;
+}
+
+
+/* Sidebar */
+.sidebar {
+    position: fixed;      /* Fixed position on the screen */
+    top: 0;                /* Start from the top of the page */
+    left: 0;               /* Align to the left of the page */
+    width: 250px;
+    background: #2c3e50;
+    color: white;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    height: 100vh;         /* Full height of the viewport */
+    overflow-y: auto;      /* Make sidebar scrollable if content overflows */
+    flex-shrink: 0;        /* Prevent shrinking */
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 10px;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+.sidebar ul li a:hover {
+    background: #34495e;
+    padding-left: 10px;
+    transition: 0.3s;
+}

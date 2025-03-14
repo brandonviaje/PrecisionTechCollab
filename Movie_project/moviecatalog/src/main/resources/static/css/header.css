@@ -7,12 +7,12 @@ body {
 
 header {
     display: flex;
-    align-items: center;
+    align-items: center; /* This ensures that all items in the header are vertically aligned */
     justify-content: space-between;
     padding: 15px 20px;
     background-color: black;
     position: fixed;
-    top: 0; 
+    top: 0;
     left: 0;
     width: 100%;
     z-index: 1000;
@@ -24,20 +24,20 @@ header {
     height: auto;
     border-radius: 50%;
 }
-#menu-btn {
-    align-self: center; /* Change to 'center' to ensure it's aligned with other elements */
-    margin-bottom: 0; /* Remove margin-bottom */
-    align-self: center; /* Ensure both elements are aligned at the center */
-
-}
 
 #search-form, nav {
     align-self: center;
     margin-bottom: 10px;
 }
 
-/* Specific to header elements */
-header #menu-btn a {
+/* Make sure these two elements have the same alignment */
+#menu-btn, #signIn-btn {
+    align-self: center;
+    margin-bottom: 0;
+}
+
+/* Button styles */
+#menu-btn a, #signIn-btn a {
     text-decoration: none;
     color: black;
     font-weight: bold;
@@ -50,43 +50,42 @@ header #menu-btn a {
     background-color: white;
 }
 
-header #menu-btn a:hover {
+#menu-btn a:hover, #signIn-btn a:hover {
     background-color: hwb(0 19% 81%);
     color: white;
+}
 
+/* Dropdown menu styles */
+.dropdown {
+    position: relative;
+    display: inline-block;
 }
-#menu_head {
-    color: white;
-    padding: 10px 10px 10px 10px;
 
+.dropdown .content {
+    display: none;
+    position: absolute;
+    background-color: hsl(0, 0%, 0%);
+    min-width: 160px;
+    box-shadow: 2px 2px 2px black;
+    border-radius: 4px;
 }
-#menu_head a{
-    color:white;
-    padding: 10px 10px 10px 10px;
-    margin:10px 10px 10px 10px;
-    
-}
-.dropdown a{
+
+.dropdown a {
     display: block;
     color: white;
     text-decoration: none;
     padding: 10px 15px;
 }
-.dropdown .content{
-    display: none;
-    position: absolute;
-    background-color: hsl(0, 0%, 0%);
-    min-width: 100px;
-    width:200px;
-    box-shadow: 2px 2px 2px black;
 
-}
-
-.dropdown:hover .content{
+.dropdown:hover .content {
     display: block;
-
 }
 
+.dropdown .content a:hover {
+    background-color: hsl(0, 0%, 20%);
+}
+
+/* Form styling for search */
 header #search-form {
     display: flex;
     justify-content: space-between;
@@ -122,6 +121,7 @@ header nav ul {
     list-style: none;
     gap: 15px;
     margin-right: 50px;
+    align-items: center; /* Ensure the nav items are vertically aligned */
 }
 
 header nav ul li a {

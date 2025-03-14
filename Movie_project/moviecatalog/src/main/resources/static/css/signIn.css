@@ -98,3 +98,16 @@ button {
 button:hover {
     background-color: hsl(51, 76%, 51%);
 }
+
+a {
+    text-decoration: none;
+}
+
+#click_here{
+    display: flex;
+    justify-content: center;
+}
+
+#sub-head {
+    text-align: center;
+}
