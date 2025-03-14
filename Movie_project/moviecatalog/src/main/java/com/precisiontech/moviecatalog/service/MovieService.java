@@ -32,10 +32,9 @@ public class MovieService {
     }
 
     public Movie addMovie(Movie movie) {
-
         movies.add(movie);
 
-        // Create a JSON object properly
+        // Prepare the movie data to send to Supabase
         Map<String, Object> movieData = new HashMap<>();
         movieData.put("title", movie.getTitle());
         movieData.put("release_date", movie.getReleaseDate());
@@ -49,30 +48,33 @@ public class MovieService {
         movieData.put("spoken_languages", movie.getSpokenLanguages());
 
         try {
+            // Serialize movie data to JSON string
             ObjectMapper objectMapper = new ObjectMapper();
             String jsonPayload = objectMapper.writeValueAsString(movieData);
 
-            webClient.post()
+            // Sends data to Supabase asynchronously
+            String response = webClient.post()
                     .uri("/rest/v1/movies")
                     .header("apikey", supabaseApiKey)
-                    .header("Prefer", "return=representation")
+                    .header("Prefer", "return=representation")  // Ensures we get the inserted row back
                     .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                     .bodyValue(jsonPayload)
                     .retrieve()
-                    .bodyToMono(String.class)
-                    .doOnSuccess(response -> System.out.println("Supabase Response: " + response))
-                    .doOnError(error -> System.err.println("Supabase Error: " + error.getMessage()))
-                    .subscribe();
+                    .bodyToMono(String.class)  // The response will be a JSON string
+                    .block();  // Blocking here to wait for the response, this could be changed based on async behavior preference
+
+            // Log the response for debugging purposes
+            System.out.println("Supabase Response: " + response);
+
+            // Return the movie object (now saved with the poster path)
+            return movie;
+
         } catch (Exception e) {
-            System.err.println("JSON Serialization Error: " + e.getMessage());
+            System.err.println("Error adding movie to Supabase: " + e.getMessage());
+            throw new RuntimeException("Error adding movie: " + e.getMessage());
         }
-
-        return movie;
     }
-
-    public List<Movie> getAllMovies() {
-        return movies;
-    }
+    public List<Movie> getAllMovies() {return movies;}
 
     public List<Movie> getMoviesByGenre(String genre) {
         List<Movie> allMovies;
@@ -110,7 +112,7 @@ public class MovieService {
         List<Movie> searchedMovies;
 
         if (title == null || title.isEmpty()) {
-            searchedMovies = new ArrayList<>(); // Return empty list if no title is provided
+            searchedMovies = new ArrayList<>();
         } else {
             searchedMovies = webClient.get()
                     .uri(uriBuilder -> uriBuilder

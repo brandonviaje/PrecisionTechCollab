@@ -27,11 +27,14 @@ function fetchMovies(genre = "") {
 function createMovieCard(movie) {
     const { title, poster_path, movie_id } = movie;
 
+    // Check if the poster path is a file name or a full URL (indicating it's from TMDb)
+    const imageSrc = poster_path.startsWith("/userimg/") ? `..${poster_path}` : `https://image.tmdb.org/t/p/original/${poster_path}`;
+
     return `
     <div class="movie_item">
         <div class="movie-photo-container">
             <a href="../components/movieDetails.html?id=${movie_id}">
-                <img src="https://image.tmdb.org/t/p/original/${poster_path}" class="movie_img_rounded" alt="${title}">
+                <img src="${imageSrc}" class="movie_img_rounded" alt="${title}">
             </a>
         </div>
         <div class="title">${title}</div>
@@ -42,16 +45,26 @@ function createMovieCard(movie) {
 function fetchGenres() {
     $.getJSON(apiUrl)
         .done(function (movies) {
-            const genres = new Set();  // Defined in the correct scope
+            const genres = new Set();  // A set to ensure no duplicate genres
+
+            // Loop through each movie and extract genres
             movies.forEach(function (movie) {
-                console.log("Genres in movie:", movie.genres); // Log the genre field
-                movie.genres.split(",").forEach(function (genre) { // Split genres if they're in a comma-separated string
-                    genres.add(genre.trim()); // Add each genre to the set
-                });
+                console.log("Genres in movie:", movie.genres); // Log the genre field to inspect its structure
+
+                // If genres is an array, you can directly loop through it
+                if (Array.isArray(movie.genres)) {
+                    movie.genres.forEach(function (genre) {
+                        genres.add(genre.trim()); // Add each genre to the set
+                    });
+                } else if (typeof movie.genres === "string") {
+                    movie.genres.split(",").forEach(function (genre) { // Split if it's a string
+                        genres.add(genre.trim());
+                    });
+                }
             });
 
             const genreFilter = $("#genre-filter");
-            genreFilter.empty();
+            genreFilter.empty(); // Clear the dropdown
             genreFilter.append('<option value="">All</option>'); // Default option
 
             // Add genres to dropdown
