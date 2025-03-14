@@ -18,6 +18,13 @@ public class Movie {
     @JsonProperty("movie_id")
     private String movieId;
 
+    public Movie(String movieId,String title, String releaseDate, String posterPath) {
+        this.movieId = movieId;
+        this.title = title;
+        this.releaseDate = releaseDate;
+        this.posterPath = posterPath;
+    }
+
     // Getters and setters
     public String getTitle() {
         return title;
