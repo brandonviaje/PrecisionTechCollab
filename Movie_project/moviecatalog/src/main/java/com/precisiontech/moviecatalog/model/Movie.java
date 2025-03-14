@@ -51,13 +51,9 @@ public class Movie {
         this.synopsis = synopsis;
     }
 
-    public String getGenres() {
-        return genres;
-    }
+    public String getGenres() {return genres;}
 
-    public void setGenres(String genres) {
-        this.genres = genres;
-    }
+    public void setGenres(String genres) {this.genres = genres;}
 
     public String getProductionCompanies() {return productionCompanies;}
 
