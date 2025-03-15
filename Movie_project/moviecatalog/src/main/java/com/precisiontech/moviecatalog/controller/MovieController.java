@@ -21,11 +21,11 @@ public class MovieController {
     private MovieService movieService;
 
     @PostMapping("/movies")
-    public ResponseEntity<?> addMovie(@RequestParam("title") String title, @RequestParam("releaseDate") String releaseDate, @RequestParam("poster") MultipartFile poster) {
+    public ResponseEntity<?> addMovie(@RequestParam("title") String title, @RequestParam("releaseDate") String releaseDate, @RequestParam("poster") MultipartFile poster,@RequestParam("genres") String genres) {
 
         // Save the poster file as a string path, return poster path
         String posterPath = movieService.saveImage(poster);
-        Movie movie = new Movie(title, releaseDate, posterPath); //create movie obj
+        Movie movie = new Movie(title, releaseDate, posterPath,genres); //create movie obj
         movieService.addMovie(movie);  // save object to the database
 
         //Response with status code 200 OK

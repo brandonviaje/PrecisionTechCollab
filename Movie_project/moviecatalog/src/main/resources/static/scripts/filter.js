@@ -42,33 +42,26 @@ function createMovieCard(movie) {
 function fetchGenres() {
     $.getJSON(apiUrl)
         .done(function (movies) {
-            const genres = new Set();  // Defined in the correct scope
+            const genres = new Set();
             movies.forEach(function (movie) {
-                console.log("Genres in movie:", movie.genres); // Log the genre field
-                if(Array.isArray(movie.genres)){
-                    movie.genres.forEach(function (genre) {
-                        genres.add(genre.trim()); // add each genre to set
-                    });
-                }else if(typeof movie.genres === "string"){
-                    movie.genres.split(",").forEach(function (genre){
-                        genres.add(genre.trim());
-                    });
+                if (Array.isArray(movie.genres)) {
+                    movie.genres.forEach(genre => genres.add(genre.trim()));
+                } else if (typeof movie.genres === "string") {
+                    movie.genres.split(",").forEach(genre => genres.add(genre.trim()));
                 }
             });
 
             const genreFilter = $("#genre-filter");
             genreFilter.empty();
-            genreFilter.append('<option value="">All</option>'); // Default option
+            genreFilter.append('<option value="">All</option>');
 
-            // Add genres to dropdown
-            genres.forEach(function (genre) {
-                genreFilter.append(`<option value="${genre}">${genre}</option>`);
-            });
+            genres.forEach(genre => genreFilter.append(`<option value="${genre}">${genre}</option>`));
+
+            console.log("Updated Genres in Dropdown:", [...genres]);  // Debugging log
         })
-        .fail(function (error) {
-            console.error("Error Fetching genres:", error);
-        });
+        .fail(error => console.error("Error Fetching genres:", error));
 }
+
 
 $(document).ready(function () {
     fetchMovies();
@@ -82,5 +75,6 @@ $(document).ready(function () {
 
     window.addEventListener('movieAdded',function (){
         fetchMovies();
+        fetchGenres();
     });
 });

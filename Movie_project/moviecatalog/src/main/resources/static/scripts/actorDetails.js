@@ -1,23 +1,27 @@
 $(document).ready(function() {
-  const actorId = new URLSearchParams(window.location.search).get('id');
-  
-  if (actorId) {
-    const actorDetailsUrl = `https://api.themoviedb.org/3/person/${actorId}?api_key=cf334fe88eeddcdc728d651ffed41008`;
+    // Get the movie_id from the URL query parameters
+    const movieId = new URLSearchParams(window.location.search).get('id');
 
-    $.getJSON(actorDetailsUrl)
-      .done(function(actorData) {
-        const { name, biography, place_of_birth, birthday, profile_path } = actorData;
+    if (movieId) {
+        // Request to your backend API to get movie details
+        const movieDetailsUrl = `/api/movies/${movieId}`; // Assuming the backend has an endpoint to fetch movie by ID
 
-        const actorProfileImage = profile_path ? `https://image.tmdb.org/t/p/w500/${profile_path}` : 'https://via.placeholder.com/150'; // Placeholder if no profile found
+        $.getJSON(movieDetailsUrl)
+            .done(function(movieData) {
+                // Destructure the movie data response
+                const { title, releaseDate, synopsis, posterPath } = movieData;
 
-        $('#actor-name').text(name);
-        $('#actor-profile').attr('src', actorProfileImage);
-        $('#actor-biography').text(biography);
-        $('#actor-place-of-birth').text(place_of_birth);
-        $('#actor-birthday').text(birthday);
-      })
-      .fail(function(error) {
-        console.error("Error fetching actor details:", error);
-      });
-  }
+                // Set the values to the HTML elements
+                $('#movie-title').text(title);
+                $('#movie-release-date').text(releaseDate);
+                $('#movie-overview').text(synopsis);
+
+                // If a poster path exists, set the image source
+                const posterUrl = posterPath ? posterPath : 'https://via.placeholder.com/500'; // Placeholder if no poster
+                $('#movie-poster').attr('src', posterUrl);
+            })
+            .fail(function(error) {
+                console.error("Error fetching movie details:", error);
+            });
+    }
 });

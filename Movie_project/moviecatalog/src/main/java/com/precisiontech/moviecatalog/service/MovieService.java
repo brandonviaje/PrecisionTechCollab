@@ -1,5 +1,6 @@
 package com.precisiontech.moviecatalog.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.precisiontech.moviecatalog.model.Movie;
 import jakarta.annotation.PostConstruct;
@@ -38,37 +39,38 @@ public class MovieService {
     }
 
     public void addMovie(Movie movie) {
-
-        //Prepare for serializing how do u spell serializing like cerealizing lol
+        // Prepare for serializing the movie data
         Map<String, Object> movieData = new HashMap<>();
         movieData.put("title", movie.getTitle());
         movieData.put("release_date", movie.getReleaseDate());
-        movieData.put("runtime", movie.getRuntime());
-        movieData.put("pg_rating", movie.getPgRating());
-        movieData.put("synopsis", movie.getSynopsis());
         movieData.put("poster_path", movie.getPosterPath());
         movieData.put("genres", movie.getGenres());
-        movieData.put("production_companies", movie.getProductionCompanies());
-        movieData.put("spoken_languages", movie.getSpokenLanguages());
 
         try {
-            //Serializing into JSON format
+            // Serialize the data into JSON format
             ObjectMapper objectMapper = new ObjectMapper();
             String jsonPayload = objectMapper.writeValueAsString(movieData);
 
+            // Insert movie into the database
             String response = webClient.post()
                     .uri("/rest/v1/movies")
                     .header("apikey", supabaseApiKey)
-                    .header("Prefer", "return=representation")
+                    .header("Prefer", "return=representation") // Ensures the response returns the inserted record
                     .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                     .bodyValue(jsonPayload)
                     .retrieve()
                     .bodyToMono(String.class)
                     .block();
-            //checkin response for debuggin
-            System.out.println("Supabase Response: " + response);
+
+            // Assuming Supabase returns the inserted movie with its generated movie_id, parse the response
+            ObjectMapper responseMapper = new ObjectMapper();
+            JsonNode responseNode = responseMapper.readTree(response);
+            String movieId = responseNode.get(0).get("movie_id").asText(); // Assuming the response contains movie_id
+
+            System.out.println("Movie added with ID: " + movieId);
+
         } catch (Exception e) {
-            System.err.println("JSON Serialization Error: " + e.getMessage());
+            System.err.println("Error adding movie: " + e.getMessage());
         }
     }
 

@@ -17,10 +17,11 @@ public class Movie {
     @JsonProperty("movie_id")
     private String movieId;
 
-    public Movie(String title, String releaseDate, String posterPath) {
+    public Movie(String title, String releaseDate, String posterPath,String genres) {
         this.title = title;
         this.releaseDate = releaseDate;
         this.posterPath = posterPath;
+        this.genres = genres;
     }
 
     // Getters and setters
