@@ -24,10 +24,16 @@ header {
     height: auto;
     border-radius: 50%;
 }
+#menu-btn {
+    align-self: center; /* Change to 'center' to ensure it's aligned with other elements */
+    margin-bottom: 0; /* Remove margin-bottom */
+    align-self: center; /* Ensure both elements are aligned at the center */
 
-#menu-btn, #search-form, nav {
-    align-self: flex-end; 
-    margin-bottom: 10px; 
+}
+
+#search-form, nav {
+    align-self: center;
+    margin-bottom: 10px;
 }
 
 /* Specific to header elements */

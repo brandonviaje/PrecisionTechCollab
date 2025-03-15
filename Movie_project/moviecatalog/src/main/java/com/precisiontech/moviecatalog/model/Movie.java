@@ -1,5 +1,7 @@
 package com.precisiontech.moviecatalog.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Movie {
 
     private String title;
@@ -9,8 +11,17 @@ public class Movie {
     private String genres;
     private String productionCompanies;
     private int runtime;
-    private String productionCountries;
     private String spokenLanguages;
+    @JsonProperty("poster_path")
+    private String posterPath;
+    @JsonProperty("movie_id")
+    private String movieId;
+
+    public Movie(String title, String releaseDate, String posterPath) {
+        this.title = title;
+        this.releaseDate = releaseDate;
+        this.posterPath = posterPath;
+    }
 
     // Getters and setters
     public String getTitle() {
@@ -45,21 +56,13 @@ public class Movie {
         this.synopsis = synopsis;
     }
 
-    public String getGenres() {
-        return genres;
-    }
+    public String getGenres() {return genres;}
 
-    public void setGenres(String genres) {
-        this.genres = genres;
-    }
+    public void setGenres(String genres) {this.genres = genres;}
 
-    public String getProductionCompanies() {
-        return productionCompanies;
-    }
+    public String getProductionCompanies() {return productionCompanies;}
 
-    public void setProductionCompanies(String productionCompanies) {
-        this.productionCompanies = productionCompanies;
-    }
+    public void setProductionCompanies(String productionCompanies) {this.productionCompanies = productionCompanies;}
 
     public int getRuntime() {
         return runtime;
@@ -69,14 +72,6 @@ public class Movie {
         this.runtime = runtime;
     }
 
-    public String getProductionCountries() {
-        return productionCountries;
-    }
-
-    public void setProductionCountries(String productionCountries) {
-        this.productionCountries = productionCountries;
-    }
-
     public String getSpokenLanguages() {
         return spokenLanguages;
     }
@@ -84,4 +79,13 @@ public class Movie {
     public void setSpokenLanguages(String spokenLanguages) {
         this.spokenLanguages = spokenLanguages;
     }
+
+    public String getPosterPath() {return posterPath;}
+
+    public void setPosterPath(String posterPath) {this.posterPath = posterPath;}
+
+    public String getMovieId() {return movieId;}
+
+    public void setMovieId(String movieId) {this.movieId = movieId;}
+
 }

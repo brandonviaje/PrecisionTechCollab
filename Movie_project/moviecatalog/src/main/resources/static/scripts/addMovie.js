@@ -1,46 +1,22 @@
-$(document).ready(function() {
-    $('#movieForm').submit(function(event) {
-        event.preventDefault(); // Prevent default form submission
+// Handle form submission with file upload
+$('#movieForm').on('submit', function(e) {
+    e.preventDefault();
 
-        // Get JWT token from localStorage
-        const token = localStorage.getItem("jwtToken");
-        if (!token) {
-            alert("You are not authenticated. Please log in again.");
-            return;
+    var formData = new FormData(this);
+
+    $.ajax({
+        url: '/api/movies', // Your backend endpoint
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function(response) {
+            $('#responseMessage').text('Movie added successfully!').css('color', 'green');
+            $('#movieForm')[0].reset();
+        },
+        error: function(xhr) {
+            console.log('Error adding movie:', xhr.responseText);
+            $('#responseMessage').text(`Error: ${xhr.responseText}`).css('color', 'red');
         }
-
-        // Prepare movie data object
-        const movieData = {
-            title: $('#title').val(),
-            releaseDate: $('#releaseDate').val(),
-            pgRating: $('#pgRating').val(),
-            synopsis: $('#synopsis').val(),
-            genres: $('#genres').val(),
-            productionCompanies: $('#productionCompanies').val(),
-            runtime: $('#runtime').val(),
-            productionCountries: $('#productionCountries').val(),
-            spokenLanguages: $('#spokenLanguages').val()
-        };
-
-        // Send AJAX request to backend
-        $.ajax({
-            url: 'http://localhost:8080/api/movies', // Ensure this matches your backend API endpoint
-            type: 'POST',
-            contentType: 'application/json',
-            headers: {
-                'Authorization': `Bearer ${token}`, // Send JWT token in Authorization header
-                'Content-Type': 'application/json'
-            },
-            data: JSON.stringify(movieData),
-            success: function(response) {
-                console.log('Movie added:', response);
-                $('#responseMessage').text('Movie added successfully!').css('color', 'green');
-                $('#movieForm')[0].reset(); // Reset form after successful submission
-            },
-            error: function(xhr, status, error) {
-                console.log('Error adding movie:', xhr.responseText);
-                $('#responseMessage').text(`Error: ${xhr.responseText}`).css('color', 'red');
-            }
-        });
     });
 });
