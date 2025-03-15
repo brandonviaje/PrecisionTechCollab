@@ -21,9 +21,7 @@ function handleSignIn(event) {
     const user = users.find(user => user.username === username && user.password === password);
 
     // Fallback to temporary credentials for development purposes
-    const tempUsername = "red";
-    const tempPassword = "red";
-    const isTempCredentials = username === tempUsername && password === tempPassword;
+    const isTempCredentials = username === username && password === password;
 
     if (user || isTempCredentials) {
         alert('Login successful!');

@@ -42,12 +42,14 @@ function createMovieCard(movie) {
 function fetchGenres() {
     $.getJSON(apiUrl)
         .done(function (movies) {
-            const genres = new Set();
+            // key: in any casing (upper,lower,mixture) value: correct casing
+            const genreMap = new Map();
+
             movies.forEach(function (movie) {
                 if (Array.isArray(movie.genres)) {
-                    movie.genres.forEach(genre => genres.add(genre.trim()));
+                    movie.genres.forEach(genre => processGenre(genre, genreMap));
                 } else if (typeof movie.genres === "string") {
-                    movie.genres.split(",").forEach(genre => genres.add(genre.trim()));
+                    movie.genres.split(",").forEach(genre => processGenre(genre, genreMap));
                 }
             });
 
@@ -55,11 +57,28 @@ function fetchGenres() {
             genreFilter.empty();
             genreFilter.append('<option value="">All</option>');
 
-            genres.forEach(genre => genreFilter.append(`<option value="${genre}">${genre}</option>`));
-
-            console.log("Updated Genres in Dropdown:", [...genres]);  // Debugging log
+            // add genres with correct casing
+            genreMap.forEach(originalGenre => {
+                genreFilter.append(`<option value="${originalGenre}">${originalGenre}</option>`);
+            });
         })
         .fail(error => console.error("Error Fetching genres:", error));
+}
+
+// helper func process genres and apply correct formatting
+function processGenre(genre, genreMap) {
+    const trimmedGenre = genre.trim();
+    const normalizeGenre = trimmedGenre.toLowerCase();
+    if (!genreMap.has(normalizeGenre)) {
+        genreMap.set(normalizeGenre, formatGenre(trimmedGenre));
+    }
+}
+
+// format new genres (e.g., DOCUMENTARY → Documentary)
+function formatGenre(genre) {
+    return genre
+        .toLowerCase()
+        .replace(/\b\w/g, char => char.toUpperCase()); // Capitalizes each word
 }
 
 
