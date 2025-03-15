@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Account</title>
+    <link rel="stylesheet" href="../css/account.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+<div id="header-container"></div>
+
+<div class="sidebar">
+    <h2>User Panel</h2>
+    <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="#">Favourite Movies</a></li>
+        <li><a href="#">Movie History</a></li>
+        <li><a href="#" id="sidebar-signout">Sign Out</a></li>
+    </ul>
+</div>
+
+<main>
+    <h1 id="acc_heading">Welcome <span id="display-username"></span></h1>
+
+    <div class="account-info-container">
+        <h2>Account Information</h2>
+        <div class="account-details">
+            <p><strong>Username:</strong> <span id="account-username"></span></p>
+            <p>
+                <strong>Password:</strong>
+                <span class="password-container">
+                    <span id="account-password" class="masked-password">••••••</span>
+                    <button id="toggle-password" class="toggle-password">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </span>
+            </p>
+            <p><strong>Email:</strong> <span id="account-email">N/A</span></p>
+            <p><strong>Member Since:</strong> <span id="member-since">N/A</span></p>
+        </div>
+
+        <div class="account-stats">
+            <h3>Your Activity</h3>
+            <p><strong>Movies Watched:</strong> <span id="movies-watched">N/A</span></p>
+            <p><strong>Favorites:</strong> <span id="favorites-count">N/A</span></p>
+        </div>
+    </div>
+</main>
+
+<script src="../scripts/headerfooter.js"></script>
+<script src="../scripts/account.js"></script>
+</body>
+</html>
