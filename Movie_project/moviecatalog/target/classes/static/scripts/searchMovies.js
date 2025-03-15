@@ -36,11 +36,13 @@ function searchMovies(query) {
 function createMovieCard(movie) {
     const { title, poster_path, movie_id } = movie;
 
+    const imageSrc = poster_path.startsWith("/userimg/") ? `http://localhost:8080${poster_path}` : `https://image.tmdb.org/t/p/original/${poster_path}`;
+
     return `
     <div class="movie_item">
         <div class="movie-photo-container">
             <a href="../components/movieDetails.html?id=${movie_id}">
-                <img src="https://image.tmdb.org/t/p/original/${poster_path}" class="movie_img_rounded" alt="${title}">
+                <img src="${imageSrc}" class="movie_img_rounded" alt="${title}">
             </a>
         </div>
         <div class="title">${title}</div>

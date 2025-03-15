@@ -16,8 +16,8 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow */
     width: 100%;
     max-width: 600px; /* Limit max width */
-    margin: 0 auto;  /* This ensures the container is centered horizontally */
-    margin-top: 700px;
+    /* This ensures the container is centered horizontally */
+    margin: 1200px auto 0;
 }
 
 h1 {
@@ -68,7 +68,6 @@ button:hover {
     font-size: 1.2em;
     color: green;
 }
-
 
 /* Sidebar */
 .sidebar {
