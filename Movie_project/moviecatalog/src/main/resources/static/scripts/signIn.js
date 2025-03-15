@@ -1,58 +1,65 @@
-// Function to handle sign-in logic with user authentication
+// Function to handle sign-in logic with proper user authentication
 document.addEventListener("DOMContentLoaded", function () {
     // Attach event listener to the form after the DOM is loaded
     const form = document.getElementById('signin-form');
 
-    // Attach the sign-in handler to the form submission
-    form.addEventListener('submit', handleSignIn);
+    if (form) {
+        console.log("Sign-in form found, attaching submit handler");
+        // Attach the sign-in handler to the form submission
+        form.addEventListener('submit', handleSignIn);
+    } else {
+        console.error("Sign-in form not found");
+    }
+
+    // Debug: Check if there are any stored users
+    const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
+    console.log("Currently stored users:", storedUsers.length);
 });
 
 // Function to handle sign-in logic
 function handleSignIn(event) {
     event.preventDefault();
+    console.log("Sign-in attempt started");
 
     const username = document.getElementById('login-username').value;
     const password = document.getElementById('password').value;
 
+    console.log("Attempting login with username:", username);
+
     // Retrieve users array from localStorage
     const users = JSON.parse(localStorage.getItem("users")) || [];
+    console.log("Found", users.length, "stored users");
 
     // Find user with matching username and password
     const user = users.find(user => user.username === username && user.password === password);
+    console.log("User found:", !!user);
 
-    // Fallback to temporary credentials for development purposes
-    const isTempCredentials = username === username && password === password;
-
-    if (user || isTempCredentials) {
+    if (user) {
+        console.log("Login successful for user:", username);
         alert('Login successful!');
 
         // Store authentication data in localStorage
         localStorage.setItem('isSignedIn', 'true');
         localStorage.setItem('username', username);
         localStorage.setItem('userName', username);
-        localStorage.setItem('password', password); // Store password for account page display
 
-        // If it's a registered user, also store their full name and join date
-        if (user) {
-            localStorage.setItem('fullName', user.name);
+        // Store user data
+        localStorage.setItem('fullName', user.name);
+        localStorage.setItem('password', password);
 
-            // If the user doesn't have a join date, set it now
-            if (!user.joinDate) {
-                const joinDate = getCurrentDate();
-                user.joinDate = joinDate;
-                // Update the user in the users array
-                const userIndex = users.findIndex(u => u.username === username);
-                if (userIndex !== -1) {
-                    users[userIndex] = user;
-                    localStorage.setItem("users", JSON.stringify(users));
-                }
-                localStorage.setItem('joinDate', joinDate);
-            } else {
-                localStorage.setItem('joinDate', user.joinDate);
+        // Handle join date
+        if (!user.joinDate) {
+            const joinDate = getCurrentDate();
+            user.joinDate = joinDate;
+            // Update the user in the users array
+            const userIndex = users.findIndex(u => u.username === username);
+            if (userIndex !== -1) {
+                users[userIndex] = user;
+                localStorage.setItem("users", JSON.stringify(users));
             }
+            localStorage.setItem('joinDate', joinDate);
         } else {
-            // For temp credentials, set join date to current date
-            localStorage.setItem('joinDate', getCurrentDate());
+            localStorage.setItem('joinDate', user.joinDate);
         }
 
         console.log("Username stored in localStorage:", localStorage.getItem('username'));
@@ -61,6 +68,7 @@ function handleSignIn(event) {
         // Redirect to index page
         window.location.href = "../index.html";
     } else {
+        console.log("Login failed: Invalid username or password");
         alert('Invalid username or password!');
     }
 }
