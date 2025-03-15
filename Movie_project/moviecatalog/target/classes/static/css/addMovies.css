@@ -1,3 +1,4 @@
+
 body {
     font-family: "Arial", serif;
     margin: 0;
@@ -68,7 +69,6 @@ button:hover {
     font-size: 1.2em;
     color: green;
 }
-
 
 /* Sidebar */
 .sidebar {

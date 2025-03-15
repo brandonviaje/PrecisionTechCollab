@@ -35,7 +35,7 @@ function initializeHeaderUI() {
     console.log("Admin login status:", isAdminSignedIn);
     console.log("Admin username:", adminUserName);
 
-    // Get UI elements - use querySelectorAll to make it more robust
+    // Get UI elements - use querySelectorAll
     const signInSection = document.querySelector('#signInSection');
     const signUpBtn = document.querySelector('#signUpBtn');
     const userSection = document.querySelector('#userSection');
@@ -80,7 +80,7 @@ function initializeHeaderUI() {
                 localStorage.removeItem('adminPassword');
 
                 console.log("Admin signed out");
-                window.location.reload(); // Reload to update UI
+                window.location.reload();
             });
         }
     }
@@ -138,10 +138,10 @@ function initializeHeaderUI() {
 function signIn(userName) {
     localStorage.setItem('isSignedIn', 'true');
     localStorage.setItem('userName', userName);
-    localStorage.setItem('username', userName); // Store both keys for compatibility
+    localStorage.setItem('username', userName);
 
     console.log("User signed in programmatically:", userName);
-    window.location.reload(); // Reload to update UI
+    window.location.reload();
 }
 
 // Function to sign in an admin (can be called from other scripts)
@@ -150,7 +150,7 @@ function adminSignIn(adminUserName) {
     localStorage.setItem('adminUsername', adminUserName);
 
     console.log("Admin signed in programmatically:", adminUserName);
-    window.location.reload(); // Reload to update UI
+    window.location.reload();
 }
 
 // Run initialization on window load as well, to catch cases where the header was already loaded

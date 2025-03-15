@@ -11,12 +11,17 @@ public class Movie {
     private String genres;
     private String productionCompanies;
     private int runtime;
-    private String productionCountries;
     private String spokenLanguages;
     @JsonProperty("poster_path")
     private String posterPath;
     @JsonProperty("movie_id")
     private String movieId;
+
+    public Movie(String title, String releaseDate, String posterPath) {
+        this.title = title;
+        this.releaseDate = releaseDate;
+        this.posterPath = posterPath;
+    }
 
     // Getters and setters
     public String getTitle() {
@@ -65,14 +70,6 @@ public class Movie {
 
     public void setRuntime(int runtime) {
         this.runtime = runtime;
-    }
-
-    public String getProductionCountries() {
-        return productionCountries;
-    }
-
-    public void setProductionCountries(String productionCountries) {
-        this.productionCountries = productionCountries;
     }
 
     public String getSpokenLanguages() {

@@ -17,8 +17,8 @@ function handleAdminSignIn(event) {
     const password = document.getElementById('adminpassword').value;
 
     // Temporary admin credentials
-    const adminUsername = "admin";  // Predefined admin username
-    const adminPassword = "admin";  // Predefined admin password
+    const adminUsername = "admin";
+    const adminPassword = "admin";
 
     // Debugging log to verify input values
     console.log("Entered Username: " + username);

@@ -45,14 +45,13 @@ public class MovieService {
         movieData.put("poster_path", movie.getPosterPath());
         movieData.put("genres", movie.getGenres());
         movieData.put("production_companies", movie.getProductionCompanies());
-        movieData.put("production_countries", movie.getProductionCountries());
         movieData.put("spoken_languages", movie.getSpokenLanguages());
 
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             String jsonPayload = objectMapper.writeValueAsString(movieData);
 
-            webClient.post()
+            String response = webClient.post()
                     .uri("/rest/v1/movies")
                     .header("apikey", supabaseApiKey)
                     .header("Prefer", "return=representation")
@@ -60,9 +59,11 @@ public class MovieService {
                     .bodyValue(jsonPayload)
                     .retrieve()
                     .bodyToMono(String.class)
-                    .doOnSuccess(response -> System.out.println("Supabase Response: " + response))
-                    .doOnError(error -> System.err.println("Supabase Error: " + error.getMessage()))
-                    .subscribe();
+                    .block();
+
+            System.out.println("Supabase Response: " + response);
+            return movie;
+
         } catch (Exception e) {
             System.err.println("JSON Serialization Error: " + e.getMessage());
         }
