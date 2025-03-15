@@ -5,10 +5,15 @@ import com.precisiontech.moviecatalog.model.Movie;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
@@ -20,7 +25,8 @@ public class MovieService {
     @Value("${supabase.url}")
     private String supabaseUrl;
 
-    @Value("${supabase.api.key}") // Use Service Role Key (since RLS is disabled)
+    // Use Service Role Key (since RLS is disabled)
+    @Value("${supabase.api.key}")
     private String supabaseApiKey;
 
     private WebClient webClient;
@@ -31,11 +37,9 @@ public class MovieService {
         this.webClient = WebClient.builder().baseUrl(supabaseUrl).build();
     }
 
-    public Movie addMovie(Movie movie) {
+    public void addMovie(Movie movie) {
 
-        movies.add(movie);
-
-        // Create a JSON object properly
+        //Prepare for serializing how do u spell serializing like cerealizing lol
         Map<String, Object> movieData = new HashMap<>();
         movieData.put("title", movie.getTitle());
         movieData.put("release_date", movie.getReleaseDate());
@@ -48,6 +52,7 @@ public class MovieService {
         movieData.put("spoken_languages", movie.getSpokenLanguages());
 
         try {
+            //Serializing into JSON format
             ObjectMapper objectMapper = new ObjectMapper();
             String jsonPayload = objectMapper.writeValueAsString(movieData);
 
@@ -60,24 +65,40 @@ public class MovieService {
                     .retrieve()
                     .bodyToMono(String.class)
                     .block();
-
+            //checkin response for debuggin
             System.out.println("Supabase Response: " + response);
-            return movie;
-
         } catch (Exception e) {
             System.err.println("JSON Serialization Error: " + e.getMessage());
         }
+    }
 
-        return movie;
+    // save the image to the 'userimg' folder and return the relative path
+    public String saveImage(MultipartFile poster) {
+        try {
+            // Take file name
+            String imageName = poster.getOriginalFilename();
+            Path path = Paths.get("src", "main", "resources", "static", "userimg", imageName); // Store the image inside the userimg folder
+
+            // Create the directory if it doesn't exist
+            Files.createDirectories(path.getParent());
+
+            // Save the file to the specified path
+            poster.transferTo(path);
+
+            // Return the relative path to the image (use forward slashes for URL compatibility)
+            return "/userimg/" + imageName;
+
+        } catch (IOException e) {
+            throw new RuntimeException("Error saving image: " + e.getMessage());
+        }
     }
 
     public List<Movie> getAllMovies() {
         return movies;
     }
 
-    public List<Movie> getMoviesByGenre(String genre) {
+    public List<Movie> filterByGenre(String genre) {
         List<Movie> allMovies;
-
         if (genre == null || genre.isEmpty()) {
             allMovies = webClient.get()
                     .uri(uriBuilder -> uriBuilder
@@ -107,11 +128,11 @@ public class MovieService {
         return allMovies;
     }
 
-    public List<Movie> searchMoviesByTitle(String title) {
+    public List<Movie> searchMovies(String title) {
         List<Movie> searchedMovies;
-
+        // Return empty list if no title is provided
         if (title == null || title.isEmpty()) {
-            searchedMovies = new ArrayList<>(); // Return empty list if no title is provided
+            searchedMovies = new ArrayList<>();
         } else {
             searchedMovies = webClient.get()
                     .uri(uriBuilder -> uriBuilder

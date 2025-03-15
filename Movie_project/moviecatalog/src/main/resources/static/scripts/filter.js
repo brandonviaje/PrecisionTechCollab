@@ -76,6 +76,7 @@ $(document).ready(function () {
 
     // Event listener for genre selection
     $("#genre-filter").change(function () {
+        $(this).css('position', 'relative');
         fetchMovies($(this).val());
     });
 

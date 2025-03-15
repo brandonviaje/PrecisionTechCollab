@@ -23,49 +23,26 @@ public class MovieController {
     @PostMapping("/movies")
     public ResponseEntity<?> addMovie(@RequestParam("title") String title, @RequestParam("releaseDate") String releaseDate, @RequestParam("poster") MultipartFile poster) {
 
-        // Save the poster file and get the file path
-        String posterPath = saveImage(poster);
+        // Save the poster file as a string path, return poster path
+        String posterPath = movieService.saveImage(poster);
+        Movie movie = new Movie(title, releaseDate, posterPath); //create movie obj
+        movieService.addMovie(movie);  // save object to the database
 
-        // Create the movie object with the poster path
-        Movie movie = new Movie(title, releaseDate, posterPath);
-
-        // Save the movie object to the database
-        movieService.addMovie(movie);
-
+        //Response with status code 200 OK
         return ResponseEntity.ok("Movie added successfully with poster at " + posterPath);
-    }
-
-    // Save the image to the userimg folder and return the relative path
-    private String saveImage(MultipartFile poster) {
-        try {
-            // Generate a unique filename for the image
-            String imageName = poster.getOriginalFilename();
-            Path path = Paths.get("src", "main", "resources", "static", "userimg", imageName); // Store the image inside the userimg folder
-
-            // Create the directory if it doesn't exist
-            Files.createDirectories(path.getParent());
-
-            // Save the file to the specified path
-            poster.transferTo(path);
-            System.out.println("Image saved at: " + path.toString());
-            // Return the relative path to the image (use forward slashes for URL compatibility)
-            return "/userimg/" + imageName;
-        } catch (IOException e) {
-            throw new RuntimeException("Error saving image: " + e.getMessage());
-        }
     }
 
     // Get all movies with optional genre filter
     @GetMapping("/movies")
     public ResponseEntity<List<Movie>> getMovies(@RequestParam(value = "genre", required = false) String genre) {
-        List<Movie> movies = movieService.getMoviesByGenre(genre);
+        List<Movie> movies = movieService.filterByGenre(genre);
         return ResponseEntity.ok(movies);
     }
 
     // Search for movies by title
     @GetMapping("/movies/search")
-    public ResponseEntity<List<Movie>> searchMoviesByTitle(@RequestParam(value = "title") String title) {
-        List<Movie> movies = movieService.searchMoviesByTitle(title);
+    public ResponseEntity<List<Movie>> searchMovies(@RequestParam(value = "title") String title) {
+        List<Movie> movies = movieService.searchMovies(title);
         return ResponseEntity.ok(movies);
     }
 }
