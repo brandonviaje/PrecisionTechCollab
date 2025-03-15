@@ -7,16 +7,18 @@ body {
     justify-content: center; /* Horizontally center */
     align-items: center;     /* Vertically center */
     height: 100vh;           /* Full viewport height */
+    background-color: hsla(45, 77%, 56%, 0.829);
+
 }
 
 #container {
     background-color: white;
-    padding: 20px;
+    padding: 30px;
     border-radius: 8px; /* Optional for rounded corners */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow */
     width: 100%;
     max-width: 600px; /* Limit max width */
-    margin-top: 900px;
+    margin-top: 1100px;
 }
 
 h1 {
@@ -25,7 +27,7 @@ h1 {
     margin-bottom: 20px;
 }
 
-form {
+#container form {
     display: flex;
     flex-direction: column;
     gap: 15px;

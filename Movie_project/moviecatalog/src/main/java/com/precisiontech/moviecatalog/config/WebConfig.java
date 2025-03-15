@@ -1,14 +1,15 @@
 package com.precisiontech.moviecatalog.config;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class WebConfig {
-
-    @Bean
-    public WebClient.Builder webClientBuilder() {
-        return WebClient.builder();
+public class WebConfig implements WebMvcConfigurer {
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/userimg/**")
+                .addResourceLocations("classpath:/static/userimg/")
+                .setCachePeriod(0);  // Disable caching
     }
 }
