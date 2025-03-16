@@ -2,8 +2,7 @@ body{
     background-color: hsla(45, 77%, 56%, 0.829);
 }
 .movie_show_container {
-
-    margin: 100px;
+    margin: 20px;
     padding: 50px;
 }
 
@@ -14,7 +13,6 @@ body{
 .filter_container label {
     margin: 0;
 }
-
 
 .movies {
     display: grid;
@@ -36,4 +34,8 @@ body{
     width: 100%;
     height: auto;
     border-radius: 5px;
+}
+
+.filter_container {
+    overflow: visible;  /* Allow dropdown to expand beyond parent */
 }

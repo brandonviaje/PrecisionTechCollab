@@ -22,6 +22,17 @@ public class MovieController {
     private MovieService movieService;
 
     @PostMapping("/movies")
+iteration2Prog
+    public ResponseEntity<?> addMovie(@RequestParam("title") String title, @RequestParam("releaseDate") String releaseDate, @RequestParam("poster") MultipartFile poster,@RequestParam("genres") String genres,  @RequestParam("synopsis") String synopsis) {
+
+        // Save the poster file as a string path, return poster path
+        String posterPath = movieService.saveImage(poster);
+        Movie movie = new Movie(title, releaseDate, posterPath,genres,synopsis); //create movie obj
+        movieService.addMovie(movie);  // save object to the database
+
+        //Response with status code 200 OK
+        return ResponseEntity.ok("Movie added successfully with poster at " + posterPath);
+
     public ResponseEntity<?> addMovie(@RequestParam("title") String title, @RequestParam("releaseDate") String releaseDate, @RequestParam("poster") MultipartFile poster) {
 
         // Save the poster file and get the file path
@@ -53,20 +64,30 @@ public class MovieController {
         } catch (IOException e) {
             throw new RuntimeException("Error saving image: " + e.getMessage());
         }
+
     }
 
     // Get all movies with optional genre filter
     @GetMapping("/movies")
     public ResponseEntity<List<Movie>> getMovies(@RequestParam(value = "genre", required = false) String genre) {
-        List<Movie> movies = movieService.getMoviesByGenre(genre);
+        List<Movie> movies = movieService.filterByGenre(genre);
         return ResponseEntity.ok(movies);
     }
 
     // Search for movies by title
     @GetMapping("/movies/search")
-    public ResponseEntity<List<Movie>> searchMoviesByTitle(@RequestParam(value = "title") String title) {
-        List<Movie> movies = movieService.searchMoviesByTitle(title);
+    public ResponseEntity<List<Movie>> searchMovies(@RequestParam(value = "title") String title) {
+        List<Movie> movies = movieService.searchMovies(title);
         return ResponseEntity.ok(movies);
     }
+
+
+    @GetMapping("/movies/{movieId}")
+    public Movie getMovieDetails(@PathVariable String movieId) {
+        return movieService.getMovieById(movieId);
+    }
+
 }
+}
+
 

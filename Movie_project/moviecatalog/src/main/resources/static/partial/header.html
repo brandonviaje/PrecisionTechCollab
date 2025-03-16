@@ -11,7 +11,8 @@
     <span id="menu-btn"><a href="#">☰ Menu</a></span>
     <div class="content">
       <a href="/components/library.html">View All</a>
-      <a href="/components/addMoviePage.html">Insert Movie</a>
+      <a href="/components/">Favourites</a>
+      <a href="/components/">History</a>
     </div>
   </div>
 
@@ -24,9 +25,38 @@
     <ul>
       <li><a href="../index.html">Home</a></li>
       <li><a href="../components/about.html">About</a></li>
-      <li><a href="../components/signIn.html">Sign In</a></li>
-      <li><a href="../components/signUp.html">Create Account</a></li>
+
+      <!-- Sign In Dropdown, initially visible -->
+      <div class="dropdown" id="signInSection">
+        <span id="signIn-btn"><a href="#">Sign In</a></span>
+        <div class="content">
+          <a href="../components/signIn.html">Sign In as User</a>
+          <a href="../components/adminSignIn.html">Sign In as Admin</a>
+        </div>
+      </div>
+
+      <!-- Create Account button, initially visible -->
+      <li id="signUpBtn"><a href="../components/signUp.html">Create Account</a></li>
+
+      <!-- User's Name and Sign Out button, initially hidden -->
+      <li id="userSection" style="display:none;">
+        <button id="signOutBtn">Sign Out</button>
+        <a href="../components/account.html" id="person-icon">
+          <img src="../images/person-icon.png" alt="Profile Icon">
+          <span id="username"></span>
+        </a>
+      </li>
+
+      <!-- Admin's Name and Sign Out button, initially hidden -->
+      <li id="adminSection" style="display:none;">
+        <button id="adminSignOutBtn">Sign Out</button>
+        <a href="../components/admin.html" id="admin-icon">
+          <img src="../images/admin.png" alt="Admin Icon">
+          <span id="adminUsername"></span>
+        </a>
+      </li>
     </ul>
   </nav>
+
 </header>
 </body>

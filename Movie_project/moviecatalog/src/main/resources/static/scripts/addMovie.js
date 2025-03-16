@@ -1,3 +1,4 @@
+// Handle form submission with file upload
 $('#movieForm').on('submit', function(e) {
     e.preventDefault();
 
@@ -12,7 +13,9 @@ $('#movieForm').on('submit', function(e) {
         success: function(response) {
             $('#responseMessage').text('Movie added successfully!').css('color', 'green');
             $('#movieForm')[0].reset();
-            $(document).trigger("movieAdded"); // trigger event for real-time update
+            const event = new CustomEvent('movieAdded'); // This is the custom event
+            window.dispatchEvent(event); // Dispatch it globally
+            location.reload(); // Force a page reload
         },
         error: function(xhr) {
             console.log('Error adding movie:', xhr.responseText);
