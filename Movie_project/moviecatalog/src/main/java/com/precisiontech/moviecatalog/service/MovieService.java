@@ -39,19 +39,19 @@ public class MovieService {
     }
 
     public void addMovie(Movie movie) {
-        // Prepare for serializing the movie data
         Map<String, Object> movieData = new HashMap<>();
         movieData.put("title", movie.getTitle());
         movieData.put("release_date", movie.getReleaseDate());
         movieData.put("poster_path", movie.getPosterPath());
         movieData.put("genres", movie.getGenres());
+        movieData.put("synopsis", movie.getSynopsis());
 
         try {
             // Serialize the data into JSON format
             ObjectMapper objectMapper = new ObjectMapper();
             String jsonPayload = objectMapper.writeValueAsString(movieData);
 
-            // Insert movie into the database
+            // Insert movie into Supabase
             String response = webClient.post()
                     .uri("/rest/v1/movies")
                     .header("apikey", supabaseApiKey)
@@ -62,16 +62,55 @@ public class MovieService {
                     .bodyToMono(String.class)
                     .block();
 
-            // Assuming Supabase returns the inserted movie with its generated movie_id, parse the response
+            // Parse the response to get the new movie_id
             ObjectMapper responseMapper = new ObjectMapper();
             JsonNode responseNode = responseMapper.readTree(response);
-            String movieId = responseNode.get(0).get("movie_id").asText(); // Assuming the response contains movie_id
+            String movieId = responseNode.get(0).get("movie_id").asText();
 
             System.out.println("Movie added with ID: " + movieId);
+            movie.setMovieId(movieId);
 
         } catch (Exception e) {
             System.err.println("Error adding movie: " + e.getMessage());
         }
+    }
+
+    public Movie getMovieById(String movieId) {
+        Movie movie = null;
+        try {
+            // query Supabase for the movie based on movieId
+            String response = webClient.get()
+                    .uri(uriBuilder -> uriBuilder
+                            .path("/rest/v1/movies")
+                            .queryParam("movie_id", "eq." + movieId)
+                            .build())
+                    .header("apikey", supabaseApiKey)
+                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .block();
+
+            //parse response to retrieve the movie
+            ObjectMapper responseMapper = new ObjectMapper();
+            JsonNode responseNode = responseMapper.readTree(response);
+
+            if (responseNode.isArray() && !responseNode.isEmpty()) {
+                JsonNode movieNode = responseNode.get(0);
+                //extract field from supabase
+                String title = movieNode.get("title").asText();
+                String releaseDate = movieNode.get("release_date").asText();
+                String posterPath = movieNode.get("poster_path").asText();
+                String genres = movieNode.get("genres").asText();
+                String synopsis = movieNode.get("synopsis").asText();
+
+                // create new movie object with retrieved details
+                movie = new Movie(title, releaseDate, posterPath, genres, synopsis);
+                movie.setMovieId(movieId);
+            }
+        } catch (Exception e) {
+            System.err.println("Error fetching movie by ID: " + e.getMessage());
+        }
+        return movie;
     }
 
     // save the image to the 'userimg' folder and return the relative path

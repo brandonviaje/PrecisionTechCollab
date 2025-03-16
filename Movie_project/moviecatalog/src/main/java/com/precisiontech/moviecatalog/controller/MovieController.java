@@ -21,11 +21,11 @@ public class MovieController {
     private MovieService movieService;
 
     @PostMapping("/movies")
-    public ResponseEntity<?> addMovie(@RequestParam("title") String title, @RequestParam("releaseDate") String releaseDate, @RequestParam("poster") MultipartFile poster,@RequestParam("genres") String genres) {
+    public ResponseEntity<?> addMovie(@RequestParam("title") String title, @RequestParam("releaseDate") String releaseDate, @RequestParam("poster") MultipartFile poster,@RequestParam("genres") String genres,  @RequestParam("synopsis") String synopsis) {
 
         // Save the poster file as a string path, return poster path
         String posterPath = movieService.saveImage(poster);
-        Movie movie = new Movie(title, releaseDate, posterPath,genres); //create movie obj
+        Movie movie = new Movie(title, releaseDate, posterPath,genres,synopsis); //create movie obj
         movieService.addMovie(movie);  // save object to the database
 
         //Response with status code 200 OK
@@ -45,4 +45,10 @@ public class MovieController {
         List<Movie> movies = movieService.searchMovies(title);
         return ResponseEntity.ok(movies);
     }
+
+    @GetMapping("/movies/{movieId}")
+    public Movie getMovieDetails(@PathVariable String movieId) {
+        return movieService.getMovieById(movieId);
+    }
+
 }

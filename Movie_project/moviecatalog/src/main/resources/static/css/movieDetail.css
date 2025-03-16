@@ -50,4 +50,13 @@ body{
   color: #272635; 
 }
 
+.inline {
+  display: inline;
+  margin-right: 10px;
+}
 
+#movie-poster {
+  width: 500px;
+  height: 100%; /* Limit the height */
+  object-fit: cover; /* Ensure the image fits within the container */
+}
