@@ -190,5 +190,4 @@ public class MovieService {
         }
         return searchedMovies;
     }
-
 }

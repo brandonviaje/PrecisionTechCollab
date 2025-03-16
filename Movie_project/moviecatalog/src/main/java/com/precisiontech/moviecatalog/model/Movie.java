@@ -26,37 +26,21 @@ public class Movie {
     }
 
     // Getters and setters
-    public String getTitle() {
-        return title;
-    }
+    public String getTitle() { return title;}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    public void setTitle(String title) {this.title = title;}
 
-    public String getReleaseDate() {
-        return releaseDate;
-    }
+    public String getReleaseDate() {return releaseDate;}
 
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
-    }
+    public void setReleaseDate(String releaseDate) {this.releaseDate = releaseDate;}
 
-    public String getPgRating() {
-        return pgRating;
-    }
+    public String getPgRating() {return pgRating;}
 
-    public void setPgRating(String pgRating) {
-        this.pgRating = pgRating;
-    }
+    public void setPgRating(String pgRating) {this.pgRating = pgRating;}
 
-    public String getSynopsis() {
-        return synopsis;
-    }
+    public String getSynopsis() {return synopsis;}
 
-    public void setSynopsis(String synopsis) {
-        this.synopsis = synopsis;
-    }
+    public void setSynopsis(String synopsis) {this.synopsis = synopsis;}
 
     public String getGenres() {return genres;}
 
@@ -66,21 +50,13 @@ public class Movie {
 
     public void setProductionCompanies(String productionCompanies) {this.productionCompanies = productionCompanies;}
 
-    public int getRuntime() {
-        return runtime;
-    }
+    public int getRuntime() {return runtime;}
 
-    public void setRuntime(int runtime) {
-        this.runtime = runtime;
-    }
+    public void setRuntime(int runtime) {this.runtime = runtime;}
 
-    public String getSpokenLanguages() {
-        return spokenLanguages;
-    }
+    public String getSpokenLanguages() {return spokenLanguages;}
 
-    public void setSpokenLanguages(String spokenLanguages) {
-        this.spokenLanguages = spokenLanguages;
-    }
+    public void setSpokenLanguages(String spokenLanguages) {this.spokenLanguages = spokenLanguages;}
 
     public String getPosterPath() {return posterPath;}
 
