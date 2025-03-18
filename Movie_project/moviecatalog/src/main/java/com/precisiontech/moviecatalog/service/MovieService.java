@@ -38,6 +38,11 @@ public class MovieService {
         this.webClient = WebClient.builder().baseUrl(supabaseUrl).build();
     }
 
+    /**
+     * Adds a movie to the movies database
+     *
+     * @param movie         the movie to be added
+     */
     public void addMovie(Movie movie) {
         Map<String, Object> movieData = new HashMap<>();
         movieData.put("title", movie.getTitle());
@@ -75,6 +80,12 @@ public class MovieService {
         }
     }
 
+    /**
+     * Fetches a movie by its id
+     *
+     * @param movieId           the id of the movie
+     * @return                  the movie being fetched
+     */
     public Movie getMovieById(String movieId) {
         Movie movie = null;
         try {
@@ -113,7 +124,12 @@ public class MovieService {
         return movie;
     }
 
-    // save the image to the 'userimg' folder and return the relative path
+    /**
+     * Saves the image cover of the movie entered by the user to the 'userimg' folder
+     *
+     * @param poster            the image file to be saved
+     * @return                  the path to image
+     */
     public String saveImage(MultipartFile poster) {
         try {
             // Take file name
@@ -134,10 +150,12 @@ public class MovieService {
         }
     }
 
-    public List<Movie> getAllMovies() {
-        return movies;
-    }
-
+    /**
+     * Fetches movies from the database by the specified genre
+     *
+     * @param genre         genre of the movie
+     * @return              movie(s) attached to the specified genre
+     */
     public List<Movie> filterByGenre(String genre) {
         List<Movie> allMovies;
         if (genre == null || genre.isEmpty()) {
@@ -169,6 +187,12 @@ public class MovieService {
         return allMovies;
     }
 
+    /**
+     * Fetches movies from the database filtered by the title
+     *
+     * @param title         title of the movie
+     * @return              movie(s) with the specified title
+     */
     public List<Movie> searchMovies(String title) {
         List<Movie> searchedMovies;
         // Return empty list if no title is provided

@@ -34,6 +34,11 @@ public class AccountService {
         this.webClient = WebClient.builder().baseUrl(supabaseUrl).build();
     }
 
+    /**
+     * Adds an account to the accounts database
+     *
+     * @param account           the account to be added
+     */
     public void addAccount(Account account) {
         Map<String, Object> accountData = new HashMap<>();
         accountData.put("full_name", account.getUsername());
@@ -68,6 +73,13 @@ public class AccountService {
         }
     }
 
+    /**
+     * Checks whether the user's account exists when signing in
+     *
+     * @param username          the user's username
+     * @param password          the user's password
+     * @return                  a flag indicating whether their account exists
+     */
     public boolean verifySignIn(String username, String password) {
         List<Account> allAccounts = webClient.get()
                 .uri(uriBuilder -> uriBuilder

@@ -21,6 +21,17 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
+    /**
+     * Spring Boot controller method to handle HTTP POST requests sent from the front end to the "/movies" endpoint
+     * Handles the submission of a movie by an admin
+     *
+     * @param title             title of the movie
+     * @param releaseDate       release date of the movie
+     * @param poster            cover image of the movie
+     * @param genres            genres of the movie
+     * @param synopsis          synopsis of the movie
+     * @return                  path to the cover image
+     */
     @PostMapping("/movies")
     public ResponseEntity<?> addMovie(@RequestParam("title") String title, @RequestParam("releaseDate") String releaseDate, @RequestParam("poster") MultipartFile poster, @RequestParam("genres") String genres, @RequestParam("synopsis") String synopsis) {
 
@@ -32,20 +43,38 @@ public class MovieController {
         return ResponseEntity.ok("Movie added successfully with poster at " + posterPath);
     }
 
-    // Get all movies with optional genre filter
+    /**
+     * Spring Boot controller method to handle HTTP GET requests sent from the front end to the "/movies" endpoint
+     * Handles the filtering of movies by the user
+     *
+     * @param genre         optional genre filter
+     * @return              movies gathered from the database
+     */
     @GetMapping("/movies")
     public ResponseEntity<List<Movie>> getMovies (@RequestParam(value = "genre", required = false) String genre){
         List<Movie> movies = movieService.filterByGenre(genre);
         return ResponseEntity.ok(movies);
     }
 
-    // Search for movies by title
+    /**
+     * Spring Boot controller method to handle HTTP GET requests sent from the front end to the "/movies/search" endpoint
+     * Handles the user searching for a movie
+     *
+     * @param title         title of the movie to be searched for
+     * @return              movies with the search filter applied
+     */
     @GetMapping("/movies/search")
     public ResponseEntity<List<Movie>> searchMovies (@RequestParam(value = "title") String title){
         List<Movie> movies = movieService.searchMovies(title);
         return ResponseEntity.ok(movies);
     }
 
+    /**
+     * Spring Boot controller method to handle HTTP GET requests sent from the front end to the "/movies/{movieId}" endpoint
+     *
+     * @param movieId           id of the movie
+     * @return                  movie with the specified id
+     */
     @GetMapping("/movies/{movieId}")
     public Movie getMovieDetails (@PathVariable String movieId){
         return movieService.getMovieById(movieId);
