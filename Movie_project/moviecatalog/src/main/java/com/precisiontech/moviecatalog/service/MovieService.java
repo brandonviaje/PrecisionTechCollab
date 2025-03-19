@@ -50,6 +50,10 @@ public class MovieService {
         movieData.put("poster_path", movie.getPosterPath());
         movieData.put("genres", movie.getGenres());
         movieData.put("synopsis", movie.getSynopsis());
+        movieData.put("pg_rating",movie.getPgRating());
+        movieData.put("runtime", movie.getRuntime());
+        movieData.put("production_companies", movie.getProductionCompanies());
+        movieData.put("spoken_languages", movie.getSpokenLanguages());
 
         try {
             // Serialize the data into JSON format
@@ -113,9 +117,13 @@ public class MovieService {
                 String posterPath = movieNode.get("poster_path").asText();
                 String genres = movieNode.get("genres").asText();
                 String synopsis = movieNode.get("synopsis").asText();
+                String pgRating = movieNode.get("pg_rating").asText();
+                String productionCompanies = movieNode.get("production_companies").asText();
+                int runtime = movieNode.get("runtime").asInt();
+                String spokenLanguages = movieNode.get("spoken_languages").asText();
 
                 // create new movie object with retrieved details
-                movie = new Movie(title, releaseDate, posterPath, genres, synopsis);
+                movie = new Movie(title, releaseDate, posterPath, genres, synopsis, pgRating, productionCompanies, runtime, spokenLanguages);
                 movie.setMovieId(movieId);
             }
         } catch (Exception e) {
@@ -160,18 +168,8 @@ public class MovieService {
         List<Movie> allMovies;
 
         //if not genres then show all movies
-        if (genre == null || genre.isEmpty()) {
-            allMovies = webClient.get()
-                    .uri(uriBuilder -> uriBuilder
-                            .path("/rest/v1/movies")
-                            .queryParam("order", "id.asc")
-                            .build())
-                    .header("apikey", supabaseApiKey)
-                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                    .retrieve()
-                    .bodyToFlux(Movie.class)
-                    .collectList()
-                    .block();
+        if (genre == null) {
+            return getAllMovies();
         } else {
         //if genre is found, show those specific movies
             allMovies = webClient.get()
@@ -200,19 +198,8 @@ public class MovieService {
     public List<Movie> filterByPgRating (String pgRating){
         List <Movie> allMovies;
 
-        //if no pgrating is found, show all movies
-        if(pgRating == null || pgRating.isEmpty()){
-            allMovies = webClient.get()
-                        .uri(uriBuilder -> uriBuilder
-                            .path("/rest/v1/movies")
-                            .queryParam("order", "id.asc")
-                            .build())
-                        .header("apikey", supabaseApiKey)
-                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .retrieve()
-                        .bodyToFlux(Movie.class)
-                        .collectList()
-                        .block();
+        if(pgRating == null){
+            return getAllMovies();
         }else{
         //if pgrating is found, show those movies
             allMovies = webClient.get()
@@ -242,24 +229,14 @@ public class MovieService {
         List <Movie> allMovies;
 
         //if no languages are found, show all movies
-        if(language == null || language.isEmpty()){
-            allMovies = webClient.get()
-                        .uri(uriBuilder -> uriBuilder
-                            .path("/rest/v1/movies")
-                            .queryParam("order", "id.asc")
-                            .build())
-                        .header("apikey", supabaseApiKey)
-                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .retrieve()
-                        .bodyToFlux(Movie.class)
-                        .collectList()
-                        .block();
+        if(language == null){
+            return getAllMovies();
         }else{
         //if found languages are found, show those movies
             allMovies = webClient.get()
                         .uri(uriBuilder -> uriBuilder
                             .path("/rest/v1/movies")
-                            .queryParam("language", "eq." + language)
+                            .queryParam("spoken_languages", "eq." + language)
                             .queryParam("order", "id.asc")
                             .build())
                         .header("apikey", supabaseApiKey)
@@ -281,8 +258,8 @@ public class MovieService {
     public List<Movie> searchMovies(String title) {
         List<Movie> searchedMovies;
         // Return empty list if no title is provided
-        if (title == null || title.isEmpty()) {
-            searchedMovies = new ArrayList<>();
+        if (title == null) {
+            return getAllMovies();
         } else {
             searchedMovies = webClient.get()
                     .uri(uriBuilder -> uriBuilder

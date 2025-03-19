@@ -1,5 +1,6 @@
 package com.precisiontech.moviecatalog.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -23,69 +24,44 @@ public class MovieEdit {
     private String supabaseApiKey;
 
     private WebClient webClient;
-    private List<Movie> movies = new ArrayList<>();
 
     @PostConstruct
     public void init() {
         this.webClient = WebClient.builder().baseUrl(supabaseUrl).build();
     }
 
-     /**
-     * Updates a movie's details in the database based on specified conditions.
-     *
-     * @param title                The title of the movie to update.
-     * @param runtime              The new runtime (optional).
-     * @param pgRating             The new PG rating (optional).
-     * @param synopsis             The new synopsis (optional).
-     * @param genres               The new genres (optional).
-     * @param productionCompanies  The new production companies (optional).
-     * @param spokenLanguages      The new spoken languages (optional).
-     * @return 
-     */
+     public void updateMovieDetails(String movieId, Movie updatedMovie) {
+         Map<String, Object> updateFields = new HashMap<>();
 
-    public boolean editMovie(
-        String title,
-        String runtime,
-        String pgRating,
-        String synopsis,
-        String genres,
-        String productionCompanies, 
-        String spokenLanguages){
+         // Add fields to update, checking for null values
+         if (updatedMovie.getTitle() != null) {updateFields.put("title", updatedMovie.getTitle());}
+         if (updatedMovie.getReleaseDate() != null) {updateFields.put("release_date", updatedMovie.getReleaseDate());}
+         if (updatedMovie.getGenres() != null) {updateFields.put("genres", updatedMovie.getGenres());}
+         if (updatedMovie.getSynopsis() != null) {updateFields.put("synopsis", updatedMovie.getSynopsis());}
+         if (updatedMovie.getRuntime() != 0) {  updateFields.put("runtime", updatedMovie.getRuntime());}
+         if (updatedMovie.getSpokenLanguages() != null) {updateFields.put("spoken_languages", updatedMovie.getSpokenLanguages());}
+         if (updatedMovie.getProductionCompanies() != null) {updateFields.put("production_companies", updatedMovie.getProductionCompanies());}
+         if (updatedMovie.getPgRating() != null) {updateFields.put("pg_rating", updatedMovie.getPgRating());}
+         if (updatedMovie.getPosterPath() != null) {updateFields.put("poster_path", updatedMovie.getPosterPath());}
 
-        try{
-            Map<String, Object> updateData = new HashMap<>();
+         try {
+             ObjectMapper objectMapper = new ObjectMapper();
+             String jsonPayload = objectMapper.writeValueAsString(updateFields);
 
-            //Upate the corresponding data if provided by the user 
-            //!null checks if the user actually put somethign and isEmpty makes sures its not an empty string " "
-            if (runtime != null && !runtime.isEmpty()) updateData.put("runtime", runtime);
-            if (pgRating != null && !pgRating.isEmpty()) updateData.put("pg_rating", pgRating);
-            if (synopsis != null && !synopsis.isEmpty()) updateData.put("synopsis", synopsis);
-            if (genres != null && !genres.isEmpty()) updateData.put("genres", genres);
-            if (productionCompanies != null && !productionCompanies.isEmpty()) updateData.put("productioncompanies", productionCompanies);
-            if (spokenLanguages != null && !spokenLanguages.isEmpty()) updateData.put("spoken_languages", spokenLanguages);
-
-            if(updateData.isEmpty()){
-                return false;
-            }
-
-            String response = webClient.patch() 
-                                .uri(uriBuilder -> uriBuilder
-                                        .path(supabaseUrl + "/rest/v1/movies")
-                                        .queryParam("title", "eq." + title) // Find movie by title
-                                        .build())
-                                .header("apikey", supabaseApiKey)
-                                .header("Prefer", "return=minimal") 
-                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                                .bodyValue(updateData)
-                                .retrieve()
-                                .bodyToMono(String.class)
-                                .block();
-
-            return response == null || response.isEmpty();
-
-        } catch (Exception e){
-            System.err.println("Error updating movie: " + e.getMessage());
-            return false;
-        }
-    }
+             // Send PATCH request to update movie details in the database
+             webClient.patch()
+                     .uri(uriBuilder -> uriBuilder
+                             .path("/rest/v1/movies")
+                             .queryParam("movie_id", "eq." + movieId)
+                             .build())
+                     .header("apikey", supabaseApiKey)
+                     .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                     .bodyValue(jsonPayload)
+                     .retrieve()
+                     .bodyToMono(Void.class)
+                     .block();
+         } catch (Exception e) {
+             throw new RuntimeException("Error updating movie: " + e.getMessage(), e);
+         }
+     }
 }

@@ -1,6 +1,7 @@
-body{
+body {
     background-color: hsla(45, 77%, 56%, 0.829);
 }
+
 .movie_show_container {
     margin: 20px;
     padding: 50px;
@@ -8,10 +9,6 @@ body{
 
 .movie_show_container h1 {
     margin: 0 0 20px 0;
-}
-
-.filter_container label {
-    margin: 0;
 }
 
 .movies {
@@ -37,5 +34,36 @@ body{
 }
 
 .filter_container {
-    overflow: visible;  /* Allow dropdown to expand beyond parent */
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.filter_container label {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.filter_container select {
+    width: 200px; /* Adjust the width of the dropdown */
+    padding: 10px;
+    margin-top: 5px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    font-size: 1rem;
+    font-family: Arial, sans-serif;
+    color: #555;
+    transition: border-color 0.3s ease;
+}
+
+.filter_container select:hover {
+    border-color: #007bff;
+}
+
+.filter_container select:focus {
+    outline: none;
+    border-color: #0056b3;
 }
