@@ -1,7 +1,8 @@
 package com.precisiontech.moviecatalog.controller;
 
 import com.precisiontech.moviecatalog.model.Account;
-import com.precisiontech.moviecatalog.service.AccountService;
+import com.precisiontech.moviecatalog.service.AddAccount;
+import com.precisiontech.moviecatalog.service.VerifySignIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,8 +11,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class AccountController {
 
+    private final VerifySignIn verifySignInService;
+    private final AddAccount addAccountService;
+
+    // Constructor injection
     @Autowired
-    private AccountService accountService;
+    public AccountController(VerifySignIn verifySignInService, AddAccount addAccountService) {
+        this.verifySignInService = verifySignInService;
+        this.addAccountService = addAccountService;
+    }
 
     /**
      * Spring Boot controller method to handle HTTP POST requests sent from the front end to the "/accounts" endpoint
@@ -29,7 +37,7 @@ public class AccountController {
             @RequestParam("password") String password) {
 
         Account account = new Account(fullName, username, password);
-        accountService.addAccount(account);
+        addAccountService.addAccount(account);
 
         return ResponseEntity.ok("Account added successfully");
     }
@@ -47,7 +55,7 @@ public class AccountController {
             @RequestParam("username") String username,
             @RequestParam("password") String password) {
 
-        boolean accountFound = accountService.verifySignIn(username, password);
+        boolean accountFound = verifySignInService.verifySignIn(username, password);
         return ResponseEntity.ok(accountFound);
     }
 }

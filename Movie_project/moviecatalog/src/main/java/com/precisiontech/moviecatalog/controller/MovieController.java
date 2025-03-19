@@ -67,13 +67,13 @@ public class MovieController {
         return movieDetails.getMovieById(movieId);
     }
 
-    @DeleteMapping("/movies/delete")
-    public ResponseEntity<String> deleteMovie(@RequestParam String title) {
-        boolean deleted = movieDeleteService.deleteMovie(title);
+    @DeleteMapping("/movies/delete/{movieId}")
+    public ResponseEntity<String> deleteMovie(@PathVariable String movieId) {
+        boolean deleted = movieDeleteService.deleteMovie(movieId);
         if (deleted) {
-            return ResponseEntity.ok("The movie " + title + " has been deleted");
+            return ResponseEntity.ok("The movie has been deleted");
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The movie " + title + " was not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The movie was not found");
         }
     }
 
