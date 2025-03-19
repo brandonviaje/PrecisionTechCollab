@@ -22,30 +22,26 @@ public class DeleteMovies {
     }
 
     /**
-     * Deletes a movie from the database by its title.
+     * Deletes a movie from the database by its movie ID.
      *
-     * @param title The title of the movie to delete.
+     * @param movieId The id of the movie to delete.
      * @return true if deletion was successful, false otherwise.
      */
-    
-    public boolean deleteMovie(String title){
+    public boolean deleteMovie(String movieId) {
         try {
             String response = webClient.delete()
-                            .uri(uriBuilder -> uriBuilder
-                                .path(supabaseUrl + "/rest/v1/movies")
-                                .queryParam("title", "eq." + title)//Find the movie by title
-                                .build())
-                            .header("apikey", supabaseApiKey)
-                            .header("Prefer", "return=minimal") 
-                            .retrieve()
-                            .bodyToMono(String.class)
-                            .block();
-            
+                    .uri("/rest/v1/movies?movie_id=eq." + movieId)
+                    .header("apikey", supabaseApiKey)
+                    .header("Prefer", "return=minimal")
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .block();
             return response == null || response.isEmpty();
         } catch (Exception e) {
-            System.err.println("Error in deleting movie" + e.getMessage());
+            System.err.println("Error in deleting movie: " + e.getMessage());
             return false;
         }
     }
+
     
 }
