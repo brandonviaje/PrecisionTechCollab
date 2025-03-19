@@ -1,184 +1,104 @@
 package com.precisiontech.moviecatalog.controller;
 
 import com.precisiontech.moviecatalog.model.Movie;
-import com.precisiontech.moviecatalog.service.MovieDelete;
-import com.precisiontech.moviecatalog.service.MovieEdit;
-import com.precisiontech.moviecatalog.service.MovieService;
+import com.precisiontech.moviecatalog.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
-@RequestMapping("/api") // Base path for all endpoints
+@RequestMapping("/api")
 public class MovieController {
 
-    @Autowired
-    private MovieService movieService;
-    private MovieDelete movieDelete;
-    private MovieEdit movieEdit;
+    private final AddMovies movieAddService;
+    private final EditMovies movieEditService;
+    private final DeleteMovies movieDeleteService;
+    private final FilterMovies movieFilterService;
+    private final SearchMovies movieSearchService;
+    private final FetchMovies movieFetchService;
+    private final GetMovieDetails movieDetails;
 
-    public MovieController(MovieEdit movieEdit, MovieDelete movieDelete) {
-        this.movieEdit = movieEdit;
-        this.movieDelete = movieDelete;
+    @Autowired
+    public MovieController(AddMovies movieAddService, EditMovies movieEditService, DeleteMovies movieDeleteService, FilterMovies movieFilterService, SearchMovies movieSearchService, FetchMovies movieFetchService, GetMovieDetails movieDetails) {
+        this.movieAddService = movieAddService;
+        this.movieEditService = movieEditService;
+        this.movieDeleteService = movieDeleteService;
+        this.movieFilterService = movieFilterService;
+        this.movieSearchService = movieSearchService;
+        this.movieFetchService = movieFetchService;
+        this.movieDetails = movieDetails;
     }
-    /**
-     * Spring Boot controller method to handle HTTP POST requests sent from the front end to the "/movies" endpoint
-     * Handles the submission of a movie by an admin
-     *
-     * @param title             title of the movie
-     * @param releaseDate       release date of the movie
-     * @param poster            cover image of the movie
-     * @param genres            genres of the movie
-     * @param synopsis          synopsis of the movie
-     * @return                  path to the cover image
-     */
+
     @PostMapping("/movies")
     public ResponseEntity<?> addMovie(@RequestParam("title") String title, @RequestParam("releaseDate") String releaseDate, @RequestParam("poster") MultipartFile poster, @RequestParam("genres") String genres, @RequestParam("synopsis") String synopsis, @RequestParam("pgRating") String pg_rating, @RequestParam("productionCompanies") String production_companies, @RequestParam("runtime") int runtime, @RequestParam("spokenLanguages") String spoken_languages) {
-        // Save the poster file as a string path, return poster path
-        String posterPath = movieService.saveImage(poster);
-
-        // Create movie object with all fields, including the new ones
+        String posterPath = SaveImage.saveImage(poster);
         Movie movie = new Movie(title, releaseDate, posterPath, genres, synopsis, pg_rating, production_companies, runtime, spoken_languages);
-        movieService.addMovie(movie); //save object to DB
-
+        movieAddService.addMovie(movie);
         return ResponseEntity.ok("Movie added successfully with poster at " + posterPath);
     }
 
-    /**
-     * Spring Boot controller method to handle HTTP GET requests sent from the front end to the "/movies" endpoint
-     * Handles the filtering of movies by the user
-     *
-     * @param genre         optional genre filter
-     * @param pgRating      Optional PG rating filter
-     * @return              movies gathered from the database
-     */
     @GetMapping("/movies")
-    public ResponseEntity<List<Movie>> getMovies (
-        @RequestParam(value = "genre", required = false) String genre,
-        @RequestParam(value = "pgRating", required = false) String pgRating,
-        @RequestParam(value = "spokenLanguages", required = false) String languages){
-        
+    public ResponseEntity<List<Movie>> getMovies(@RequestParam(value = "genre", required = false) String genre, @RequestParam(value = "pgRating", required = false) String pgRating, @RequestParam(value = "spokenLanguages", required = false) String languages) {
         List<Movie> movies;
-        //if genre is found, find movies by that genre 
-        if(genre != null){
-            movies = movieService.filterByGenre(genre);
-        //if genre is not selected, but pgrating is selected, find movies by that rating
-        }else if(pgRating != null){
-            movies = movieService.filterByPgRating(pgRating);
-        //if genre & rating is not selected, but languages is selected, find movies by that language
-        }else if(languages != null){
-            movies = movieService.filterByLanguage(languages);
-        //if nothin is selected, show all movies
-        }else{
-            movies = movieService.getAllMovies();
+        if (genre != null) {
+            movies = movieFilterService.filterByGenre(genre);
+        } else if (pgRating != null) {
+            movies = movieFilterService.filterByPgRating(pgRating);
+        } else if (languages != null) {
+            movies = movieFilterService.filterByLanguage(languages);
+        } else { //shows all movies
+            movies = movieFetchService.getAllMovies();
         }
-
         return ResponseEntity.ok(movies);
     }
 
-    /**
-     * Spring Boot controller method to handle HTTP GET requests sent from the front end to the "/movies/search" endpoint
-     * Handles the user searching for a movie
-     *
-     * @param title         title of the movie to be searched for
-     * @return              movies with the search filter applied
-     */
     @GetMapping("/movies/search")
-    public ResponseEntity<List<Movie>> searchMovies (@RequestParam(value = "title") String title){
-        List<Movie> movies = movieService.searchMovies(title);
+    public ResponseEntity<List<Movie>> searchMovies(@RequestParam(value = "title") String title) {
+        List<Movie> movies = movieSearchService.searchMovies(title);
         return ResponseEntity.ok(movies);
     }
 
-    /**
-     * Spring Boot controller method to handle HTTP GET requests sent from the front end to the "/movies/{movieId}" endpoint
-     *
-     * @param movieId           id of the movie
-     * @return                  movie with the specified id
-     */
     @GetMapping("/movies/{movieId}")
-    public Movie getMovieDetails (@PathVariable String movieId){
-        return movieService.getMovieById(movieId);
+    public Movie getMovieDetails(@PathVariable String movieId) {
+        return movieDetails.getMovieById(movieId);
     }
 
-    /**
-     * Deletes a movie from the database by its title.
-     *
-     * @param title The title of the movie to delete.
-     * @return true if deletion was successful, false otherwise.
-     */
     @DeleteMapping("/movies/delete")
-    public ResponseEntity<String> deleteMovieByName(@RequestParam String title){
-        boolean deleted = movieDelete.deleteMovieByName(title);
-
-        //if movie was deleted, itd be set to true and prompt the statement 
-        if(deleted){
+    public ResponseEntity<String> deleteMovie(@RequestParam String title) {
+        boolean deleted = movieDeleteService.deleteMovie(title);
+        if (deleted) {
             return ResponseEntity.ok("The movie " + title + " has been deleted");
-        }else{
-        //if movie was not found or deleted, prompt the statement 
+        } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The movie " + title + " was not found");
         }
     }
 
-     /**
-     * Updates a movie's details by title.
-     *
-     * @param title                The title of the movie to update.
-     * @param runtime              The new runtime (optional).
-     * @param pgRating             The new PG rating (optional).
-     * @param synopsis             The new synopsis (optional).
-     * @param genres               The new genres (optional).
-     * @param productionCompanies  The new production companies (optional).
-     * @param spokenLanguages      The new spoken languages (optional).
-     * @return 
-     */
-     @PatchMapping("/movies/{movieId}/update")
-     public ResponseEntity<String> updateMovie(
-             @PathVariable String movieId,
-             @RequestParam(value = "title", required = false) String title,
-             @RequestParam(value = "releaseDate", required = false) String releaseDate,
-             @RequestParam(value = "genres", required = false) String genres,
-             @RequestParam(value = "synopsis", required = false) String synopsis,
-             @RequestParam(value = "pgRating", required = false) String pgRating,
-             @RequestParam(value = "productionCompanies", required = false) String productionCompanies,
-             @RequestParam(value = "runtime", required = false) Integer runtime,
-             @RequestParam(value = "spokenLanguages", required = false) String spokenLanguages,
-             @RequestParam(value = "poster", required = false) MultipartFile poster) {
+    @PatchMapping("/movies/{movieId}/update")
+    public ResponseEntity<String> updateMovie(@PathVariable String movieId, @RequestParam(value = "title", required = false) String title, @RequestParam(value = "releaseDate", required = false) String releaseDate, @RequestParam(value = "genres", required = false) String genres, @RequestParam(value = "synopsis", required = false) String synopsis, @RequestParam(value = "pgRating", required = false) String pgRating, @RequestParam(value = "productionCompanies", required = false) String productionCompanies, @RequestParam(value = "runtime", required = false) Integer runtime, @RequestParam(value = "spokenLanguages", required = false) String spokenLanguages, @RequestParam(value = "poster", required = false) MultipartFile poster) {
 
-         // Handle the movie update logic here
-         Movie existingMovie = movieService.getMovieById(movieId);
-         if (existingMovie == null) {
-             return ResponseEntity.notFound().build();  // Movie not found
-         }
+        Movie existingMovie = movieDetails.getMovieById(movieId);
+        if (existingMovie == null) {return ResponseEntity.notFound().build();}
 
-         // Update the movie fields if they are not null
-         if (title != null) existingMovie.setTitle(title);
-         if (releaseDate != null) existingMovie.setReleaseDate(releaseDate);
-         if (genres != null) existingMovie.setGenres(genres);
-         if (synopsis != null) existingMovie.setSynopsis(synopsis);
-         if (pgRating != null) existingMovie.setPgRating(pgRating);
-         if (productionCompanies != null) existingMovie.setProductionCompanies(productionCompanies);
-         if (runtime != null) existingMovie.setRuntime(runtime);
-         if (spokenLanguages != null) existingMovie.setSpokenLanguages(spokenLanguages);
+        // Update fields if they are provided
+        if (title != null) existingMovie.setTitle(title);
+        if (releaseDate != null) existingMovie.setReleaseDate(releaseDate);
+        if (genres != null) existingMovie.setGenres(genres);
+        if (synopsis != null) existingMovie.setSynopsis(synopsis);
+        if (pgRating != null) existingMovie.setPgRating(pgRating);
+        if (productionCompanies != null) existingMovie.setProductionCompanies(productionCompanies);
+        if (runtime != null) existingMovie.setRuntime(runtime);
+        if (spokenLanguages != null) existingMovie.setSpokenLanguages(spokenLanguages);
 
-         // Handle the poster if uploaded
-         if (poster != null && !poster.isEmpty()) {
-             String posterPath = movieService.saveImage(poster);
-             existingMovie.setPosterPath(posterPath);
-         }
+        if (poster != null && !poster.isEmpty()) {
+            String posterPath = SaveImage.saveImage(poster);
+            existingMovie.setPosterPath(posterPath);
+        }
+        movieEditService.updateMovieDetails(movieId, existingMovie);
+        return ResponseEntity.ok("Movie updated successfully!");
+    }
 
-         movieEdit.updateMovieDetails(movieId, existingMovie);
-         return ResponseEntity.ok("Movie updated successfully!");
-     }
 }
-
-
-
