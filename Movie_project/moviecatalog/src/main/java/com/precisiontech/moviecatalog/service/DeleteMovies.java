@@ -3,16 +3,10 @@ package com.precisiontech.moviecatalog.service;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import com.precisiontech.moviecatalog.model.Movie;
 import jakarta.annotation.PostConstruct;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
-public class MovieDelete {
+public class DeleteMovies {
 @Value("${supabase.url}")
     private String supabaseUrl;
 
@@ -21,7 +15,6 @@ public class MovieDelete {
     private String supabaseApiKey;
 
     private WebClient webClient;
-    private List<Movie> movies = new ArrayList<>();
 
     @PostConstruct
     public void init() {
@@ -35,7 +28,7 @@ public class MovieDelete {
      * @return true if deletion was successful, false otherwise.
      */
     
-    public boolean deleteMovieByName(String title){
+    public boolean deleteMovie(String title){
         try {
             String response = webClient.delete()
                             .uri(uriBuilder -> uriBuilder

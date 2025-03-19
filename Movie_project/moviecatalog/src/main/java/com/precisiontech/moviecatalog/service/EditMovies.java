@@ -9,13 +9,11 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class MovieEdit {
+public class EditMovies {
     @Value("${supabase.url}")
     private String supabaseUrl;
 
