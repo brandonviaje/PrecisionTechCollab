@@ -64,16 +64,22 @@ function fetchGenres() {
 
 
 $(document).ready(function () {
-    fetchMovies();
+    // Check if the movieUpdated flag is set in localStorage
+    if (localStorage.getItem('movieUpdated') === 'true') {
+        fetchMovies();  // Refresh the movies list
+        localStorage.removeItem('movieUpdated');  // Remove the flag to prevent reloading unnecessarily
+    } else {
+        fetchMovies();
+    }
+
     fetchGenres();
 
-    // Event listener for genre selection
     $("#genre-filter").change(function () {
         $(this).css('position', 'relative');
         fetchMovies($(this).val());
     });
 
-    window.addEventListener('movieAdded',function (){
+    window.addEventListener('movieAdded', function () {
         fetchMovies();
         fetchGenres();
     });

@@ -6,23 +6,27 @@ public class Movie {
 
     private String title;
     private String releaseDate;
-    private String pgRating;
+    private String pg_rating;
     private String synopsis;
     private String genres;
-    private String productionCompanies;
+    private String production_companies;
     private int runtime;
-    private String spokenLanguages;
+    private String spoken_languages;
     @JsonProperty("poster_path")
     private String posterPath;
     @JsonProperty("movie_id")
     private String movieId;
 
-    public Movie(String title, String releaseDate, String posterPath,String genres, String synopsis) {
+    public Movie(String title, String releaseDate, String posterPath, String genres, String synopsis, String pg_rating, String production_companies, int runtime, String spoken_languages) {
         this.title = title;
         this.releaseDate = releaseDate;
         this.posterPath = posterPath;
         this.genres = genres;
         this.synopsis = synopsis;
+        this.pg_rating = pg_rating;
+        this.production_companies = production_companies;
+        this.runtime = runtime;
+        this.spoken_languages = spoken_languages;
     }
 
     // Getters and setters
@@ -43,11 +47,11 @@ public class Movie {
     }
 
     public String getPgRating() {
-        return pgRating;
+        return pg_rating;
     }
 
-    public void setPgRating(String pgRating) {
-        this.pgRating = pgRating;
+    public void setPgRating(String pg_rating) {
+        this.pg_rating = pg_rating;
     }
 
     public String getSynopsis() {
@@ -62,9 +66,9 @@ public class Movie {
 
     public void setGenres(String genres) {this.genres = genres;}
 
-    public String getProductionCompanies() {return productionCompanies;}
+    public String getProductionCompanies() {return production_companies;}
 
-    public void setProductionCompanies(String productionCompanies) {this.productionCompanies = productionCompanies;}
+    public void setProductionCompanies(String production_companies) {this.production_companies = production_companies;}
 
     public int getRuntime() {
         return runtime;
@@ -75,11 +79,11 @@ public class Movie {
     }
 
     public String getSpokenLanguages() {
-        return spokenLanguages;
+        return spoken_languages;
     }
 
-    public void setSpokenLanguages(String spokenLanguages) {
-        this.spokenLanguages = spokenLanguages;
+    public void setSpokenLanguages(String spoken_languages) {
+        this.spoken_languages = spoken_languages;
     }
 
     public String getPosterPath() {return posterPath;}

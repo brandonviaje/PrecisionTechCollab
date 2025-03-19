@@ -8,14 +8,14 @@ $(document).ready(function() {
             .done(function(data) {
                 const { title, poster_path, overview, release_date, genres } = data;
 
-                // Join the genres into a single string
+                // join the genres into a single string
                 const genreNames = genres.map(genre => genre.name).join(', ');
 
                 $('#movie-title').text(title);
                 $('#movie-poster').attr('src', `https://image.tmdb.org/t/p/w500/${poster_path}`);
                 $('#movie-overview').text(overview);
                 $('#movie-release-date').text(release_date);
-                $('#movie-genres').text(genreNames); // Display the genres
+                $('#movie-genres').text(genreNames);
             })
             .fail(function(error) {
                 console.error("Error fetching movie details:", error);

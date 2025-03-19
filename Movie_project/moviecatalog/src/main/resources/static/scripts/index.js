@@ -27,11 +27,10 @@ function createMovieCard(media) {
   `;
 }
 
-// Ensure jQuery runs the function after the page loads
+//run the function after the page loads
 $(document).ready(fetchMovies);
 
-
-const Url = 'https://api.themoviedb.org/3/person/popular?api_key=cf334fe88eeddcdc728d651ffed41008';
+const Url = 'https://api.themoviedb.org/3/trending/person/week?api_key=cf334fe88eeddcdc728d651ffed41008';
 
 function fetchActors() {
     $.getJSON(Url)

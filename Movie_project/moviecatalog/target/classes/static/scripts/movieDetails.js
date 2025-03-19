@@ -6,13 +6,15 @@ $(document).ready(function() {
 
         $.getJSON(apiUrl)
             .done(function(data) {
-                const { title, poster_path, synopsis, releaseDate, genres } = data;
+                console.log(data);
+                const { title, poster_path, synopsis, releaseDate, genres, runtime, spokenLanguages} = data;
 
                 // Set the movie details in HTML
                 $('#movie-title').text(title);
                 $('#movie-overview').text(synopsis);
                 $('#movie-release-date').text(releaseDate);
                 $('#movie-genres').text(genres);
+                $('#runtime').text(runtime);
 
                 // Set the movie poster
                 let posterSrc = "";

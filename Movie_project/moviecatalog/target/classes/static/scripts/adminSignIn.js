@@ -7,6 +7,11 @@ document.addEventListener("DOMContentLoaded", function () {
     if (form) {
         form.addEventListener('submit', handleAdminSignIn);
     }
+
+    // If admin is already logged in, redirect directly to the admin dashboard
+    if (localStorage.getItem('isAdminSignedIn') === 'true') {
+        window.location.href = "../components/admin.html";
+    }
 });
 
 // Function to handle admin sign-in logic

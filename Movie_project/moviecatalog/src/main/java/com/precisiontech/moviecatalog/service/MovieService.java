@@ -45,6 +45,10 @@ public class MovieService {
         movieData.put("poster_path", movie.getPosterPath());
         movieData.put("genres", movie.getGenres());
         movieData.put("synopsis", movie.getSynopsis());
+        movieData.put("pg_rating",movie.getPgRating());
+        movieData.put("runtime", movie.getRuntime());
+        movieData.put("production_companies", movie.getProductionCompanies());
+        movieData.put("spoken_languages", movie.getSpokenLanguages());
 
         try {
             // Serialize the data into JSON format
@@ -102,9 +106,13 @@ public class MovieService {
                 String posterPath = movieNode.get("poster_path").asText();
                 String genres = movieNode.get("genres").asText();
                 String synopsis = movieNode.get("synopsis").asText();
+                String pgRating = movieNode.get("pg_rating").asText();
+                String productionCompanies = movieNode.get("production_companies").asText();
+                int runtime = movieNode.get("runtime").asInt();
+                String spokenLanguages = movieNode.get("spoken_languages").asText();
 
                 // create new movie object with retrieved details
-                movie = new Movie(title, releaseDate, posterPath, genres, synopsis);
+                movie = new Movie(title, releaseDate, posterPath, genres, synopsis, pgRating, productionCompanies, runtime, spokenLanguages);
                 movie.setMovieId(movieId);
             }
         } catch (Exception e) {
@@ -119,54 +127,45 @@ public class MovieService {
             // Take file name
             String imageName = poster.getOriginalFilename();
             Path path = Paths.get("src", "main", "resources", "static", "userimg", imageName); // Store the image inside the userimg folder
-
-            // Create the directory if it doesn't exist
-            Files.createDirectories(path.getParent());
-
-            // Save the file to the specified path
-            poster.transferTo(path);
-
-            // Return the relative path to the image (use forward slashes for URL compatibility)
+            Files.createDirectories(path.getParent());      // Create the directory if it doesn't exist
+            poster.transferTo(path);           // Save the file to the specified path
             return "/userimg/" + imageName;
-
         } catch (IOException e) {
             throw new RuntimeException("Error saving image: " + e.getMessage());
         }
     }
 
     public List<Movie> getAllMovies() {
-        return movies;
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/rest/v1/movies")
+                        .queryParam("order", "id.asc") //the first 50 movies in database
+                        .build())
+                .header("apikey", supabaseApiKey)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .retrieve()
+                .bodyToFlux(Movie.class)
+                .collectList()
+                .block();
     }
 
     public List<Movie> filterByGenre(String genre) {
-        List<Movie> allMovies;
-        if (genre == null || genre.isEmpty()) {
-            allMovies = webClient.get()
-                    .uri(uriBuilder -> uriBuilder
-                            .path("/rest/v1/movies")
-                            .queryParam("order", "id.asc")
-                            .build())
-                    .header("apikey", supabaseApiKey)
-                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                    .retrieve()
-                    .bodyToFlux(Movie.class)
-                    .collectList()
-                    .block();
-        } else {
-            allMovies = webClient.get()
-                    .uri(uriBuilder -> uriBuilder
-                            .path("/rest/v1/movies")
-                            .queryParam("genres", "ilike.%"+ genre +"%")
-                            .queryParam("order", "id.asc")
-                            .build())
-                    .header("apikey", supabaseApiKey)
-                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                    .retrieve()
-                    .bodyToFlux(Movie.class)
-                    .collectList()
-                    .block();
+        if (genre == null) {
+            return getAllMovies();
         }
-        return allMovies;
+
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/rest/v1/movies")
+                        .queryParam("genres", "ilike.%" + genre + "%")
+                        .queryParam("order", "id.asc")
+                        .build(genre)) // Pass genre separately to avoid null issues
+                .header("apikey", supabaseApiKey)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .retrieve()
+                .bodyToFlux(Movie.class)
+                .collectList()
+                .block();
     }
 
     public List<Movie> searchMovies(String title) {
@@ -191,4 +190,38 @@ public class MovieService {
         return searchedMovies;
     }
 
+    public void updateMovieDetails(String movieId, Movie updatedMovie) {
+        Map<String, Object> updateFields = new HashMap<>();
+
+        // Add fields to update, checking for null values
+        if (updatedMovie.getTitle() != null) {updateFields.put("title", updatedMovie.getTitle());}
+        if (updatedMovie.getReleaseDate() != null) {updateFields.put("release_date", updatedMovie.getReleaseDate());}
+        if (updatedMovie.getGenres() != null) {updateFields.put("genres", updatedMovie.getGenres());}
+        if (updatedMovie.getSynopsis() != null) {updateFields.put("synopsis", updatedMovie.getSynopsis());}
+        if (updatedMovie.getRuntime() != 0) {  updateFields.put("runtime", updatedMovie.getRuntime());}
+        if (updatedMovie.getSpokenLanguages() != null) {updateFields.put("spoken_languages", updatedMovie.getSpokenLanguages());}
+        if (updatedMovie.getProductionCompanies() != null) {updateFields.put("production_companies", updatedMovie.getProductionCompanies());}
+        if (updatedMovie.getPgRating() != null) {updateFields.put("pg_rating", updatedMovie.getPgRating());}
+        if (updatedMovie.getPosterPath() != null) {updateFields.put("poster_path", updatedMovie.getPosterPath());}
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonPayload = objectMapper.writeValueAsString(updateFields);
+
+            // Send PATCH request to update movie details in the database
+            webClient.patch()
+                    .uri(uriBuilder -> uriBuilder
+                            .path("/rest/v1/movies")
+                            .queryParam("movie_id", "eq." + movieId)
+                            .build())
+                    .header("apikey", supabaseApiKey)
+                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                    .bodyValue(jsonPayload)
+                    .retrieve()
+                    .bodyToMono(Void.class)
+                    .block();
+        } catch (Exception e) {
+            throw new RuntimeException("Error updating movie: " + e.getMessage(), e);
+        }
+    }
 }
