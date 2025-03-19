@@ -188,6 +188,82 @@ public class MovieService {
     }
 
     /**
+     * Fetches movies from the database by the specified pgrating
+     *
+     * @param pgRating         pgrating of the movie
+     * @return              movie(s) attached to the specified pgrating
+     */
+
+    public List<Movie> filterByPgRating (String pgRating){
+        List <Movie> allMovies;
+        if(pgRating == null || pgRating.isEmpty()){
+            allMovies = webClient.get()
+                        .uri(uriBuilder -> uriBuilder
+                            .path("/rest/v1/movies")
+                            .queryParam("order", "id.asc")
+                            .build())
+                        .header("apikey", supabaseApiKey)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .retrieve()
+                        .bodyToFlux(Movie.class)
+                        .collectList()
+                        .block();
+        }else{
+            allMovies = webClient.get()
+            .uri(uriBuilder -> uriBuilder
+                    .path("/rest/v1/movies")
+                    .queryParam("pg_rating", "eq." + pgRating)
+                    .queryParam("order", "id.asc")
+                    .build())
+            .header("apikey", supabaseApiKey)
+            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+            .retrieve()
+            .bodyToFlux(Movie.class)
+            .collectList()
+            .block();
+        }
+        return allMovies;
+    }
+    
+     /**
+     * Fetches movies from the database by the specified spoken language 
+     *
+     * @param language      spoken language in the movie
+     * @return              movie(s) attached to the specified spoken language 
+     */
+
+    public List<Movie> filterByLanguage(String language){
+        List <Movie> allMovies;
+        if(language == null || language.isEmpty()){
+            allMovies = webClient.get()
+                        .uri(uriBuilder -> uriBuilder
+                            .path("/rest/v1/movies")
+                            .queryParam("order", "id.asc")
+                            .build())
+                        .header("apikey", supabaseApiKey)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .retrieve()
+                        .bodyToFlux(Movie.class)
+                        .collectList()
+                        .block();
+        }else{
+            allMovies = webClient.get()
+                        .uri(uriBuilder -> uriBuilder
+                            .path("/rest/v1/movies")
+                            .queryParam("language", "eq." + language)
+                            .queryParam("order", "id.asc")
+                            .build())
+                        .header("apikey", supabaseApiKey)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .retrieve()
+                        .bodyToFlux(Movie.class)
+                        .collectList()
+                        .block();
+        }
+        return allMovies;
+    }
+
+    /**
      * Fetches movies from the database filtered by the title
      *
      * @param title         title of the movie
@@ -214,4 +290,24 @@ public class MovieService {
         }
         return searchedMovies;
     }
+
+    /**
+     * Fetches all movies from the database.
+     *
+     * @return A list of all movies.
+     */
+    public List<Movie> getAllMovies() {
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/rest/v1/movies")
+                        .queryParam("order", "id.asc") // Order by ID
+                        .build())
+                .header("apikey", supabaseApiKey)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .retrieve()
+                .bodyToFlux(Movie.class)
+                .collectList()
+                .block();
+    }
+
 }

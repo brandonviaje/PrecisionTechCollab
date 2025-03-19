@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="../scripts/headerfooter.js" defer></script>
+    <!-- <script src="../scripts/backButton.js" defer></script> -->
+    <link rel="stylesheet" href="../css/signIn.css">
+</head>
+<body>
+<div id="header-container"></div>
+
+<form id="signin-form" method="POST">
+    <label id="sub-head">User Sign In</label>
+    <div class="form-group">
+        <label for="login-username">Username:</label>
+        <input type="text" id="login-username" placeholder="Enter Username" name="username" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" placeholder="Enter Password" name="password" required>
+    </div>
+    <button type="submit">Sign In</button>
+</form>
+
+<div id="click_here">
+    <p>Sign In As Admin<a href="adminSignIn.html"> Here</a></p>
+</div>
+
+<script src="../scripts/signIn.js" defer></script>
+
+</body>
+</html>

@@ -48,11 +48,31 @@ public class MovieController {
      * Handles the filtering of movies by the user
      *
      * @param genre         optional genre filter
+     * @param pgRating      Optional PG rating filter
+     * @param language      Optional language filter.
      * @return              movies gathered from the database
      */
     @GetMapping("/movies")
-    public ResponseEntity<List<Movie>> getMovies (@RequestParam(value = "genre", required = false) String genre){
-        List<Movie> movies = movieService.filterByGenre(genre);
+    public ResponseEntity<List<Movie>> getMovies (
+        @RequestParam(value = "genre", required = false) String genre,
+        @RequestParam(value = "pg_rating", required = false) String pgRating,
+        @RequestParam(value = "spoken_languages", required = false) String languages){
+        
+        List<Movie> movies;
+        //if genre is found, find movies by that genre 
+        if(genre != null){
+            movies = movieService.filterByGenre(genre);
+        //if genre is not selected, but pgrating is selected, find movies by that rating
+        }else if(pgRating != null){
+            movies = movieService.filterByPgRating(pgRating);
+        //if genre & rating is not selected, but langauges is selected, find movies by that langauge
+        }else if(languages != null){
+            movies = movieService.filterByLanguage(languages);
+        //if nothign is selected, show all movies 
+        }else{
+            movies = movieService.getAllMovies();
+        }
+
         return ResponseEntity.ok(movies);
     }
 

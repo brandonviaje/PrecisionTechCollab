@@ -1,0 +1,41 @@
+body{
+    background-color: hsla(45, 77%, 56%, 0.829);
+}
+.movie_show_container {
+    margin: 20px;
+    padding: 50px;
+}
+
+.movie_show_container h1 {
+    margin: 0 0 20px 0;
+}
+
+.filter_container label {
+    margin: 0;
+}
+
+.movies {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    row-gap: 30px;
+    column-gap: 16px;
+    justify-content: center;
+}
+
+.movie_item {
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.movie-photo-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.filter_container {
+    overflow: visible;  /* Allow dropdown to expand beyond parent */
+}
