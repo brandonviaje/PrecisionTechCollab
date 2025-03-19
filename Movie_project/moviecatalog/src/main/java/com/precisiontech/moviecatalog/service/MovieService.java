@@ -158,6 +158,8 @@ public class MovieService {
      */
     public List<Movie> filterByGenre(String genre) {
         List<Movie> allMovies;
+
+        //if not genres then show all movies
         if (genre == null || genre.isEmpty()) {
             allMovies = webClient.get()
                     .uri(uriBuilder -> uriBuilder
@@ -171,6 +173,7 @@ public class MovieService {
                     .collectList()
                     .block();
         } else {
+        //if genre is found, show those specific movies
             allMovies = webClient.get()
                     .uri(uriBuilder -> uriBuilder
                             .path("/rest/v1/movies")
@@ -196,6 +199,8 @@ public class MovieService {
 
     public List<Movie> filterByPgRating (String pgRating){
         List <Movie> allMovies;
+
+        //if no pgrating is found, show all movies
         if(pgRating == null || pgRating.isEmpty()){
             allMovies = webClient.get()
                         .uri(uriBuilder -> uriBuilder
@@ -209,6 +214,7 @@ public class MovieService {
                         .collectList()
                         .block();
         }else{
+        //if pgrating is found, show those movies
             allMovies = webClient.get()
             .uri(uriBuilder -> uriBuilder
                     .path("/rest/v1/movies")
@@ -234,6 +240,8 @@ public class MovieService {
 
     public List<Movie> filterByLanguage(String language){
         List <Movie> allMovies;
+
+        //if no languages are found, show all movies
         if(language == null || language.isEmpty()){
             allMovies = webClient.get()
                         .uri(uriBuilder -> uriBuilder
@@ -247,6 +255,7 @@ public class MovieService {
                         .collectList()
                         .block();
         }else{
+        //if found languages are found, show those movies
             allMovies = webClient.get()
                         .uri(uriBuilder -> uriBuilder
                             .path("/rest/v1/movies")

@@ -1,8 +1,11 @@
 package com.precisiontech.moviecatalog.controller;
 
 import com.precisiontech.moviecatalog.model.Movie;
+import com.precisiontech.moviecatalog.service.MovieDelete;
+import com.precisiontech.moviecatalog.service.MovieEdit;
 import com.precisiontech.moviecatalog.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +23,8 @@ public class MovieController {
 
     @Autowired
     private MovieService movieService;
+    private MovieDelete movieDelete;
+    private MovieEdit movieEdit;
 
     /**
      * Spring Boot controller method to handle HTTP POST requests sent from the front end to the "/movies" endpoint
@@ -100,6 +105,60 @@ public class MovieController {
         return movieService.getMovieById(movieId);
     }
 
+    /**
+     * Deletes a movie from the database by its title.
+     *
+     * @param title The title of the movie to delete.
+     * @return true if deletion was successful, false otherwise.
+     */
+    @DeleteMapping("/movies/delete")
+    public ResponseEntity<String> deleteMovieByName(@RequestParam String title){
+        boolean deleted = movieDelete.deleteMovieByName(title);
+
+        //if movie was deleted, itd be set to true and prompt the statement 
+        if(deleted){
+            return ResponseEntity.ok("The movie " + title + " has been deleted");
+        }else{
+        //if movie was not found or deleted, prompt the statement 
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The movie " + title + " was not found");
+        }
+    }
+
+     /**
+     * Updates a movie's details by title.
+     *
+     * @param title                The title of the movie to update.
+     * @param runtime              The new runtime (optional).
+     * @param pgRating             The new PG rating (optional).
+     * @param synopsis             The new synopsis (optional).
+     * @param genres               The new genres (optional).
+     * @param productionCompanies  The new production companies (optional).
+     * @param spokenLanguages      The new spoken languages (optional).
+     * @return 
+     */
+    @PatchMapping("/movies/update")
+    public ResponseEntity<String> updateMovie(
+            @RequestParam String title,
+            @RequestParam(required = false) String runtime,
+            @RequestParam(required = false) String pgRating,
+            @RequestParam(required = false) String synopsis,
+            @RequestParam(required = false) String genres,
+            @RequestParam(required = false) String productionCompanies,
+            @RequestParam(required = false) String spokenLanguages) {
+
+        boolean isUpdated = movieEdit.editMovie(
+                title, runtime, pgRating, synopsis, genres, productionCompanies, spokenLanguages);
+                
+        //if movie was edited, prompt the statement
+        if (isUpdated) {
+            return ResponseEntity.ok("Movie details updated successfully.");
+        } else {
+            //if movie was not found or edited, prompt the statement 
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("The movie " + title + " not found");
+        }
+    }
 }
+
 
 

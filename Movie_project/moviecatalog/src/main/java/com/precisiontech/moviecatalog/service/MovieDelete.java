@@ -39,7 +39,7 @@ public class MovieDelete {
             String response = webClient.delete()
                             .uri(uriBuilder -> uriBuilder
                                 .path(supabaseUrl + "/rest/v1/movies")
-                                .queryParam("title", "eq." + title)
+                                .queryParam("title", "eq." + title)//Find the movie by title
                                 .build())
                             .header("apikey", supabaseApiKey)
                             .header("Prefer", "return=minimal") 
