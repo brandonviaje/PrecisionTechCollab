@@ -1,7 +1,7 @@
 // Handle form submission with file upload
 $('#movieForm').on('submit', function(e) {
     e.preventDefault();
-
+    $('#submit-button').prop('disabled', true);
     var formData = new FormData(this);
 
     $.ajax({

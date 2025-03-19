@@ -26,6 +26,10 @@ public class MovieController {
     private MovieDelete movieDelete;
     private MovieEdit movieEdit;
 
+    public MovieController(MovieEdit movieEdit, MovieDelete movieDelete) {
+        this.movieEdit = movieEdit;
+        this.movieDelete = movieDelete;
+    }
     /**
      * Spring Boot controller method to handle HTTP POST requests sent from the front end to the "/movies" endpoint
      * Handles the submission of a movie by an admin
@@ -38,12 +42,13 @@ public class MovieController {
      * @return                  path to the cover image
      */
     @PostMapping("/movies")
-    public ResponseEntity<?> addMovie(@RequestParam("title") String title, @RequestParam("releaseDate") String releaseDate, @RequestParam("poster") MultipartFile poster, @RequestParam("genres") String genres, @RequestParam("synopsis") String synopsis) {
-
+    public ResponseEntity<?> addMovie(@RequestParam("title") String title, @RequestParam("releaseDate") String releaseDate, @RequestParam("poster") MultipartFile poster, @RequestParam("genres") String genres, @RequestParam("synopsis") String synopsis, @RequestParam("pgRating") String pg_rating, @RequestParam("productionCompanies") String production_companies, @RequestParam("runtime") int runtime, @RequestParam("spokenLanguages") String spoken_languages) {
         // Save the poster file as a string path, return poster path
         String posterPath = movieService.saveImage(poster);
-        Movie movie = new Movie(title, releaseDate, posterPath, genres, synopsis); //create movie obj
-        movieService.addMovie(movie);  // save object to the database
+
+        // Create movie object with all fields, including the new ones
+        Movie movie = new Movie(title, releaseDate, posterPath, genres, synopsis, pg_rating, production_companies, runtime, spoken_languages);
+        movieService.addMovie(movie); //save object to DB
 
         return ResponseEntity.ok("Movie added successfully with poster at " + posterPath);
     }
@@ -54,14 +59,13 @@ public class MovieController {
      *
      * @param genre         optional genre filter
      * @param pgRating      Optional PG rating filter
-     * @param language      Optional language filter.
      * @return              movies gathered from the database
      */
     @GetMapping("/movies")
     public ResponseEntity<List<Movie>> getMovies (
         @RequestParam(value = "genre", required = false) String genre,
-        @RequestParam(value = "pg_rating", required = false) String pgRating,
-        @RequestParam(value = "spoken_languages", required = false) String languages){
+        @RequestParam(value = "pgRating", required = false) String pgRating,
+        @RequestParam(value = "spokenLanguages", required = false) String languages){
         
         List<Movie> movies;
         //if genre is found, find movies by that genre 
@@ -70,10 +74,10 @@ public class MovieController {
         //if genre is not selected, but pgrating is selected, find movies by that rating
         }else if(pgRating != null){
             movies = movieService.filterByPgRating(pgRating);
-        //if genre & rating is not selected, but langauges is selected, find movies by that langauge
+        //if genre & rating is not selected, but languages is selected, find movies by that language
         }else if(languages != null){
             movies = movieService.filterByLanguage(languages);
-        //if nothign is selected, show all movies 
+        //if nothin is selected, show all movies
         }else{
             movies = movieService.getAllMovies();
         }
@@ -136,28 +140,44 @@ public class MovieController {
      * @param spokenLanguages      The new spoken languages (optional).
      * @return 
      */
-    @PatchMapping("/movies/update")
-    public ResponseEntity<String> updateMovie(
-            @RequestParam String title,
-            @RequestParam(required = false) String runtime,
-            @RequestParam(required = false) String pgRating,
-            @RequestParam(required = false) String synopsis,
-            @RequestParam(required = false) String genres,
-            @RequestParam(required = false) String productionCompanies,
-            @RequestParam(required = false) String spokenLanguages) {
+     @PatchMapping("/movies/{movieId}/update")
+     public ResponseEntity<String> updateMovie(
+             @PathVariable String movieId,
+             @RequestParam(value = "title", required = false) String title,
+             @RequestParam(value = "releaseDate", required = false) String releaseDate,
+             @RequestParam(value = "genres", required = false) String genres,
+             @RequestParam(value = "synopsis", required = false) String synopsis,
+             @RequestParam(value = "pgRating", required = false) String pgRating,
+             @RequestParam(value = "productionCompanies", required = false) String productionCompanies,
+             @RequestParam(value = "runtime", required = false) Integer runtime,
+             @RequestParam(value = "spokenLanguages", required = false) String spokenLanguages,
+             @RequestParam(value = "poster", required = false) MultipartFile poster) {
 
-        boolean isUpdated = movieEdit.editMovie(
-                title, runtime, pgRating, synopsis, genres, productionCompanies, spokenLanguages);
-                
-        //if movie was edited, prompt the statement
-        if (isUpdated) {
-            return ResponseEntity.ok("Movie details updated successfully.");
-        } else {
-            //if movie was not found or edited, prompt the statement 
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("The movie " + title + " not found");
-        }
-    }
+         // Handle the movie update logic here
+         Movie existingMovie = movieService.getMovieById(movieId);
+         if (existingMovie == null) {
+             return ResponseEntity.notFound().build();  // Movie not found
+         }
+
+         // Update the movie fields if they are not null
+         if (title != null) existingMovie.setTitle(title);
+         if (releaseDate != null) existingMovie.setReleaseDate(releaseDate);
+         if (genres != null) existingMovie.setGenres(genres);
+         if (synopsis != null) existingMovie.setSynopsis(synopsis);
+         if (pgRating != null) existingMovie.setPgRating(pgRating);
+         if (productionCompanies != null) existingMovie.setProductionCompanies(productionCompanies);
+         if (runtime != null) existingMovie.setRuntime(runtime);
+         if (spokenLanguages != null) existingMovie.setSpokenLanguages(spokenLanguages);
+
+         // Handle the poster if uploaded
+         if (poster != null && !poster.isEmpty()) {
+             String posterPath = movieService.saveImage(poster);
+             existingMovie.setPosterPath(posterPath);
+         }
+
+         movieEdit.updateMovieDetails(movieId, existingMovie);
+         return ResponseEntity.ok("Movie updated successfully!");
+     }
 }
 
 

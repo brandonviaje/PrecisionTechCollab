@@ -1,24 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movies and Shows</title>
-    <link rel="stylesheet" href="../css/library.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movies and Shows</title>
+  <link rel="stylesheet" href="../css/library.css">
 </head>
 <body>
 <div id="header-container"> </div>
 <main>
-    <div class="movie_show_container">
-        <h1>Movies</h1>
-        <div class="filter_container">
-            <label for="genre-filter">Filter by Genre:</label>
-            <select id="genre-filter">
-                <option value="">All</option>
-            </select></div>
+  <div class="movie_show_container">
+    <h1>Movies</h1>
 
-        <div class="movies"></div>
+    <!-- Filters Section -->
+    <div class="filter_container">
+      <label for="genre-filter">Filter by Genre:</label>
+      <select id="genre-filter">
+        <option value="">All Genres</option>
+      </select>
+
+      <label for="pg-rating-filter">Filter by PG Rating:</label>
+      <select id="pg-rating-filter">
+        <option value="">All Ratings</option>
+      </select>
+
+      <label for="languages-filter">Filter by Language:</label>
+      <select id="languages-filter">
+        <option value="">All Languages</option>
+      </select>
     </div>
+
+    <!-- Movies List -->
+    <div class="movies">
+    </div>
+  </div>
 </main>
 
 <script src="../scripts/headerfooter.js"></script>

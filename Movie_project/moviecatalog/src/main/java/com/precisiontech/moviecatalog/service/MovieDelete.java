@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class MovieDelete {
 @Value("${supabase.url}")
     private String supabaseUrl;
