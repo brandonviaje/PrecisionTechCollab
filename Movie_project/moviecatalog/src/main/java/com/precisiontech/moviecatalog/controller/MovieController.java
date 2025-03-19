@@ -42,7 +42,7 @@ public class MovieController {
     }
 
     @GetMapping("/movies")
-    public ResponseEntity<List<Movie>> getMovies(@RequestParam(value = "genre", required = false) String genre, @RequestParam(value = "pgRating", required = false) String pgRating, @RequestParam(value = "spokenLanguages", required = false) String languages) {
+    public ResponseEntity<List<Movie>> getMovies(@RequestParam(value = "genre", required = false) String genre, @RequestParam(value = "pg_rating", required = false) String pgRating, @RequestParam(value = "spoken_languages", required = false) String languages) {
         List<Movie> movies;
         if (genre != null) {
             movies = movieFilterService.filterByGenre(genre);
@@ -50,11 +50,13 @@ public class MovieController {
             movies = movieFilterService.filterByPgRating(pgRating);
         } else if (languages != null) {
             movies = movieFilterService.filterByLanguage(languages);
-        } else { //shows all movies
+        } else {
             movies = movieFetchService.getAllMovies();
         }
         return ResponseEntity.ok(movies);
     }
+
+
 
     @GetMapping("/movies/search")
     public ResponseEntity<List<Movie>> searchMovies(@RequestParam(value = "title") String title) {

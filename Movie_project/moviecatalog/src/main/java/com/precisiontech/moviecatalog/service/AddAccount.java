@@ -27,7 +27,7 @@ public class AddAccount {
     }
 
     /**
-     * Adds an account to the accounts database.
+     * Adds an account to the account's database.
      *
      * @param account the account to be added
      */

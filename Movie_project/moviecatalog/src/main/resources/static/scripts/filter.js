@@ -39,16 +39,25 @@ function fetchPgRatings() {
             const ratings = new Set();
             movies.forEach(function (movie) {
                 if (movie.pgRating) {
-                    //Normalize Casing
+                    // Normalize Casing
                     const formattedRating = movie.pgRating.toLowerCase().replace(/^\w/, (c) => c.toUpperCase());
                     ratings.add(formattedRating);
                 }
             });
+
+            // Convert the Set to an array, sort it alphabetically, and exclude "18+"
+            const sortedRatings = [...ratings].sort((a, b) => a.localeCompare(b));
+
             const ratingFilter = $("#pg-rating-filter");
             ratingFilter.empty();
             ratingFilter.append('<option value="">All Ratings</option>');
 
-            ratings.forEach(rating => ratingFilter.append(`<option value="${rating}">${rating}</option>`));
+            // Add sorted ratings to the dropdown, excluding "18+"
+            sortedRatings.forEach(rating => {
+                if (rating !== "18+") {
+                    ratingFilter.append(`<option value="${rating}">${rating}</option>`);
+                }
+            });
         })
         .fail(error => console.error("Error Fetching PG Ratings:", error));
 }
@@ -60,27 +69,26 @@ function fetchLanguages() {
             movies.forEach(function (movie) {
                 if (Array.isArray(movie.spokenLanguages)) {
                     movie.spokenLanguages.forEach(language => languages.add(language.trim()));
-                    if (language && language.trim() !== "Null") {
-                        languages.add(language.trim());
-                    }
                 } else if (typeof movie.spokenLanguages === "string") {
                     movie.spokenLanguages.split(",").forEach(language => languages.add(language.trim()));
                 }
             });
 
+            // Convert Set to array and sort it alphabetically
+            const sortedLanguages = [...languages].sort((a, b) => a.localeCompare(b));
             const languageFilter = $("#languages-filter");
             languageFilter.empty();
             languageFilter.append('<option value="">All Languages</option>');
 
-            languages.forEach(language => {
-                //Normalize Casing
+            // Add sorted languages to the dropdown
+            sortedLanguages.forEach(language => {
+                // Normalize Casing
                 const formattedLanguage = language.toLowerCase().replace(/^\w/, (c) => c.toUpperCase());
                 languageFilter.append(`<option value="${formattedLanguage}">${formattedLanguage}</option>`);
             });
         })
         .fail(error => console.error("Error Fetching Languages:", error));
 }
-
 
 function fetchGenres() {
     $.getJSON(apiUrl)
@@ -94,17 +102,21 @@ function fetchGenres() {
                 }
             });
 
+            // Convert Set to an array and sort alphabetically
+            const sortedGenres = [...genres].sort((a, b) => a.localeCompare(b));
+
             const genreFilter = $("#genre-filter");
             genreFilter.empty();
             genreFilter.append('<option value="">All Genres</option>');
 
-            genres.forEach(genre => {
-                //Normalize Casing
+            // Add sorted genres to the dropdown
+            sortedGenres.forEach(genre => {
+                // Normalize Casing
                 const formattedGenre = genre.toLowerCase().replace(/^\w/, (c) => c.toUpperCase());
                 genreFilter.append(`<option value="${formattedGenre}">${formattedGenre}</option>`);
             });
 
-            console.log("Updated Genres in Dropdown:", [...genres]);  // Debugging log
+            console.log("Updated Genres in Dropdown:", sortedGenres);  // Debugging log
         })
         .fail(error => console.error("Error Fetching genres:", error));
 }

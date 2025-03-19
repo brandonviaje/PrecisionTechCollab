@@ -21,7 +21,7 @@ public class FilterMovies {
     public FilterMovies(WebClient.Builder webClientBuilder, SupabaseConfig supabaseConfig, FetchMovies movieFetchService) {
         this.webClient = webClientBuilder.baseUrl(supabaseConfig.getSupabaseUrl()).build();
         this.supabaseApiKey = supabaseConfig.getSupabaseApiKey();
-        this.movieFetchService = movieFetchService;  // Assigning MovieFetchService
+        this.movieFetchService = movieFetchService;
     }
 
     /**
@@ -33,16 +33,14 @@ public class FilterMovies {
     public List<Movie> filterByGenre(String genre) {
         List<Movie> allMovies;
 
-        // If no genre is specified, return all movies
         if (genre == null) {
             return movieFetchService.getAllMovies();
         } else {
-            // If genre is provided, fetch those specific movies
             allMovies = webClient.get()
                     .uri(uriBuilder -> uriBuilder
                             .path("/rest/v1/movies")
                             .queryParam("genres", "ilike.%" + genre + "%")
-                            .queryParam("order", "id.asc")
+                            .queryParam("order", "title.asc")
                             .build())
                     .header("apikey", supabaseApiKey)
                     .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
@@ -63,7 +61,6 @@ public class FilterMovies {
     public List<Movie> filterByPgRating(String pgRating) {
         List<Movie> allMovies;
 
-        // If no rating is specified, return all movies
         if (pgRating == null) {
             return movieFetchService.getAllMovies();
         } else {
@@ -71,8 +68,8 @@ public class FilterMovies {
             allMovies = webClient.get()
                     .uri(uriBuilder -> uriBuilder
                             .path("/rest/v1/movies")
-                            .queryParam("pg_rating", "eq." + pgRating)
-                            .queryParam("order", "id.asc")
+                            .queryParam("pg_rating", "ilike.%" + pgRating + "%")
+                            .queryParam("order", "title.asc")
                             .build())
                     .header("apikey", supabaseApiKey)
                     .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
@@ -93,7 +90,6 @@ public class FilterMovies {
     public List<Movie> filterByLanguage(String language) {
         List<Movie> allMovies;
 
-        // If no language is specified, return all movies
         if (language == null) {
             return movieFetchService.getAllMovies();
         } else {
@@ -101,8 +97,8 @@ public class FilterMovies {
             allMovies = webClient.get()
                     .uri(uriBuilder -> uriBuilder
                             .path("/rest/v1/movies")
-                            .queryParam("spoken_languages", "eq." + language)
-                            .queryParam("order", "id.asc")
+                            .queryParam("spoken_languages", "ilike.%" + language + "%")
+                            .queryParam("order", "title.asc")
                             .build())
                     .header("apikey", supabaseApiKey)
                     .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
