@@ -9,6 +9,11 @@ public class Account {
     @JsonProperty("account_id")
     private String accountId;
 
+    // Default constructor for Jackson deserialization
+    public Account() {
+        // Required for proper JSON deserialization
+    }
+
     public Account(String fullName, String username, String password) {
         this.fullName = fullName;
         this.username = username;
@@ -46,5 +51,14 @@ public class Account {
 
     public void setAccountId(String accountId) {
         this.accountId = accountId;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "fullName='" + fullName + '\'' +
+                ", username='" + username + '\'' +
+                ", accountId='" + accountId + '\'' +
+                '}';
     }
 }

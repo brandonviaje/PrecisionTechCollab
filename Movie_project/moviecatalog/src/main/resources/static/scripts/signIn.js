@@ -1,45 +1,96 @@
-// Function to handle sign-in logic with temporary credentials
 document.addEventListener("DOMContentLoaded", function () {
     // Attach event listener to the form after the DOM is loaded
     const form = document.getElementById('signin-form');
 
-    // Attach the sign-in handler to the form submission
-    form.addEventListener('submit', handleSignIn);
+    if (form) {
+        console.log("Sign-in form found, attaching submit handler");
+        // Attach the sign-in handler to the form submission
+        form.addEventListener('submit', handleSignIn);
+    } else {
+        console.error("Sign-in form not found");
+    }
 });
 
 // Function to handle sign-in logic
 function handleSignIn(event) {
     event.preventDefault();
+    console.log("Sign-in attempt started");
 
     const username = document.getElementById('login-username').value;
     const password = document.getElementById('password').value;
+    console.log("Attempting login with:", username);
 
-    // Temporary credentials
-    const tempUsername = "red";
-    const tempPassword = "red";
-
-    // Debugging log to verify input values
-    console.log("Entered Username: " + username);
-    console.log("Entered Password: " + password);
-    console.log("Expected Username: " + tempUsername);
-    console.log("Expected Password: " + tempPassword);
-
-    // Check if the entered username and password match the temp credentials
-    if (username === tempUsername && password === tempPassword) {
-        alert('Login successful!');
-
-        // Store both 'username' and 'userName' for compatibility with both scripts
-        localStorage.setItem('isSignedIn', 'true');
-        localStorage.setItem('username', username);
-        localStorage.setItem('userName', username);
-        localStorage.setItem('password', password); // Store password for display on account page
-
-        console.log("Username stored in localStorage:", localStorage.getItem('username'));
-        console.log("UserName stored in localStorage:", localStorage.getItem('userName'));
-
-        // Redirect to index page
-        window.location.href = "../index.html";
-    } else {
-        alert('Invalid username or password!');
+    // Basic validation
+    if (!username || !password) {
+        alert('Username and password are required!');
+        return;
     }
+
+    console.log("Attempting login with username:", username);
+
+    // Show loading indicator
+    const submitButton = event.target.querySelector("button[type='submit']");
+    const originalButtonText = submitButton.textContent;
+    submitButton.textContent = "Signing In...";
+    submitButton.disabled = true;
+
+    // Call the backend API to verify credentials
+    fetch(`/api/accounts?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+        .then(response => {
+            console.log("Response status:", response.status);
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            return response.json();
+        })
+        .then(data => {
+            // Handle the response data
+            console.log("Response data:", JSON.stringify(data));
+
+            if (data.success === true) {
+                console.log("Login successful for user:", username);
+
+                // Store authentication data in localStorage
+                localStorage.setItem('isSignedIn', 'true');
+                localStorage.setItem('username', username);
+                localStorage.setItem('userName', username);
+
+                // Store password for account page display
+                localStorage.setItem('password', password);
+
+                // Store additional user information
+                localStorage.setItem('fullName', data.fullName || username);
+
+                // Store join date if available from the response, otherwise set current date
+                if (data.joinDate) {
+                    localStorage.setItem('joinDate', data.joinDate);
+                } else {
+                    const now = new Date();
+                    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                    localStorage.setItem('joinDate', now.toLocaleDateString('en-US', options));
+                }
+
+                // Redirect to index page
+                window.location.href = "../index.html";
+            } else {
+                console.log("Login failed: Invalid username or password");
+                alert('Invalid username or password!');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error during sign in. Please try again.');
+        })
+        .finally(() => {
+            // Reset button state
+            submitButton.textContent = originalButtonText;
+            submitButton.disabled = false;
+        });
 }

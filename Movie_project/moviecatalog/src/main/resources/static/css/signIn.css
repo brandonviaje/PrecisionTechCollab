@@ -111,3 +111,8 @@ a {
 #sub-head {
     text-align: center;
 }
+#sign-up-link {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Add some spacing if needed */
+}

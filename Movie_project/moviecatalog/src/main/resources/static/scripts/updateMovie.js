@@ -6,11 +6,11 @@ $(document).ready(function() {
         $.getJSON(apiUrl)
             .done(function(data) {
                 console.log(data);
-                const {title, releaseDate, pgRating, poster_path, productionCompanies, spokenLanguages, runtime, genres, synopsis} = data
+                const {title, release_date, pgRating, poster_path, productionCompanies, spokenLanguages, runtime, genres, synopsis} = data
 
                 // Populate the form fields
                 $('#title').val(title);
-                $('#releaseDate').val(releaseDate);
+                $('#releaseDate').val(release_date);
                 $('#pgRating').val(pgRating);
                 $('#synopsis').val(synopsis);
                 $('#genres').val(genres);
