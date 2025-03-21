@@ -1,27 +1,28 @@
 $(document).ready(function() {
-    // Get the movie_id from the URL query parameters
-    const movieId = new URLSearchParams(window.location.search).get('id');
+    // Get actor_id from URL query parameters
+    const actorId = new URLSearchParams(window.location.search).get('id');
 
-    if (movieId) {
-        // Request to your backend API to get movie details
-        const movieDetailsUrl = `/api/movies/${movieId}`; // Assuming the backend has an endpoint to fetch movie by ID
+    if (actorId) {
+        // Request to the TMDb API to get actor details
+        const actorDetailsUrl = `https://api.themoviedb.org/3/person/${actorId}?api_key=cf334fe88eeddcdc728d651ffed41008`;
 
-        $.getJSON(movieDetailsUrl)
-            .done(function(movieData) {
-                // Destructure the movie data response
-                const { title, releaseDate, synopsis, posterPath } = movieData;
+        $.getJSON(actorDetailsUrl)
+            .done(function(actorData) {
+                // Destructure the actor data response from TMDb
+                const { name, biography, place_of_birth, birthday, profile_path } = actorData;
 
                 // Set the values to the HTML elements
-                $('#movie-title').text(title);
-                $('#movie-release-date').text(releaseDate);
-                $('#movie-overview').text(synopsis);
+                $('#actor-name').text(name);
+                $('#actor-biography').text(biography);
+                $('#actor-place-of-birth').text(place_of_birth);
+                $('#actor-birthday').text(birthday);
 
-                // If a poster path exists, set the image source
-                const posterUrl = posterPath ? posterPath : 'https://via.placeholder.com/500'; // Placeholder if no poster
-                $('#movie-poster').attr('src', posterUrl);
+                // If a profile path exists, set the image source
+                const profileUrl = profile_path ? `https://image.tmdb.org/t/p/w500${profile_path}` : 'https://via.placeholder.com/500';
+                $('#actor-profile').attr('src', profileUrl);
             })
             .fail(function(error) {
-                console.error("Error fetching movie details:", error);
+                console.error("Error fetching actor details:", error);
             });
     }
 });

@@ -5,7 +5,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
-    
+
+    /**
+     * Spring Boot controller method to handle HTTP GET requests to the "/" endpoint
+     * Handles loading the home page
+     *
+     * @return          the home page
+     */
     // This method maps to the root URL ("/") and returns the index.html page
     @GetMapping("/")
     public String showHomePage() {
