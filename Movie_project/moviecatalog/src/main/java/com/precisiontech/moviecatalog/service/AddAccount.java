@@ -18,12 +18,12 @@ import java.util.Map;
 public class AddAccount {
 
     private final WebClient webClient;
-    private final SupabaseConfig supabaseConfig;
+    private final String supabaseApiKey;
 
     @Autowired
-    public AddAccount(WebClient webClient, SupabaseConfig supabaseConfig) {
-        this.webClient = webClient;
-        this.supabaseConfig = supabaseConfig;
+    public AddAccount(WebClient.Builder webClientBuilder, SupabaseConfig supabaseConfig) {
+        this.webClient = webClientBuilder.baseUrl(supabaseConfig.getSupabaseUrl()).build();
+        this.supabaseApiKey = supabaseConfig.getSupabaseApiKey();
     }
 
     /**
@@ -36,7 +36,7 @@ public class AddAccount {
         accountData.put("full_name", account.getFullName()); // Fixed: was using username instead of fullName
         accountData.put("username", account.getUsername());
         accountData.put("password", account.getPassword());
-        accountData.put("join_date", account.getJoinDate());
+        //accountData.put("join_date", account.getJoinDate());
 
         try {
             // Serialize the data into JSON format
@@ -46,7 +46,7 @@ public class AddAccount {
             // Insert account into Supabase
             String response = webClient.post()
                     .uri("/rest/v1/accounts")
-                    .header("apikey", supabaseConfig.getSupabaseApiKey())
+                    .header("apikey", supabaseApiKey)
                     .header("Prefer", "return=representation") // Ensures the response returns the inserted record
                     .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                     .bodyValue(jsonPayload)
