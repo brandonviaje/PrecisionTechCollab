@@ -6,12 +6,12 @@ $(document).ready(function() {
 
         $.getJSON(apiUrl)
             .done(function(data) {
-                const { title, poster_path, synopsis, releaseDate, genres } = data;
+                const { title, poster_path, synopsis, release_date, genres } = data;
 
                 // Set the movie details in HTML
                 $('#movie-title').text(title);
                 $('#movie-overview').text(synopsis);
-                $('#movie-release-date').text(releaseDate);
+                $('#movie-release-date').text(release_date);
                 $('#movie-genres').text(genres);
 
                 // Set the movie poster

@@ -15,7 +15,7 @@ public class FilterMovies {
 
     private final WebClient webClient;
     private final String supabaseApiKey;
-    private final FetchMovies movieFetchService;  // Injecting MovieFetchService
+    private final FetchMovies movieFetchService;
 
     @Autowired
     public FilterMovies(WebClient.Builder webClientBuilder, SupabaseConfig supabaseConfig, FetchMovies movieFetchService) {
