@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     // Get user data from localStorage
     const username = localStorage.getItem('userName') || localStorage.getItem('username');
-    const password = localStorage.getItem('password') || ""; // Default to empty string if not stored
+    const password = localStorage.getItem('password') || ""; // Get password from localStorage
     const fullName = localStorage.getItem('fullName') || username; // Use username as fallback
     const joinDate = localStorage.getItem('joinDate') || getCurrentDate(); // Get join date or set current date
 
@@ -34,26 +34,34 @@ document.addEventListener("DOMContentLoaded", function() {
     const passwordElement = document.getElementById('account-password');
 
     if (togglePasswordBtn && passwordElement) {
-        // Store the actual password but don't display it initially
-        passwordElement.dataset.password = password;
+        // Initialize the password field with masked characters
         passwordElement.textContent = '••••••';
+
+        // Make sure we can access the actual password later
+        passwordElement.dataset.password = password;
         passwordElement.classList.add('masked-password');
 
         togglePasswordBtn.addEventListener('click', function() {
             const icon = this.querySelector('i');
 
             if (passwordElement.classList.contains('masked-password')) {
-                // Show password
-                passwordElement.textContent = passwordElement.dataset.password;
+                // Show password - use the stored password from dataset
+                passwordElement.textContent = passwordElement.dataset.password || password;
                 passwordElement.classList.remove('masked-password');
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
+                if (icon) {
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                }
+                this.setAttribute('title', 'Hide password');
             } else {
                 // Hide password
                 passwordElement.textContent = '••••••';
                 passwordElement.classList.add('masked-password');
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
+                if (icon) {
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+                this.setAttribute('title', 'Show password');
             }
         });
     }

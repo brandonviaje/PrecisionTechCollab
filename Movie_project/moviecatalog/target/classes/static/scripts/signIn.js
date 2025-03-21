@@ -62,8 +62,20 @@ function handleSignIn(event) {
                 localStorage.setItem('username', username);
                 localStorage.setItem('userName', username);
 
+                // Store password for account page display
+                localStorage.setItem('password', password);
+
                 // Store additional user information
                 localStorage.setItem('fullName', data.fullName || username);
+
+                // Store join date if available from the response, otherwise set current date
+                if (data.joinDate) {
+                    localStorage.setItem('joinDate', data.joinDate);
+                } else {
+                    const now = new Date();
+                    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                    localStorage.setItem('joinDate', now.toLocaleDateString('en-US', options));
+                }
 
                 // Redirect to index page
                 window.location.href = "../index.html";
