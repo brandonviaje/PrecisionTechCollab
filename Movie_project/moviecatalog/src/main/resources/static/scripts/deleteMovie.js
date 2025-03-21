@@ -21,6 +21,7 @@ $(document).ready(function() {
         }
     });
 
+
     // Display the search results
     function displaySearchResults(movies) {
         $('#search-results').empty();

@@ -56,8 +56,6 @@ public class MovieController {
         return ResponseEntity.ok(movies);
     }
 
-
-
     @GetMapping("/movies/search")
     public ResponseEntity<List<Movie>> searchMovies(@RequestParam(value = "title") String title) {
         List<Movie> movies = movieSearchService.searchMovies(title);

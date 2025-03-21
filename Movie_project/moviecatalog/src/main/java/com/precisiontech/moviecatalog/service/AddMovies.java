@@ -17,12 +17,12 @@ import java.util.Map;
 public class AddMovies {
 
     private final WebClient webClient;
-    private final String supabaseApiKey;
+    private final SupabaseConfig supabaseConfig;
 
     @Autowired
-    public AddMovies(WebClient.Builder webClientBuilder, SupabaseConfig supabaseConfig) {
-        this.webClient = webClientBuilder.baseUrl(supabaseConfig.getSupabaseUrl()).build();
-        this.supabaseApiKey = supabaseConfig.getSupabaseApiKey();
+    public AddMovies(WebClient webClient, SupabaseConfig supabaseConfig) {
+        this.webClient = webClient;
+        this.supabaseConfig = supabaseConfig;
     }
 
     public void addMovie(Movie movie) {
@@ -34,7 +34,7 @@ public class AddMovies {
 
             String response = webClient.post()
                     .uri("/rest/v1/movies")
-                    .header("apikey", supabaseApiKey)
+                    .header("apikey", supabaseConfig.getSupabaseApiKey())
                     .header("Prefer", "return=representation")
                     .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                     .bodyValue(jsonPayload)
