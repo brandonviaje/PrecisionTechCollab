@@ -40,6 +40,8 @@ public class AccountController {
             @RequestParam("username") String username,
             @RequestParam("password") String password) {
 
+        System.out.println("Received account creation request for username: " + username);
+
         // Basic validation
         if (fullName == null || fullName.trim().isEmpty() ||
                 username == null || username.trim().isEmpty() ||
@@ -50,9 +52,12 @@ public class AccountController {
         try {
             Account account = new Account(fullName, username, password);
             addAccountService.addAccount(account);
+            System.out.println("Account created successfully for: " + username);
 
             return ResponseEntity.ok("Account added successfully");
         } catch (Exception e) {
+            System.err.println("Error creating account: " + e.getMessage());
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error creating account: " + e.getMessage());
         }
@@ -72,21 +77,27 @@ public class AccountController {
             @RequestParam("password") String password) {
         System.out.println("Sign-in attempt for user: " + username);
 
+        try {
+            Account account = verifySignInService.findAndVerifyAccount(username, password);
+            System.out.println("Account found: " + (account != null));
 
-        Account account = verifySignInService.findAndVerifyAccount(username, password);
-        System.out.println("Account found: " + (account != null));
+            if (account != null) {
+                System.out.println("Account details: " + account.getUsername() + ", " + account.getFullName());
 
-        if (account != null) {
-            System.out.println("Account details: " + account.getUsername() + ", " + account.getFullName());
-
-            Map<String, Object> response = new HashMap<>();
-            response.put("success", true);
-            response.put("fullName", account.getFullName());
-            response.put("username", account.getUsername());
-            response.put("joinDate", account.getJoinDate());
-            return ResponseEntity.ok(response);
-        } else {
-            return ResponseEntity.ok(Map.of("success", false));
+                Map<String, Object> response = new HashMap<>();
+                response.put("success", true);
+                response.put("fullName", account.getFullName());
+                response.put("username", account.getUsername());
+                return ResponseEntity.ok(response);
+            } else {
+                System.out.println("No matching account found for: " + username);
+                return ResponseEntity.ok(Map.of("success", false, "message", "Invalid username or password"));
+            }
+        } catch (Exception e) {
+            System.err.println("Error during sign-in: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("success", false, "message", "Error during sign-in"));
         }
     }
 }

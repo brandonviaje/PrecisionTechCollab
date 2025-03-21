@@ -36,27 +36,25 @@ function handleSignIn(event) {
 
     // Call the backend API to verify credentials
     fetch(`/api/accounts?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`, {
-        method: 'GET'
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json'
+        }
     })
         .then(response => {
             console.log("Response status:", response.status);
-            console.log("Response OK:", response.ok);
+
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
+
             return response.json();
         })
         .then(data => {
-            // Handle the legacy boolean response format (remove this if backend is updated)
+            // Handle the response data
             console.log("Response data:", JSON.stringify(data));
 
-            if (data === false) {
-                console.log("Login failed: Invalid username or password");
-                alert('Invalid username or password!');
-                return;
-            }
-
-            if (data.success) {
+            if (data.success === true) {
                 console.log("Login successful for user:", username);
 
                 // Store authentication data in localStorage
@@ -66,7 +64,6 @@ function handleSignIn(event) {
 
                 // Store additional user information
                 localStorage.setItem('fullName', data.fullName || username);
-                localStorage.setItem('joinDate', data.joinDate || getCurrentDate());
 
                 // Redirect to index page
                 window.location.href = "../index.html";
@@ -84,11 +81,4 @@ function handleSignIn(event) {
             submitButton.textContent = originalButtonText;
             submitButton.disabled = false;
         });
-}
-
-// Helper function to get current date if joinDate is missing
-function getCurrentDate() {
-    const now = new Date();
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return now.toLocaleDateString('en-US', options);
 }
