@@ -49,4 +49,3 @@ function createMovieCard(movie) {
     </div>
     `;
 }
-

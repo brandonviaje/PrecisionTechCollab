@@ -31,7 +31,7 @@ public class FetchMovies {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/rest/v1/movies")
-                        .queryParam("order", "id.asc")  // Sorting by ID in ascending order
+                        .queryParam("order", "id.asc")
                         .build())
                 .header("apikey", supabaseApiKey)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)

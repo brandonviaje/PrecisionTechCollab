@@ -74,7 +74,7 @@ function initializeHeaderUI() {
 
         // Set up admin sign out functionality
         if (adminSignOutBtn) {
-            adminSignOutBtn.addEventListener('click', function() {
+            adminSignOutBtn.addEventListener('click', function () {
                 localStorage.removeItem('isAdminSignedIn');
                 localStorage.removeItem('adminUsername');
                 localStorage.removeItem('adminPassword');
@@ -83,8 +83,7 @@ function initializeHeaderUI() {
                 window.location.reload();
             });
         }
-    }
-    else if (isUserSignedIn === 'true' && userName) {
+    } else if (isUserSignedIn === 'true' && userName) {
         // REGULAR USER IS LOGGED IN
         signInSection.style.display = 'none'; // Hide Sign In section
         signUpBtn.style.display = 'none'; // Hide Sign Up button
@@ -106,7 +105,7 @@ function initializeHeaderUI() {
 
         // Set up user sign out functionality
         if (signOutBtn) {
-            signOutBtn.addEventListener('click', function() {
+            signOutBtn.addEventListener('click', function () {
                 localStorage.removeItem('isSignedIn');
                 localStorage.removeItem('userName');
                 localStorage.removeItem('username');
@@ -116,8 +115,7 @@ function initializeHeaderUI() {
                 window.location.reload(); // Reload to update UI
             });
         }
-    }
-    else {
+    } else {
         // NO ONE IS LOGGED IN
         signInSection.style.display = 'inline-block'; // Show Sign In section
         signUpBtn.style.display = 'inline-block'; // Show Sign Up button
@@ -154,7 +152,7 @@ function adminSignIn(adminUserName) {
 }
 
 // Run initialization on window load as well, to catch cases where the header was already loaded
-window.onload = function() {
+window.onload = function () {
     // If header is already in the DOM, initialize it
     if (document.querySelector('#signInSection')) {
         initializeHeaderUI();
