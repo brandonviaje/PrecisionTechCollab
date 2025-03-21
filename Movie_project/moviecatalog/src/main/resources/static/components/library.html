@@ -3,28 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Movies and Shows</title>
+  <title>Movie Library</title>
   <link rel="stylesheet" href="../css/library.css">
 </head>
 <body>
 <div id="header-container"> </div>
 <main>
   <div class="movie_show_container">
-    <h1>Movies and Shows</h1>
+    <h1>Movies</h1>
+
+    <!-- Filters Section -->
     <div class="filter_container">
       <label for="genre-filter">Filter by Genre:</label>
       <select id="genre-filter">
-        <option value="">All</option>
-      </select></div>
+        <option value="">All Genres</option>
+      </select>
 
+      <label for="pg-rating-filter">Filter by PG Rating:</label>
+      <select id="pg-rating-filter">
+        <option value="">All Ratings</option>
+      </select>
+
+      <label for="languages-filter">Filter by Language:</label>
+      <select id="languages-filter">
+        <option value="">All Languages</option>
+      </select>
+    </div>
+
+    <!-- Movies List -->
     <div class="movies">
-      <!-- Movies will be dynamically loaded here -->
     </div>
   </div>
 </main>
 
 <script src="../scripts/headerfooter.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="../scripts/filter.js"></script> <!-- Add this line for your filter.js -->
+<script src="../scripts/filter.js"></script>
 </body>
 </html>
