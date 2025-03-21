@@ -15,11 +15,11 @@ import java.util.Map;
 @Service
 public class EditMovies {
     @Value("${supabase.url}")
-    private String supabaseUrl;
+    String supabaseUrl;
 
     // Use Service Role Key (since RLS is disabled)
     @Value("${supabase.api.key}")
-    private String supabaseApiKey;
+    String supabaseApiKey;
 
     private WebClient webClient;
 

@@ -33,7 +33,7 @@ public class Movie {
     public String getTitle() {return title;}
 
     public void setTitle(String title) {this.title = title;}
-
+    @JsonProperty("release_date")
     public String getReleaseDate() {return releaseDate;}
 
     public void setReleaseDate(String releaseDate) {this.releaseDate = releaseDate;}

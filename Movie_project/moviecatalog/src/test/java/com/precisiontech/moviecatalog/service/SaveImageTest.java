@@ -25,16 +25,12 @@ class SaveImageTest {
         String originalFileName = "poster.jpg";
         String expectedPath = "/userimg/" + originalFileName;
 
-        // Mock MultipartFile behavior
+        // Mock saveimage behaviour
         when(mockMultipartFile.getOriginalFilename()).thenReturn(originalFileName);
-
-        // Mock file transfer behavior
         Path path = Paths.get("src", "main", "resources", "static", "userimg", originalFileName);
         Files.createDirectories(path.getParent());
 
         String result = SaveImage.saveImage(mockMultipartFile);
-
-        // Assert
         assertEquals(expectedPath, result);
         verify(mockMultipartFile, times(1)).transferTo(any(Path.class));
     }
@@ -46,8 +42,6 @@ class SaveImageTest {
 
         // Simulate IOException during file transfer
         doThrow(new IOException("Error saving file")).when(mockMultipartFile).transferTo(any(Path.class));
-
-        // Act & Assert
         RuntimeException thrown = assertThrows(RuntimeException.class, () -> SaveImage.saveImage(mockMultipartFile));  // Accessing via class name
         assertTrue(thrown.getMessage().contains("Error saving image"));
     }
