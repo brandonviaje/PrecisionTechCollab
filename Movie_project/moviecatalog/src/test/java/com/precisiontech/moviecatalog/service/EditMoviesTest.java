@@ -72,8 +72,6 @@ class EditMoviesTest {
 
         // Prepare the expected request body
         String expectedRequestBody = "{\"title\":\"Updated Title\",\"release_date\":\"2022-12-12\",\"genres\":\"Action, Adventure\",\"runtime\":120,\"spoken_languages\":\"English\",\"production_companies\":\"Test Production\",\"pg_rating\":\"PG-13\",\"poster_path\":\"/path/to/poster.jpg\",\"synopsis\":\"Ship sinking\"}";
-
-        // Use JSONAssert to compare the expected and actual JSON bodies ignoring the field order
         JSONAssert.assertEquals(expectedRequestBody, request.getBody().readUtf8(), false);
     }
 }

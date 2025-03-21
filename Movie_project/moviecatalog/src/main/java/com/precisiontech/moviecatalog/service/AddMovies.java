@@ -27,7 +27,7 @@ public class AddMovies {
 
     public void addMovie(Movie movie) {
         Map<String, Object> movieData = getStringObjectMap(movie);
-
+        //serialize to json
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             String jsonPayload = objectMapper.writeValueAsString(movieData);

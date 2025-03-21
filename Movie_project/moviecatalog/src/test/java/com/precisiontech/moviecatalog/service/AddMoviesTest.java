@@ -48,29 +48,27 @@ public class AddMoviesTest {
 
     @Test
     public void testAddMovie() throws Exception {
-        // Create test movie
+        // create test movie
         Movie movie = new Movie("Test Title", "12-02-02", "/testPath.jpg",
                 "Test Genre", "Test Synopsis", "R", "Test Company", 148, "Test Language");
 
-        // Mock HTTP response from Supabase
+        // mock HTTP response from Supabase
         mockWebServer.enqueue(new MockResponse()
                 .setBody("[{\"movie_id\":\"12345\"}]")
                 .addHeader("Content-Type", "application/json"));
 
         // Call the method to add movie
         addMoviesService.addMovie(movie);
-
-        // Validate that the movie ID was set correctly
         assertEquals("12345", movie.getMovieId());
 
-        // Verify request details
+        // verify request details
         var request = mockWebServer.takeRequest();
         assertEquals("POST", request.getMethod());
         assertEquals("/rest/v1/movies", request.getPath());
         assertEquals("application/json", request.getHeader("Content-Type"));
         assertEquals("test-api-key", request.getHeader("apikey"));
 
-        // Verify request body contains expected data
+        // verify if request body contains expected data
         ObjectMapper mapper = new ObjectMapper();
         JsonNode requestBody = mapper.readTree(request.getBody().readUtf8());
         assertEquals("Test Title", requestBody.get("title").asText());
