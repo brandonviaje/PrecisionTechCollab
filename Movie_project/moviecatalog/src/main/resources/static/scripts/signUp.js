@@ -9,9 +9,20 @@ document.addEventListener("DOMContentLoaded", function () {
         const password = document.getElementById("password").value;
         const confirmPassword = document.getElementById("confirm-password").value;
 
-        // Basic validation
+        // Enhanced validation
         if (!name || !username || !password || !confirmPassword) {
             alert("All fields are required!");
+            return;
+        }
+
+        // Check minimum length for username and password
+        if (username.length < 3) {
+            alert("Username must be at least 3 characters long");
+            return;
+        }
+
+        if (password.length < 6) {
+            alert("Password must be at least 6 characters long");
             return;
         }
 
@@ -21,35 +32,41 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // Retrieve existing users from localStorage or create an empty array
-        const users = JSON.parse(localStorage.getItem("users")) || [];
+        // Create form data for the API request
+        const formData = new FormData();
+        formData.append("fullName", name);
+        formData.append("username", username);
+        formData.append("password", password);
 
-        // Check if the username is already taken
-        if (users.some(user => user.username === username)) {
-            alert("This username is already taken. Please choose a different one.");
-            return;
-        }
+        // Show loading indicator
+        const submitButton = form.querySelector("button[type='submit']");
+        const originalButtonText = submitButton.textContent;
+        submitButton.textContent = "Creating Account...";
+        submitButton.disabled = true;
 
-        // Get current date for join date
-        const joinDate = getCurrentDate();
-
-        // Save user to localStorage with join date
-        users.push({
-            name,
-            username,
-            password,
-            joinDate
-        });
-        localStorage.setItem("users", JSON.stringify(users));
-
-        alert("Account created successfully! Please log in.");
-        window.location.href = "signIn.html"; // Redirect to sign-in page
+        // Send data to server using fetch API
+        fetch('/api/accounts', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => { throw new Error(text || 'Network response was not ok') });
+                }
+                return response.text();
+            })
+            .then(data => {
+                alert("Account created successfully! Please log in.");
+                window.location.href = "signIn.html"; // Redirect to sign-in page
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert(error.message || "Error creating account. Please try again.");
+            })
+            .finally(() => {
+                // Reset button state
+                submitButton.textContent = originalButtonText;
+                submitButton.disabled = false;
+            });
     });
 });
-
-// Helper function to get current date in a formatted string
-function getCurrentDate() {
-    const now = new Date();
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return now.toLocaleDateString('en-US', options);
-}

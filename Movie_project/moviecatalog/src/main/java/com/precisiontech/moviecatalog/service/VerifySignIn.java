@@ -50,4 +50,33 @@ public class VerifySignIn {
         }
         return false;
     }
+
+    /**
+     * Finds and verifies an account by username and password.
+     * Used by the controller to return the full account details.
+     *
+     * @param username          the user's username
+     * @param password          the user's password
+     * @return                  the Account if found and verified, null otherwise
+     */
+    public Account findAndVerifyAccount(String username, String password) {
+        List<Account> allAccounts = webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/rest/v1/accounts")
+                        .queryParam("order", "id.asc")
+                        .build())
+                .header("apikey", supabaseConfig.getSupabaseApiKey())
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .retrieve()
+                .bodyToFlux(Account.class)
+                .collectList()
+                .block();
+
+        for (Account account : allAccounts) {
+            if (account.getUsername().equals(username) && account.getPassword().equals(password)) {
+                return account;
+            }
+        }
+        return null;
+    }
 }

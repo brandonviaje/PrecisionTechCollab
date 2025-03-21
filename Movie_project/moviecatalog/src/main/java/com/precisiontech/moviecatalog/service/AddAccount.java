@@ -33,9 +33,10 @@ public class AddAccount {
      */
     public void addAccount(Account account) {
         Map<String, Object> accountData = new HashMap<>();
-        accountData.put("full_name", account.getUsername());
+        accountData.put("full_name", account.getFullName()); // Fixed: was using username instead of fullName
         accountData.put("username", account.getUsername());
         accountData.put("password", account.getPassword());
+        accountData.put("join_date", account.getJoinDate());
 
         try {
             // Serialize the data into JSON format
