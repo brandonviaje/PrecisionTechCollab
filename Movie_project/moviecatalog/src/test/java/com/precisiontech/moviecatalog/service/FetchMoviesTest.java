@@ -32,5 +32,6 @@ public class FetchMoviesTest {
         when(movieFetcher.fetchMovies()).thenReturn(mockMovies);
         List<Movie> result = fetchMovies.getAllMovies();
         assertEquals(2, result.size());
+        System.out.println("Test passed: Successfully fetched " + result.size() + " movies.");
     }
 }

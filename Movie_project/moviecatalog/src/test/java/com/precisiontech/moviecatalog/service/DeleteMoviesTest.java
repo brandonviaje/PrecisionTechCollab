@@ -43,6 +43,7 @@ public class DeleteMoviesTest {
         mockWebServer.enqueue(new MockResponse().setResponseCode(204));
         boolean result = deleteMoviesService.deleteMovie("123");
         assertThat(result).isTrue();
+        System.out.println("Test passed: Successfully deleted movie with ID 123.");
     }
 
     @Test
@@ -51,6 +52,7 @@ public class DeleteMoviesTest {
         mockWebServer.enqueue(new MockResponse().setResponseCode(404));
         boolean result = deleteMoviesService.deleteMovie("123");
         assertThat(result).isFalse();
+        System.out.println("Test passed: Movie with ID 123 not found, deletion failed as expected.");
     }
 
 }

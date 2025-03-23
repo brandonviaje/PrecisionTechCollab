@@ -75,6 +75,7 @@ class FilterMoviesTest {
         assertEquals(2, movies.size());
         assertEquals("Inception", movies.get(0).getTitle());
         assertEquals("2010-07-16", movies.get(0).getReleaseDate());
+        System.out.println("Test passed: Successfully filtered movies by genre. Found " + movies.size() + " Sci-Fi movies.");
     }
 
     @Test
@@ -95,6 +96,7 @@ class FilterMoviesTest {
         assertEquals(1, movies.size());
         assertEquals("Avatar", movies.get(0).getTitle());
         assertEquals("2009-12-18", movies.get(0).getReleaseDate());
+        System.out.println("Test passed: Successfully filtered movies by PG rating. Found " + movies.size() + " PG-13 movie(s).");
     }
 
     @Test
@@ -114,5 +116,6 @@ class FilterMoviesTest {
         assertEquals(1, movies.size());
         assertEquals("Titanic", movies.get(0).getTitle());
         assertEquals("1997-12-19", movies.get(0).getReleaseDate());
+        System.out.println("Test passed: Successfully filtered movies by language. Found " + movies.size() + " English movie(s).");
     }
 }
