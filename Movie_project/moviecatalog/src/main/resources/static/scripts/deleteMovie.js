@@ -3,7 +3,6 @@ $(document).ready(function() {
     // Search for movies when the user clicks the search button
     $('#search-button').click(function() {
         const searchQuery = $('#movie-search').val().trim();
-
         if (searchQuery !== '') {
             $.getJSON(`/api/movies/search?title=${searchQuery}`)
                 .done(function(data) {
@@ -20,7 +19,6 @@ $(document).ready(function() {
             $('#search-results').empty();
         }
     });
-
 
     // Display the search results
     function displaySearchResults(movies) {

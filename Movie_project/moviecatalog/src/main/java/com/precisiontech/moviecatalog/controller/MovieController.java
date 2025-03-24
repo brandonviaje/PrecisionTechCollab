@@ -100,5 +100,4 @@ public class MovieController {
         movieEditService.updateMovieDetails(movieId, existingMovie);
         return ResponseEntity.ok("Movie updated successfully!");
     }
-
 }

@@ -14,8 +14,8 @@ $('#movieForm').on('submit', function(e) {
             $('#responseMessage').text('Movie added successfully!').css('color', 'green');
             $('#movieForm')[0].reset();
             const event = new CustomEvent('movieAdded'); // This is the custom event
-            window.dispatchEvent(event); // Dispatch it globally
-            location.reload(); // Force a page reload
+            window.dispatchEvent(event);
+            location.reload();
         },
         error: function(xhr) {
             console.log('Error adding movie:', xhr.responseText);

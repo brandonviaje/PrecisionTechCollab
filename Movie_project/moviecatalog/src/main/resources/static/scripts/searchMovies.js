@@ -1,12 +1,6 @@
 $(document).ready(function () {
     const urlParams = new URLSearchParams(window.location.search);
     const query = urlParams.get("query");
-
-    if (!query || query.trim() === "") {
-        $(".movies").html("<p>No movies found.</p>");
-        return;
-    }
-
     searchMovies(query);
 });
 
@@ -31,7 +25,6 @@ function searchMovies(query) {
             console.error("Error Fetching movies:", error);
         });
 }
-
 
 function createMovieCard(movie) {
     const { title, poster_path, movie_id } = movie;

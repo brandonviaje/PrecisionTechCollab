@@ -255,3 +255,25 @@ header nav ul li a:hover {
     align-items: center;
     gap: 10px;
 }
+
+/* Initially hide the dropdown */
+.suggestions-dropdown {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    width: 100%;
+    z-index: 100;
+}
+
+/* Show dropdown when it has suggestions */
+.suggestions-dropdown div {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.suggestions-dropdown div:hover {
+    background-color: #f0f0f0;
+}

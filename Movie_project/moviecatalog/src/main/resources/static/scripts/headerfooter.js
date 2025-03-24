@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Important: Wait a brief moment for the DOM to update before initializing
             setTimeout(() => {
                 initializeHeaderUI();
+                initializeSearchButton();
             }, 100);
         })
         .catch(error => console.error("Error loading the header:", error));
@@ -20,6 +21,27 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(error => console.error("Error loading the footer:", error));
 });
+
+function initializeSearchButton() {
+    const searchInput = document.getElementById('search-query');
+    const searchButton = document.getElementById('search-btn'); // Assuming your search button has the ID 'search-btn'
+
+    // Function to toggle search button state based on input value
+    function toggleSearchButton() {
+        if (searchInput.value.trim() === '') {
+            searchButton.disabled = true;  // Disable the button if the input is empty
+        } else {
+            searchButton.disabled = false;  // Enable the button if there is text in the input
+        }
+    }
+
+    // Add event listener to the search input field
+    searchInput.addEventListener('input', toggleSearchButton);
+
+    // Initialize the button state when the page loads
+    toggleSearchButton();
+}
+
 
 // Initialize header UI based on login status
 function initializeHeaderUI() {
