@@ -1,6 +1,8 @@
 package com.precisiontech.moviecatalog.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.precisiontech.moviecatalog.config.SupabaseConfig;
+import com.precisiontech.moviecatalog.model.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
