@@ -14,6 +14,8 @@ import java.util.List;
 @RequestMapping("/api")
 public class MovieController {
 
+    private final GetFavouriteMovies favouriteGetService;
+    private final AddFavouriteMovie favouriteAddService;
     private final AddMovies movieAddService;
     private final EditMovies movieEditService;
     private final DeleteMovies movieDeleteService;
@@ -23,7 +25,9 @@ public class MovieController {
     private final GetMovieDetails movieDetails;
 
     @Autowired
-    public MovieController(AddMovies movieAddService, EditMovies movieEditService, DeleteMovies movieDeleteService, FilterMovies movieFilterService, SearchMovies movieSearchService, FetchMovies movieFetchService, GetMovieDetails movieDetails) {
+    public MovieController(GetFavouriteMovies favouriteGetService, AddFavouriteMovie favouriteAddService, AddMovies movieAddService, EditMovies movieEditService, DeleteMovies movieDeleteService, FilterMovies movieFilterService, SearchMovies movieSearchService, FetchMovies movieFetchService, GetMovieDetails movieDetails) {
+        this.favouriteGetService = favouriteGetService;
+        this.favouriteAddService = favouriteAddService;
         this.movieAddService = movieAddService;
         this.movieEditService = movieEditService;
         this.movieDeleteService = movieDeleteService;
@@ -31,6 +35,20 @@ public class MovieController {
         this.movieSearchService = movieSearchService;
         this.movieFetchService = movieFetchService;
         this.movieDetails = movieDetails;
+    }
+
+    @PostMapping("/favourites")
+    public ResponseEntity<?> addFavouriteMovie(@RequestParam("username") String username, @RequestParam("title") String title, @RequestParam("releaseDate") String releaseDate, @RequestParam("poster") MultipartFile poster, @RequestParam("genres") String genres, @RequestParam("synopsis") String synopsis, @RequestParam("pgRating") String pg_rating, @RequestParam("productionCompanies") String production_companies, @RequestParam("runtime") int runtime, @RequestParam("spokenLanguages") String spoken_languages) {
+        String posterPath = SaveImage.saveImage(poster);
+        Movie movie = new Movie(title, releaseDate, posterPath, genres, synopsis, pg_rating, production_companies, runtime, spoken_languages);
+        favouriteAddService.addFavouriteMovie(username, movie);
+        return ResponseEntity.ok("Favourite movie added successfully");
+    }
+
+    @GetMapping("/favourites")
+    public ResponseEntity<List<Movie>> getFavouriteMovies(@RequestParam("username") String username) {
+        List<Movie> movies = favouriteGetService.getFavouriteMovieByUsername(username);
+        return ResponseEntity.ok(movies);
     }
 
     @PostMapping("/movies")
