@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
             document.getElementById("header-container").innerHTML = data;
 
-            // Important: Wait a brief moment for the DOM to update before initializing
             setTimeout(() => {
                 initializeHeaderUI();
                 initializeSearchButton();
@@ -158,7 +157,6 @@ function initializeHeaderUI() {
 function signIn(userName) {
     localStorage.setItem('isSignedIn', 'true');
     localStorage.setItem('userName', userName);
-    localStorage.setItem('username', userName);
 
     console.log("User signed in programmatically:", userName);
     window.location.reload();
@@ -171,6 +169,13 @@ function adminSignIn(adminUserName) {
 
     console.log("Admin signed in programmatically:", adminUserName);
     window.location.reload();
+}
+export function isUserSignedIn() {
+    return localStorage.getItem('isSignedIn') === 'true';
+}
+
+export function isAdminSignedIn() {
+    return localStorage.getItem('isAdminSignedIn') === 'true';
 }
 
 // Run initialization on window load as well, to catch cases where the header was already loaded
