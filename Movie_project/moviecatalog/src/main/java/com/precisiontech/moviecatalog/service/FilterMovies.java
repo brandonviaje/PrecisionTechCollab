@@ -75,4 +75,38 @@ public class FilterMovies {
     public List<Movie> filterByLanguage(String language) {
         return language == null ? movieFetchService.getAllMovies() : fetchMoviesByQuery("spoken_languages", language);
     }
+
+    /**
+     * Fetches movies from the database by the specified spoken language
+     *
+     * @param genre,pgRating,languages     tags associated with the movie
+     * @return              movie(s) attached to the specified tags
+     */
+
+    public List<Movie> filterMovies(String genre, String pgRating, String language) {
+        return webClient.get()
+                .uri(uriBuilder -> {
+                    uriBuilder.path("/rest/v1/movies");
+    
+                    if (genre != null && !genre.isEmpty()) {
+                        uriBuilder.queryParam("genres", "ilike.%" + genre + "%");
+                    }
+                    if (pgRating != null && !pgRating.isEmpty()) {
+                        uriBuilder.queryParam("pg_rating", "ilike.%" + pgRating + "%");
+                    }
+                    if (language != null && !language.isEmpty()) {
+                        uriBuilder.queryParam("spoken_languages", "ilike.%" + language + "%");
+                    }
+    
+                    uriBuilder.queryParam("order", "title.asc");
+                    return uriBuilder.build();
+                })
+                .header("apikey", supabaseApiKey)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .retrieve()
+                .bodyToFlux(Movie.class)
+                .collectList()
+                .block();
+    }
+    
 }

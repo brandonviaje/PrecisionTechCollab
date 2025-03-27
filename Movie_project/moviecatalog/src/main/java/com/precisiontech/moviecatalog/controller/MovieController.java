@@ -41,18 +41,10 @@ public class MovieController {
         return ResponseEntity.ok("Movie added successfully with poster at " + posterPath);
     }
 
+    //Added dynamic filtering
     @GetMapping("/movies")
     public ResponseEntity<List<Movie>> getMovies(@RequestParam(value = "genre", required = false) String genre, @RequestParam(value = "pg_rating", required = false) String pgRating, @RequestParam(value = "spoken_languages", required = false) String languages) {
-        List<Movie> movies;
-        if (genre != null) {
-            movies = movieFilterService.filterByGenre(genre);
-        } else if (pgRating != null) {
-            movies = movieFilterService.filterByPgRating(pgRating);
-        } else if (languages != null) {
-            movies = movieFilterService.filterByLanguage(languages);
-        } else {
-            movies = movieFetchService.getAllMovies();
-        }
+        List<Movie> movies = movieFilterService.filterMovies(genre,pgRating,languages);
         return ResponseEntity.ok(movies);
     }
 
