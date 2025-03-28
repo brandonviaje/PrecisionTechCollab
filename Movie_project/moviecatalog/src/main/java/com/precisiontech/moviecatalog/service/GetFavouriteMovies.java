@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class GetFavouriteMovies {
@@ -25,19 +26,39 @@ public class GetFavouriteMovies {
     }
 
     public List<Movie> getFavouriteMovieByUsername(String username) {
-        List<Movie> userFavourites;
-
-        // Fetch movies from Supabase where the title matches the search query
-        userFavourites = webClient.get()
+        List<Movie> userFavourites = webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/rest/v1/favourites")
-                        .queryParam("username", "ilike.%" + username + "%")  // Using ilike for case-insensitive search
-                        .queryParam("order", "id.asc")  // Sorting by ID in ascending order
+                        .queryParam("username", "eq." + username)
+                        .queryParam("order", "id.asc")
                         .build())
                 .header("apikey", supabaseApiKey)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .retrieve()
-                .bodyToFlux(Movie.class)
+                .bodyToFlux(Map.class)  // Retrieve as a Map first
+                .map(movieMap -> {
+                    // Explicitly convert Map to Movie object
+                    Movie movie = new Movie(
+                            (String) movieMap.get("title"),
+                            (String) movieMap.get("release_date"),
+                            (String) movieMap.get("poster_path"),
+                            (String) movieMap.get("genres"),
+                            (String) movieMap.get("synopsis"),
+                            (String) movieMap.get("pg_rating"),
+                            (String) movieMap.get("production_companies"),
+                            movieMap.get("runtime") instanceof Integer ? (Integer) movieMap.get("runtime") : 0,
+                            (String) movieMap.get("spoken_languages")
+                    );
+
+                    // Explicitly set the movie ID
+                    movie.setMovieId((String) movieMap.get("movie_id"));
+
+                    // Debug logging
+                    System.out.println("Mapped Movie: " + movie);
+                    System.out.println("Movie ID: " + movie.getMovieId());
+
+                    return movie;
+                })
                 .collectList()
                 .block();
 

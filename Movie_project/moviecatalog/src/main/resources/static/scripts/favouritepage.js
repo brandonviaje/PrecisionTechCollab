@@ -23,6 +23,9 @@ $(document).ready(function() {
     })
         .done(function(response) {
             // Check if the response is a valid array of movies
+            console.log("Full favorite movies response:", response);
+
+
             if (Array.isArray(response)) {
                 console.log("Fetched favorite movies:", response);
 
@@ -34,6 +37,8 @@ $(document).ready(function() {
                 const movieListContainer = $('<div class="favorite-movies-grid"></div>');
 
                 response.forEach(movie => {
+                    console.log("Each movie object:", movie);
+                    console.log("Movie ID:", movie.id, movie.movie_id, movie.movieId);
                     const movieCard = createMovieCard(movie);
                     movieListContainer.append(movieCard);
                 });
@@ -58,6 +63,11 @@ $(document).ready(function() {
 
     // Function to create a movie card
     function createMovieCard(movie) {
+        // Correct the property name to match what you added in the backend
+        // Try multiple possible ID fields
+        const movieId = movie.movie_id || movie.id || 'unknown';
+        console.log("Movie card creation - Movie ID:", movieId, "Full movie object:", movie);
+
         // Robust poster path handling
         let posterSrc = movie.poster_path;
         if (!posterSrc) {
@@ -69,53 +79,46 @@ $(document).ready(function() {
         }
 
         const movieCard = $(`
-            <div class="movie-card" data-movie-id="${movie.id}">
-                <img src="${posterSrc}" alt="${movie.title} Poster" class="movie-poster">
-                <div class="movie-info">
-                    <h3 class="movie-title">${movie.title}</h3>
-                    <p class="movie-release-date">Released: ${movie.release_date}</p>
-                    <p class="movie-genres">${movie.genres}</p>
-                    <button class="remove-favorite-btn">Remove from Favorites</button>
-                </div>
+        <div class="movie-card" data-movie-id="${movieId}">
+            <img src="${posterSrc}" alt="${movie.title} Poster" class="movie-poster">
+            <div class="movie-info">
+                <h3 class="movie-title">${movie.title}</h3>
+                <p class="movie-release-date">Released: ${movie.release_date}</p>
+                <p class="movie-genres">${movie.genres}</p>
+                <button class="remove-favorite-btn">Remove from Favorites</button>
             </div>
-        `);
+        </div>
+    `);
 
         // Add remove from favorites functionality
         movieCard.find('.remove-favorite-btn').click(function() {
-            removeFavoriteMovie(movie.id);
+            console.log("Removing movie with ID:", movieId);
+            removeFavoriteMovie(movieId);
         });
 
         // Add click event to navigate to movie details
         movieCard.find('.movie-poster, .movie-title').click(function() {
-            window.location.href = `../html/moviedetails.html?id=${movie.id}`;
+            window.location.href = `../html/moviedetails.html?id=${movieId}`;
         });
 
         return movieCard;
     }
 
-    // Function to remove a movie from favorites
     function removeFavoriteMovie(movieId) {
         $.ajax({
             url: `/api/favourites/${movieId}?username=${userName}`,
             type: "DELETE",
             success: function (response) {
-                console.log("Movie removed from favorites:", response);
-
-                // Remove the movie card from the UI
+                // Remove the movie card from the UI using the external ID
                 $(`[data-movie-id="${movieId}"]`).remove();
-
                 showNotification("Movie removed from favorites");
-
-                // Check if no movies left
-                if ($('.favorite-movies-grid').children().length === 0) {
-                    displayNoFavoritesMessage();
-                }
             },
             error: function (xhr, status, error) {
-                console.error("Error removing movie:", status, error);
-                console.error("Response status:", xhr.status);
-                console.error("Response text:", xhr.responseText);
-
+                console.error("Error removing movie:", {
+                    status: xhr.status,
+                    statusText: xhr.statusText,
+                    responseText: xhr.responseText
+                });
                 showNotification("Failed to remove movie from favorites", true);
             }
         });
