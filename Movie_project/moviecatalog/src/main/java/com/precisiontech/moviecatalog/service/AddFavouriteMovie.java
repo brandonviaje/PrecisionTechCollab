@@ -22,14 +22,21 @@ public class AddFavouriteMovie {
     public AddFavouriteMovie(WebClient webClient, SupabaseConfig supabaseConfig) {
         this.webClient = webClient;
         this.supabaseConfig = supabaseConfig;
+
     }
 
     public void addFavouriteMovie(String username, Movie movie) {
+        System.out.println("Adding favourite movie for username: " + username);
+        System.out.println("Movie details: " + movie);
+
         Map<String, Object> favouriteMovieData = getStringObjectMap(username, movie);
 
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             String jsonPayload = objectMapper.writeValueAsString(favouriteMovieData);
+
+            System.out.println("Payload to be sent: " + jsonPayload);
+
 
             webClient.post()
                     .uri("/rest/v1/favourites")
@@ -40,6 +47,8 @@ public class AddFavouriteMovie {
                     .retrieve()
                     .bodyToMono(String.class)
                     .block();
+
+            System.out.println("Favourite movie added successfully.");
 
         } catch (Exception e) {
             System.err.println("Error adding movie: " + e.getMessage());
