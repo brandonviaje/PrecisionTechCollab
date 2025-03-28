@@ -69,12 +69,10 @@ $(document).ready(function() {
         }
 
         const movieCard = $(`
-            <div class="movie-card" data-movie-id="${movie.id}">
+            <div class="movie-card" data-movie-id="${movie.movie_id}">
                 <img src="${posterSrc}" alt="${movie.title} Poster" class="movie-poster">
                 <div class="movie-info">
                     <h3 class="movie-title">${movie.title}</h3>
-                    <p class="movie-release-date">Released: ${movie.release_date}</p>
-                    <p class="movie-genres">${movie.genres}</p>
                     <button class="remove-favorite-btn">Remove from Favorites</button>
                 </div>
             </div>
@@ -87,7 +85,7 @@ $(document).ready(function() {
 
         // Add click event to navigate to movie details
         movieCard.find('.movie-poster, .movie-title').click(function() {
-            window.location.href = `../html/moviedetails.html?id=${movie.id}`;
+            window.location.href = `../components/movieDetails.html?id=${movie.movie_id}`;
         });
 
         return movieCard;
@@ -126,7 +124,7 @@ $(document).ready(function() {
         const noFavoritesMessage = $(`
             <div class="no-favorites-message">
                 <p>You haven't added any favorite movies yet.</p>
-                <a href="../html/browse.html" class="browse-movies-btn">Browse Movies</a>
+                <a href="../components/library.html" class="browse-movies-btn">Browse Movies</a>
             </div>
         `);
         $('main').html(noFavoritesMessage);

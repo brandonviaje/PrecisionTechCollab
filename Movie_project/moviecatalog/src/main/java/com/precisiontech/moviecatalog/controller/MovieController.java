@@ -69,7 +69,6 @@ public class MovieController {
         }
     }
 
-
     @GetMapping("/favourites")
     public ResponseEntity<Object> getFavorites(@RequestParam("username") String username) {
         // Use the favouriteGetService to get the list of favorite movies for the user
@@ -86,7 +85,6 @@ public class MovieController {
         // Otherwise, return the list of movies
         return ResponseEntity.ok(movies);
     }
-
 
 
     @PostMapping("/movies")

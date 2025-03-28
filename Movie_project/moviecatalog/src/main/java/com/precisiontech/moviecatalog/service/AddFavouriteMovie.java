@@ -22,7 +22,6 @@ public class AddFavouriteMovie {
     public AddFavouriteMovie(WebClient webClient, SupabaseConfig supabaseConfig) {
         this.webClient = webClient;
         this.supabaseConfig = supabaseConfig;
-
     }
 
     public void addFavouriteMovie(String username, Movie movie) {
@@ -36,7 +35,6 @@ public class AddFavouriteMovie {
             String jsonPayload = objectMapper.writeValueAsString(favouriteMovieData);
 
             System.out.println("Payload to be sent: " + jsonPayload);
-
 
             webClient.post()
                     .uri("/rest/v1/favourites")
@@ -58,6 +56,7 @@ public class AddFavouriteMovie {
     private static Map<String, Object> getStringObjectMap(String username, Movie movie) {
         Map<String, Object> favouriteMovieData = new HashMap<>();
         favouriteMovieData.put("username", username);
+        favouriteMovieData.put("movie_id", movie.getMovieId());
         favouriteMovieData.put("title", movie.getTitle());
         favouriteMovieData.put("release_date", movie.getReleaseDate());
         favouriteMovieData.put("poster_path", movie.getPosterPath());

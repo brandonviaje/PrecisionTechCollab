@@ -8,7 +8,6 @@ $(document).ready(function () {
 
     // Get the logged-in user's username from localStorage
     console.log("Stored userName:", localStorage.getItem('userName'));
-    console.log("Stored username:", localStorage.getItem('username'));
     const userName = localStorage.getItem('userName')?.trim();
     if (!userName) {
         console.error("No valid username found");
@@ -25,34 +24,27 @@ $(document).ready(function () {
             console.log("API Response:", movieData); // Log the full API response
 
             // Log the specific properties to check their existence
-            const { title, poster_path, synopsis, release_date, genres } = movieData;
-            console.log("Title:", title, "Poster Path:", poster_path, "Synopsis:", synopsis); // Check if properties exist
+            const { title, poster_path, synopsis, release_date, genres, runtime} = movieData;
+            console.log("Title:", title, "Poster Path:", poster_path, "Synopsis:", synopsis, "Runtime:", runtime); // Check if properties exist
 
             // Populate the movie details on the page
             $("#movie-title").text(title);
             $("#movie-release-date").text(release_date);
 
-            // Robust poster path handling
             let posterSrc = poster_path;
             if (!posterSrc) {
                 console.warn("No poster path found for the movie");
-                posterSrc = "/path/to/default/poster.jpg"; // Add a default poster path
+                posterSrc = "/path/to/default/poster.jpg"; // Default poster if missing
             } else if (posterSrc.startsWith('/userimg/')) {
-                posterSrc = `http://localhost:8080${posterSrc}`;
+                posterSrc = `http://localhost:8080${posterSrc}`; // Handle local server paths
             } else if (!posterSrc.startsWith('http')) {
-                posterSrc = `https://image.tmdb.org/t/p/w500/${posterSrc}`;
+                posterSrc = `https://image.tmdb.org/t/p/w500/${posterSrc}`; // Handle external links
             }
             $("#movie-poster").attr("src", posterSrc);
-
-            // Handle genres (in case it's an array or string)
-            const genreNames = Array.isArray(genres)
-                ? genres.join(', ')
-                : genres;
+            const genreNames = Array.isArray(genres) ? genres.join(', ') : genres;
             $("#movie-genres").text(genreNames);
-
             $("#movie-overview").text(synopsis);
-
-            // Check if the movie is already favorited
+            $("#movie-runtime").text(runtime);
             checkFavoriteStatus(userName, movieId, favoriteButton);
 
         })
@@ -76,16 +68,12 @@ $(document).ready(function () {
 
         // Prepare the movie data to send to the backend
         const movie = {
-            id: movieId,
+            movie_id: movieId,  // Ensure the movie ID is included
             title: $("#movie-title").text(),
             release_date: $("#movie-release-date").text(),
             poster_path: $("#movie-poster").attr("src"),
             genres: $("#movie-genres").text(),
             synopsis: $("#movie-overview").text(),
-            pg_rating: "Not Rated", // Provide a default value
-            runtime: 0, // Provide a default value
-            production_companies: "Unknown", // Provide a default value
-            spoken_languages: "English" // Provide a default value
         };
 
         if (newStatus) {
@@ -153,7 +141,7 @@ $(document).ready(function () {
                 // Check if the favorites array is indeed an array
                 if (Array.isArray(favoriteMovies)) {
                     const isFavorited = favoriteMovies.some(movie =>
-                        movie.id == movieId ||
+                        movie.movie_id === movieId ||
                         (movie.title === $("#movie-title").text() && movie.release_date === $("#movie-release-date").text())
                     );
                     favButton.html(isFavorited ? "♥" : "♡");
