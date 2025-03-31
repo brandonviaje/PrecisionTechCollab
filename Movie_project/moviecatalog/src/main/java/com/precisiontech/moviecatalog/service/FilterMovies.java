@@ -46,6 +46,7 @@ public class FilterMovies {
                 .block();
     }
 
+
     /**
      * Fetches movies from the database by the specified genre
      *
@@ -55,6 +56,7 @@ public class FilterMovies {
     public List<Movie> filterByGenre(String genre) {
         return genre == null ? movieFetchService.getAllMovies() : fetchMoviesByQuery("genres", genre);
     }
+
 
     /**
      * Fetches movies from the database by the specified pg_rating
@@ -66,6 +68,7 @@ public class FilterMovies {
         return pgRating == null ? movieFetchService.getAllMovies() : fetchMoviesByQuery("pg_rating", pgRating);
     }
 
+
     /**
      * Fetches movies from the database by the specified spoken language
      *
@@ -76,13 +79,13 @@ public class FilterMovies {
         return language == null ? movieFetchService.getAllMovies() : fetchMoviesByQuery("spoken_languages", language);
     }
 
+
     /**
      * Fetches movies from the database by the specified spoken language
      *
      * @param genre,pgRating,languages     tags associated with the movie
      * @return              movie(s) attached to the specified tags
      */
-
     public List<Movie> filterMovies(String genre, String pgRating, String language) {
         return webClient.get()
                 .uri(uriBuilder -> {
@@ -108,5 +111,4 @@ public class FilterMovies {
                 .collectList()
                 .block();
     }
-    
 }

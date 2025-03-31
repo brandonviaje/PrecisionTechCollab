@@ -23,6 +23,7 @@ public class VerifySignIn {
         this.supabaseConfig = supabaseConfig;
     }
 
+
     /**
      * Checks whether the user's account exists when signing in.
      *
@@ -59,6 +60,7 @@ public class VerifySignIn {
             return false;
         }
     }
+
 
     /**
      * Finds and verifies an account by username and password.

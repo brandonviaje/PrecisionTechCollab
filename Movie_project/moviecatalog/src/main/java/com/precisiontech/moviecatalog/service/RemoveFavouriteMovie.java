@@ -19,6 +19,14 @@ public class RemoveFavouriteMovie {
         this.supabaseConfig = supabaseConfig;
     }
 
+
+    /**
+     * Removes a user's favourite movie from the database
+     *
+     * @param username      the user's username
+     * @param movieId       the movie's id
+     * @return true or false indicating successful deletion from the database
+     */
     public boolean removeFavouriteMovie(String username, String movieId) {
         try {
             // Delete from Supabase where username and movie match

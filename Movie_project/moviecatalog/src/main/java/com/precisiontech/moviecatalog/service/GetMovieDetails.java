@@ -22,6 +22,7 @@ public class GetMovieDetails {
         this.supabaseApiKey = supabaseConfig.getSupabaseApiKey();
     }
 
+
     /**
      * Fetches a movie by its ID.
      *

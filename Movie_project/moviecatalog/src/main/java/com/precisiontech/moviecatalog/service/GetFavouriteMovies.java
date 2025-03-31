@@ -24,6 +24,13 @@ public class GetFavouriteMovies {
         this.supabaseApiKey = supabaseConfig.getSupabaseApiKey();
     }
 
+
+    /**
+     * Retrieves a user's favourite movie by the username assigned to the movie
+     *
+     * @param username      the user's username
+     * @return a list of the user's favourite movies
+     */
     public List<Movie> getFavouriteMovieByUsername(String username) {
         List<Movie> userFavourites;
 

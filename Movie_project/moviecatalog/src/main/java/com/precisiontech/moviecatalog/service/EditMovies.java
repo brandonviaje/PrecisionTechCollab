@@ -28,30 +28,42 @@ public class EditMovies {
         this.webClient = WebClient.builder().baseUrl(supabaseUrl).build();
     }
 
-     public void updateMovieDetails(String movieId, Movie updatedMovie) {
-         Map<String, Object> updateFields = getStringObjectMap(updatedMovie);
+    /**
+     * Updates info of a movie in the database
+     *
+     * @param movieId           the movie's id
+     * @param updatedMovie      a movie object with updated metadata
+     */
+    public void updateMovieDetails(String movieId, Movie updatedMovie) {
+        Map<String, Object> updateFields = getStringObjectMap(updatedMovie);
 
-         try {
-             ObjectMapper objectMapper = new ObjectMapper();
-             String jsonPayload = objectMapper.writeValueAsString(updateFields);
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonPayload = objectMapper.writeValueAsString(updateFields);
 
-             // Send PATCH request to update movie details in the database
-             webClient.patch()
-                     .uri(uriBuilder -> uriBuilder
-                             .path("/rest/v1/movies")
-                             .queryParam("movie_id", "eq." + movieId)
-                             .build())
-                     .header("apikey", supabaseApiKey)
-                     .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                     .bodyValue(jsonPayload)
-                     .retrieve()
-                     .bodyToMono(Void.class)
-                     .block();
-         } catch (Exception e) {
-             throw new RuntimeException("Error updating movie: " + e.getMessage(), e);
-         }
-     }
+            // Send PATCH request to update movie details in the database
+            webClient.patch()
+                .uri(uriBuilder -> uriBuilder
+                .path("/rest/v1/movies")
+                .queryParam("movie_id", "eq." + movieId)
+                .build())
+            .header("apikey", supabaseApiKey)
+            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+            .bodyValue(jsonPayload)
+            .retrieve()
+            .bodyToMono(Void.class)
+            .block();
+        } catch (Exception e) {
+            throw new RuntimeException("Error updating movie: " + e.getMessage(), e);
+        }
+    }
 
+    /**
+     * Helper function to convert the movie's metadata into a new format
+     *
+     * @param updatedMovie      the updated movie object
+     * @return a map of the movie metadata
+     */
     private static Map<String, Object> getStringObjectMap(Movie updatedMovie) {
         Map<String, Object> updateFields = new HashMap<>();
 

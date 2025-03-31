@@ -24,6 +24,12 @@ public class AddFavouriteMovie {
         this.supabaseConfig = supabaseConfig;
     }
 
+    /**
+     * Adds a user's favourite movie to the database
+     *
+     * @param username      the user's username
+     * @param movie         the movie object being added
+     */
     public void addFavouriteMovie(String username, Movie movie) {
         System.out.println("Adding favourite movie for username: " + username);
         System.out.println("Movie details: " + movie);
@@ -53,6 +59,13 @@ public class AddFavouriteMovie {
         }
     }
 
+    /**
+     * Helper function to convert the movie data into a better format
+     *
+     * @param username      user's username to keep track of their favourites
+     * @param movie         the movie object being added
+     * @return a map of the movie metadata
+     */
     private static Map<String, Object> getStringObjectMap(String username, Movie movie) {
         Map<String, Object> favouriteMovieData = new HashMap<>();
         favouriteMovieData.put("username", username);

@@ -25,6 +25,11 @@ public class AddMovies {
         this.supabaseConfig = supabaseConfig;
     }
 
+    /**
+     * Adds a movie to the database
+     *
+     * @param movie     The movie object being added
+     */
     public void addMovie(Movie movie) {
         Map<String, Object> movieData = getStringObjectMap(movie);
         //serialize to json
@@ -54,6 +59,12 @@ public class AddMovies {
         }
     }
 
+    /**
+     * Helper function for storing movie metadata in a better format
+     *
+     * @param movie     The movie object
+     * @return a map of the movie metadata
+     */
     private static Map<String, Object> getStringObjectMap(Movie movie) {
         Map<String, Object> movieData = new HashMap<>();
         movieData.put("title", movie.getTitle());

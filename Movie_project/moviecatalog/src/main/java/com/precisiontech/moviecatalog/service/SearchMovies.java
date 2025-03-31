@@ -25,6 +25,7 @@ public class SearchMovies {
         this.movieFetchService = movieFetchService;
     }
 
+
     /**
      * Fetches movies from the database filtered by the title
      *

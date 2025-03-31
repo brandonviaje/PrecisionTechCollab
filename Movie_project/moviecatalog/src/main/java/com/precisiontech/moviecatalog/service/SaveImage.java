@@ -11,6 +11,12 @@ import java.nio.file.Paths;
 @Service
 public class SaveImage {
 
+    /**
+     * Saves the cover image of the movie to the project structure
+     *
+     * @param poster    the image being saved
+     * @return the file path of the image
+     */
     public static String saveImage(MultipartFile poster) {
         try {
             String imageName = poster.getOriginalFilename();
