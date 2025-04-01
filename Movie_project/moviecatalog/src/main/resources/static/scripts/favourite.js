@@ -66,9 +66,8 @@ $(document).ready(function () {
         const newStatus = !currentlyFavorited;
         favoriteButton.html(newStatus ? "♥" : "♡");
 
-        // Prepare the movie data to send to the backend
         const movie = {
-            movie_id: movieId,  // Ensure the movie ID is included
+            movie_id: movieId,
             title: $("#movie-title").text(),
             release_date: $("#movie-release-date").text(),
             poster_path: $("#movie-poster").attr("src"),
@@ -77,30 +76,38 @@ $(document).ready(function () {
         };
 
         if (newStatus) {
-            // Send a POST request to add the movie to favorites
+            // Check if the movie is already in favorites to prevent duplicates
             $.ajax({
                 url: `/api/favourites?username=${userName}`,
-                type: "POST",
-                contentType: "application/json",
-                data: JSON.stringify(movie),
-                success: function (response) {
-                    console.log("Movie added to favorites:", response);
-                    showNotification("Movie added to favorites!");
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error adding movie:", status, error);
-                    console.error("Response status:", xhr.status);
-                    console.error("Response text:", xhr.responseText);
+                method: "GET",
+                dataType: "json",
+                success: function (movies) {
+                    const favoriteMovies = Array.isArray(movies) ? movies : movies.favorites || [];
+                    if (favoriteMovies.some(m => m.movie_id === movieId)) {
+                        console.log("Movie already exists in favorites, skipping addition.");
+                        return;
+                    }
 
-                    // Revert the button state
-                    favoriteButton.html("♡");
-
-                    // Show error notification
-                    showNotification("Failed to add movie to favorites", true);
+                    // Only add if not already present
+                    $.ajax({
+                        url: `/api/favourites?username=${userName}`,
+                        type: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify(movie),
+                        success: function (response) {
+                            console.log("Movie added to favorites:", response);
+                            showNotification("Movie added to favorites!");
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error adding movie:", status, error);
+                            favoriteButton.html("♡");
+                            showNotification("Failed to add movie to favorites", true);
+                        }
+                    });
                 }
             });
         } else {
-            // Send a DELETE request to remove the movie from favorites
+            // Remove from favorites
             $.ajax({
                 url: `/api/favourites/${movieId}?username=${userName}`,
                 type: "DELETE",
@@ -110,21 +117,16 @@ $(document).ready(function () {
                 },
                 error: function (xhr, status, error) {
                     console.error("Error removing movie:", status, error);
-                    console.error("Response status:", xhr.status);
-                    console.error("Response text:", xhr.responseText);
-
-                    // Revert the button state
                     favoriteButton.html("♥");
-
-                    // Show error notification
                     showNotification("Failed to remove movie from favorites", true);
                 }
             });
         }
     });
 
+
     function checkFavoriteStatus(username, movieId, favButton) {
-        console.log("Checking favorite status for:", username, movieId); // Debugging the call
+        console.log("Checking favorite status for:", username, movieId);
 
         $.ajax({
             url: `/api/favourites?username=${username}`,
@@ -133,30 +135,19 @@ $(document).ready(function () {
         })
             .done(function (movies) {
                 console.log("Fetched favorite movies:", movies);
-                console.log("Is array:", Array.isArray(movies));
 
-                // Access the favorites array inside the movies object
-                const favoriteMovies = movies.favorites;
+                // Ensure `movies` is treated as an array
+                const favoriteMovies = Array.isArray(movies) ? movies : movies.favorites || [];
 
-                // Check if the favorites array is indeed an array
-                if (Array.isArray(favoriteMovies)) {
-                    const isFavorited = favoriteMovies.some(movie =>
-                        movie.movie_id === movieId ||
-                        (movie.title === $("#movie-title").text() && movie.release_date === $("#movie-release-date").text())
-                    );
-                    favButton.html(isFavorited ? "♥" : "♡");
-                } else {
-                    // If there are no favorite movies, handle it gracefully
-                    console.log("No favorite movies found for this user.");
-                    favButton.html("♡");
-                }
+                const isFavorited = favoriteMovies.some(movie => movie.movie_id === movieId);
+                favButton.html(isFavorited ? "♥" : "♡");
             })
             .fail(function (xhr, status, error) {
                 console.error("Error fetching favorites:", status, error);
                 favButton.html("♡");
             });
-
     }
+
 
 
     // Simple notification function
