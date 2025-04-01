@@ -1,5 +1,7 @@
 body {
-    font-family: Arial, sans-serif;
+    background-color: hsla(45, 77%, 56%, 0.829);
+    font-family: "Open Sans", serif;
+
 }
 
 #header-container {
