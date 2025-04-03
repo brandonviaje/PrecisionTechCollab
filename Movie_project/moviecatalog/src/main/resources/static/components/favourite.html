@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Favorites</title>
   <link rel="stylesheet" href="../css/favourite.css">
+  <!-- Load jQuery first, since other scripts depend on it -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <div id="header-container"></div>
@@ -14,10 +16,10 @@
 
 <div id="notification"></div>
 
+<!-- Load your scripts after jQuery -->
+<script src="../scripts/access.js"></script>
 <script src="../scripts/headerfooter.js" type="module"></script>
 <script src="../scripts/favouritepage.js" type="module"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="../scripts/access.js" defer></script>
 
 </body>
 </html>

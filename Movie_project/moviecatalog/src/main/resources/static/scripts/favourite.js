@@ -106,7 +106,9 @@ $(document).ready(function () {
                     });
                 }
             });
-        } else {
+        }
+        // Replace the existing "Remove from favorites" code block with this updated version
+        else {
             // Remove from favorites
             $.ajax({
                 url: `/api/favourites/${movieId}?username=${userName}`,
@@ -117,8 +119,15 @@ $(document).ready(function () {
                 },
                 error: function (xhr, status, error) {
                     console.error("Error removing movie:", status, error);
-                    favoriteButton.html("♥");
-                    showNotification("Failed to remove movie from favorites", true);
+
+                    // If error is 404, it means the movie was already deleted successfully
+                    if (xhr.status === 404) {
+                        console.log("Movie was successfully deleted (404 indicates record no longer exists)");
+                        showNotification("Movie removed from favorites");
+                    } else {
+                        favoriteButton.html("♥"); // Only revert UI if it's a real error
+                        showNotification("Failed to remove movie from favorites", true);
+                    }
                 }
             });
         }

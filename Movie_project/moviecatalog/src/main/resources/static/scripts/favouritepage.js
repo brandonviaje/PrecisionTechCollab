@@ -78,19 +78,38 @@ $(document).ready(function() {
             url: `/api/favourites/${movieId}?username=${userName}`,
             type: "DELETE",
             success: function () {
-                $(`[data-movie-id="${movieId}"]`).remove();
-                showNotification("Movie removed from favorites");
-
-                if ($('.favorite-movies-grid .movie-card').length === 0) {
-                    displayNoFavoritesMessage();
-                }
+                // Handle successful removal
+                handleSuccessfulRemoval(movieId);
             },
             error: function (xhr, status, error) {
                 console.error("Error removing movie:", status, error, xhr.responseText);
-                showNotification("Failed to remove movie from favorites", true);
+
+                // If error is 404, it means the movie was already deleted successfully
+                if (xhr.status === 404) {
+                    console.log("Movie was successfully deleted (404 indicates record no longer exists)");
+                    handleSuccessfulRemoval(movieId);
+                } else {
+                    showNotification("Failed to remove movie from favorites", true);
+                }
             }
         });
     }
+
+// Helper function to handle UI updates after successful removal
+    function handleSuccessfulRemoval(movieId) {
+        // Remove the movie card from the DOM
+        $(`[data-movie-id="${movieId}"]`).fadeOut(300, function() {
+            $(this).remove();
+
+            // If there are no more favorite movies, display the no-favorites message
+            if ($('.movie-card').length === 0) {
+                displayNoFavoritesMessage();
+            }
+        });
+
+        showNotification("Movie removed from favorites");
+    }
+
 
     function displayNoFavoritesMessage() {
         const noFavoritesMessage = `
