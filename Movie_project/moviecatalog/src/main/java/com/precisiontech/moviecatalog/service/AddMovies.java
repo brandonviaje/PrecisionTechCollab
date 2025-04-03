@@ -59,6 +59,10 @@ public class AddMovies {
         }
     }
 
+
+    // ------------- Helper Functions -------------
+
+
     /**
      * Helper function for storing movie metadata in a better format
      *

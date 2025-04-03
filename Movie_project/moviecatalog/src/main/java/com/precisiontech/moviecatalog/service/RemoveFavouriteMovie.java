@@ -38,6 +38,14 @@ public class RemoveFavouriteMovie {
         }
     }
 
+
+    /**
+     * Removes a movie from the user's favourites list.
+     *
+     * @param username      the user's username
+     * @param movieId       the movie id
+     * @return a message indicating whether the movie was removed
+     */
     public boolean removeFavouriteMovie(String username, String movieId) {
         try {
             Long deletedCount = webClient.delete()

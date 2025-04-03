@@ -12,7 +12,6 @@ public class HomeController {
      *
      * @return          the home page
      */
-    // This method maps to the root URL ("/") and returns the index.html page
     @GetMapping("/")
     public String showHomePage() {
         return "index";  // "index" corresponds to the index.html file in templates

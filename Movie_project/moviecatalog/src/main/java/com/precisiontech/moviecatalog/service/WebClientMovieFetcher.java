@@ -21,6 +21,12 @@ public class WebClientMovieFetcher implements MovieFetcher {
         this.supabaseApiKey = supabaseConfig.getSupabaseApiKey();
     }
 
+
+    /**
+     * Fetches a list of movies from the Supabase backend.
+     *
+     * @return a list of {@link Movie} objects fetched from the database
+     */
     @Override
     public List<Movie> fetchMovies() {
         return webClient.get()

@@ -7,10 +7,17 @@ import jakarta.annotation.PostConstruct;
 
 @Service
 public class DeleteMovies {
-@Value("${supabase.url}")
-String supabaseUrl;
 
-    // Use Service Role Key (since RLS is disabled)
+    /**
+     * The URL of the Supabase database, injected from the application properties.
+     */
+    @Value("${supabase.url}")
+    String supabaseUrl;
+
+
+    /**
+     * The API key for authenticating with Supabase, injected from the application properties.
+     */
     @Value("${supabase.api.key}")
     String supabaseApiKey;
 

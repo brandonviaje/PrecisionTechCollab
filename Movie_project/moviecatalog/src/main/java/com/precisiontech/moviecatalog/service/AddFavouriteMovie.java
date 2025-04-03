@@ -59,6 +59,10 @@ public class AddFavouriteMovie {
         }
     }
 
+
+    // ------------- Helper Functions -------------
+
+
     /**
      * Helper function to convert the movie data into a better format
      *

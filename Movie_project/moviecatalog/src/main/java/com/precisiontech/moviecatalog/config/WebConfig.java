@@ -7,6 +7,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
+
+    /**
+     * Configures resource handlers to serve static files.
+     *
+     * @param registry the {@link ResourceHandlerRegistry} to configure resource mappings
+     */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 

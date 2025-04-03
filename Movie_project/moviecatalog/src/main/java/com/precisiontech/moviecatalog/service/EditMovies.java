@@ -14,10 +14,17 @@ import java.util.Map;
 
 @Service
 public class EditMovies {
+
+    /**
+     * The URL of the Supabase database, injected from the application properties.
+     */
     @Value("${supabase.url}")
     String supabaseUrl;
 
-    // Use Service Role Key (since RLS is disabled)
+
+    /**
+     * The API key for authenticating with Supabase, injected from the application properties.
+     */
     @Value("${supabase.api.key}")
     String supabaseApiKey;
 
@@ -57,6 +64,9 @@ public class EditMovies {
             throw new RuntimeException("Error updating movie: " + e.getMessage(), e);
         }
     }
+
+
+    // ------------- Helper Functions -------------
 
     /**
      * Helper function to convert the movie's metadata into a new format
