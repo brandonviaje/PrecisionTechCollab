@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
             document.getElementById("header-container").innerHTML = data;
 
-            // Important: Wait a brief moment for the DOM to update before initializing
             setTimeout(() => {
                 initializeHeaderUI();
                 initializeSearchButton();
@@ -14,12 +13,12 @@ document.addEventListener("DOMContentLoaded", function () {
         .catch(error => console.error("Error loading the header:", error));
 
     // Load footer
-    fetch("../partial/footer.html")
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById("footer-container").innerHTML = data;
-        })
-        .catch(error => console.error("Error loading the footer:", error));
+    // fetch("../partial/footer.html")
+    //     .then(response => response.text())
+    //     .then(data => {
+    //         document.getElementById("footer-container").innerHTML = data;
+    //     })
+    //     .catch(error => console.error("Error loading the footer:", error));
 });
 
 function initializeSearchButton() {
@@ -49,7 +48,10 @@ function initializeHeaderUI() {
     const isAdminSignedIn = localStorage.getItem('isAdminSignedIn');
 
     // Check both possible storage keys for username compatibility
-    const userName = localStorage.getItem('userName') || localStorage.getItem('username');
+    console.log("Stored userName:", localStorage.getItem('userName'));
+    console.log("Stored username:", localStorage.getItem('username'));
+    const userName = localStorage.getItem('userName')?.trim();
+
     const adminUserName = localStorage.getItem('adminUsername');
 
     console.log("User login status:", isUserSignedIn);
@@ -157,8 +159,7 @@ function initializeHeaderUI() {
 // Function to sign in a user (can be called from other scripts)
 function signIn(userName) {
     localStorage.setItem('isSignedIn', 'true');
-    localStorage.setItem('userName', userName);
-    localStorage.setItem('username', userName);
+    localStorage.setItem('userName', userName.trim());
 
     console.log("User signed in programmatically:", userName);
     window.location.reload();
@@ -171,6 +172,13 @@ function adminSignIn(adminUserName) {
 
     console.log("Admin signed in programmatically:", adminUserName);
     window.location.reload();
+}
+export function isUserSignedIn() {
+    return localStorage.getItem('isSignedIn') === 'true';
+}
+
+export function isAdminSignedIn() {
+    return localStorage.getItem('isAdminSignedIn') === 'true';
 }
 
 // Run initialization on window load as well, to catch cases where the header was already loaded

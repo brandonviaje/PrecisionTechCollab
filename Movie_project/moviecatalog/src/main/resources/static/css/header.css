@@ -1,6 +1,6 @@
 body {
     font-family: "Open Sans", serif;
-    margin: 0;
+    margin:0;
     padding: 0;
     padding-top: 80px;
 }
@@ -16,7 +16,7 @@ header {
     left: 0;
     width: 100%;
     z-index: 1000;
-    margin-bottom: 100px;
+    margin-bottom: 250px;
 }
 
 #logo {
@@ -166,7 +166,7 @@ header nav ul li a:hover {
 /* Show User Section */
 #userSection p {
     margin: 0;
-    font-size: 18px;
+    font-size: 14px;
     color: black;
 }
 
@@ -187,24 +187,49 @@ header nav ul li a:hover {
     align-items: center;
     margin-right: 20px; /* To ensure it aligns with the right side */
 }
+/* User Section */
+.user-section {
+    text-align: center;
+    cursor: pointer; /* Makes the entire section clickable */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px; /* To ensure it aligns with the right side */
+}
 
+/* Center the Profile Icon */
 #person-icon {
-    color: white; /* Icon color */
-    border-radius: 100px;
+    display: flex;
+    flex-direction: column;  /* Stack the image and username vertically */
+    align-items: center;     /* Center the items horizontally */
+    justify-content: center; /* Center the items vertically */
+    width: 70px;             /* Set width for the circle (adjust as needed) */
+    height: 70px;            /* Set height for the circle (adjust as needed) */
+    border-radius: 100%;      /* Make the container circular */
+    border: 2px solid white; /* Optional: Add border around the circle */
+    margin-bottom: 10px;     /* Space between image and username */
 }
 
-#person-icon img{
-    width: 30px;         /* Make the image fill the width of the container */
-    height: 30px;        /* Make the image fill the height of the container */
-    object-fit: contain;
+/* Profile Image Styling */
+#person-icon img {
+    width: 30px;             /* Limit the size of the image */
+    height: auto;            /* Limit the size of the image */
 }
 
+/* Username Styling */
 #username {
     display: block;
-    color: black; /* Username color */
-    font-size: 14px; /* Adjust the font size */
-    margin-top: 5px; /* Space between icon and username */
+    color: black;
+    font-size: 14px;
+    text-align: center;      /* Ensure the username is centered */
+    white-space: normal;     /* Allow the text to wrap */
+    line-height: 1.2;        /* Prevent too much space between lines when wrapping */
+    margin: 0;               /* Remove default margin for better spacing */
+    padding: 0 5px;          /* Add some padding to make text fit better */
+    margin-bottom: 10px;
 }
+
+
 /* Add this to your header.css file */
 #adminSignOutBtn {
     cursor: pointer;
