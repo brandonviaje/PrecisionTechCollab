@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update Movie</title>
+  <link rel="stylesheet" href="../css/header.css">
+  <link rel="stylesheet" href="../css/addMovies.css">
+</head>
+<body>
+<div id ="header-container"></div>
+
+<div id="container">
+  <h1>Update Movie Details</h1>
+
+  <form id="update-movie-form">
+    <label for="title">Movie Title:</label>
+    <input type="text" id="title" name="title"  required><br><br>
+
+    <label for="releaseDate">Release Date:</label>
+    <input type="date" id="releaseDate" name="releaseDate"  required><br><br>
+
+    <label for="pgRating">PG Rating:</label>
+    <input type="text" id="pgRating" name="pgRating" required><br><br>
+
+    <label for="synopsis">Synopsis:</label>
+    <textarea id="synopsis" name="synopsis" rows="4" required></textarea><br><br>
+
+    <label for="genres">Genres:</label>
+    <input type="text" id="genres" name="genres" required><br><br>
+
+    <label for="poster">Movie Poster:</label>
+    <input type="file" id="poster" name="poster" accept="image/*"><br><br>
+
+    <label for="productionCompanies">Production Companies:</label>
+    <input type="text" id="productionCompanies" name="productionCompanies" required><br><br>
+
+    <label for="runtime">Runtime (in minutes):</label>
+    <input type="number" id="runtime" name="runtime" min="1"  required><br><br>
+
+    <label for="spokenLanguages">Spoken Languages:</label>
+    <input type="text" id="spokenLanguages" name="spokenLanguages" required><br><br>
+
+    <button type="submit">Update Movie</button>
+  </form>
+
+  <div id="responseMessage"></div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="../scripts/updateMovie.js"></script>
+<script src="../scripts/headerfooter.js" type="module"></script>
+<script src="../scripts/access.js" defer></script>
+
+</body>
+</html>

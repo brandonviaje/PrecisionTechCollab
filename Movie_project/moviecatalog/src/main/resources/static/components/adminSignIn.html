@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <script src="../scripts/headerfooter.js" type="module" defer></script>
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/adminSignIn.css">
+</head>
+<body>
+<div id="header-container"></div>
+
+<form id="signin-form">
+    <div class="form-group">
+        <label id="sub-head">Admin Sign In</label>
+        <label for="adminusername">Username:</label>
+        <input type="text" id="adminusername" name="username" required>
+    </div>
+    <div class="form-group">
+        <label for="adminpassword">Password:</label>
+        <input type="password" id="adminpassword" name="password" required>
+    </div>
+    <button type="submit">Sign In</button>
+</form>
+
+<script src="../scripts/adminSignIn.js"></script>
+<script src="../scripts/access.js" defer></script>
+<!-- Ensure this is correctly linked -->
+</body>
+</html>

@@ -1,0 +1,45 @@
+/* High Contrast Mode Styles */
+.high-contrast {
+    background-color: black !important;
+    color: yellow !important;
+}
+
+.high-contrast a {
+    color: cyan !important;
+}
+
+.high-contrast button {
+    background-color: yellow !important;
+    color: black !important;
+    border: 2px solid cyan !important;
+}
+
+/* Input/Select/Textarea Styling */
+.high-contrast input,
+.high-contrast textarea,
+.high-contrast select {
+    background-color: black !important;
+    color: yellow !important;
+    border: 2px solid cyan !important;
+}
+
+/* Image Styling */
+.high-contrast img {
+    filter: grayscale(100%) contrast(150%) !important;
+}
+
+/* Section Elements (header, footer, nav) */
+.high-contrast header,
+.high-contrast footer,
+.high-contrast nav,
+.high-contrast section {
+    background-color: black !important;
+    color: yellow !important;
+}
+
+/* Ensure the container background is set to black in high contrast */
+.high-contrast .container {
+    background-color: black !important;
+    color: yellow !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Adjust shadow for contrast */
+}
