@@ -45,7 +45,7 @@ $(document).ready(function() {
     function createMovieCard(movie) {
         let posterSrc = movie.poster_path;
         if (!posterSrc) {
-            posterSrc = "../assets/default-poster.jpg";
+            posterSrc = "../userimg/default-poster.jpg";
         } else if (posterSrc.startsWith('/userimg/')) {
             posterSrc = `http://localhost:8080${posterSrc}`;
         } else if (!posterSrc.startsWith('http')) {

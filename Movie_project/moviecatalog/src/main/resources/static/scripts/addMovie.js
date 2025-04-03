@@ -20,6 +20,7 @@ $('#movieForm').on('submit', function(e) {
         error: function(xhr) {
             console.log('Error adding movie:', xhr.responseText);
             $('#responseMessage').text(`Error: ${xhr.responseText}`).css('color', 'red');
+            $('#submit-button').prop('disabled', false);
         }
     });
 });
