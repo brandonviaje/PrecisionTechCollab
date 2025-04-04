@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accessibility Settings</title>
+  <link rel="stylesheet" href="../css/adminAccessPage.css">
+  <script src="../scripts/access.js" defer></script>
+</head>
+<body>
+
+<div class="sidebar">
+  <h2>Admin Panel</h2>
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+    <!--    <li><a href="../components/admin.html">Dashboard</a></li>-->
+    <li><a href="../components/manageMovies.html">Manage Movies</a></li>
+    <li><a href="../components/adminAccessibility.html">Accessibility</a></li>
+
+    <li></li>
+    <li><a href="../components/adminSignIn.html" onclick="signOut()">Sign Out</a></li>
+  </ul>
+</div>
+
+<main>
+  <section>
+    <h2>High Contrast Mode</h2>
+    <button id="toggle-contrast">Enable High Contrast</button>
+  </section>
+</main>
+<script src="../scripts/adminSignOut.js"></script>
+
+</body>
+</html>

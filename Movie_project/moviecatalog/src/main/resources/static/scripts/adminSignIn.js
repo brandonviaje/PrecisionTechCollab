@@ -38,7 +38,7 @@ function handleAdminSignIn(event) {
         console.log("Admin Username stored in localStorage:", localStorage.getItem('adminUsername'));
 
         // Redirect to admin dashboard
-        window.location.href = "../components/admin.html";
+        window.location.href = "../components/manageMovies.html";
     } else {
         alert('Invalid admin credentials!');
     }

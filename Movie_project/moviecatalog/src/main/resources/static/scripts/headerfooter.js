@@ -136,8 +136,9 @@ function initializeHeaderUI() {
                 localStorage.removeItem('password');
 
                 console.log("User signed out");
-                window.location.reload(); // Reload to update UI
+                window.location.href = "/index.html"; // Redirect to index.html
             });
+
         }
     } else {
         // NO ONE IS LOGGED IN

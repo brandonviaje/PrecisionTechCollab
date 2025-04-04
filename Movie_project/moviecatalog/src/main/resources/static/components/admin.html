@@ -15,6 +15,8 @@
         <li><a href="../index.html">Home</a></li>
         <li><a href="../components/admin.html">Dashboard</a></li>
         <li><a href="manageMovies.html">Manage Movies</a></li>
+        <li><a href="../components/accessibility.html">Accessibility</a></li>
+
 
         <li></li>
         <li><a href="../components/adminSignIn.html" onclick="signOut()">Sign Out</a></li>
@@ -24,38 +26,9 @@
     <h1>Dashboard</h1>
 
     <div class="admin-stats">
-        <div class="admin-card">Total Movies: <span id="totalMovies">N/A</span></div>
-        <div class="admin-card">Active Users: <span id="activeUsers">N/A</span></div>
-        <div class="admin-card">Total Reviews: <span id="totalReviews">N/A</span></div>
+
     </div>
 
-    <h2>User Management</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody id="userTable">
-        <tr>
-            <td>John Doe</td>
-            <td>john@example.com</td>
-            <td><button onclick="editUser('John Doe')">Edit</button></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-
-<div id="modal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <h2>Edit User</h2>
-        <input type="text" id="username" placeholder="Enter name">
-        <button onclick="saveUser()">Save</button>
-    </div>
-</div>
 
 <script src="script.js"></script>
 <script src="../scripts/access.js" defer></script>
