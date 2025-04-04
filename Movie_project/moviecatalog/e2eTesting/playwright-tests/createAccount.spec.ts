@@ -5,7 +5,7 @@ test('test', async ({ page }) => {
     await page.getByRole('textbox', { name: 'Full Name:' }).click();
     await page.getByRole('textbox', { name: 'Full Name:' }).fill('person');
     await page.getByRole('textbox', { name: 'Username:' }).click();
-    await page.getByRole('textbox', { name: 'Username:' }).fill('test');
+    await page.getByRole('textbox', { name: 'Username:' }).fill('Brandon');
     await page.getByRole('textbox', { name: 'Password:', exact: true }).click();
     await page.getByRole('textbox', { name: 'Password:', exact: true }).fill('testing123');
     await page.getByRole('textbox', { name: 'Confirm Password:' }).click();
@@ -18,7 +18,7 @@ test('test', async ({ page }) => {
     });
 
     await page.getByRole('textbox', { name: 'Username:' }).click();
-    await page.getByRole('textbox', { name: 'Username:' }).fill('test');
+    await page.getByRole('textbox', { name: 'Username:' }).fill('Brandon');
     await page.getByRole('textbox', { name: 'Password:' }).click();
     await page.getByRole('textbox', { name: 'Password:' }).fill('testing123');
     await page.getByRole('button', { name: 'Sign In' }).click();
