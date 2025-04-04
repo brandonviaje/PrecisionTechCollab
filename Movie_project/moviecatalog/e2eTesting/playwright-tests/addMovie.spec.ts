@@ -35,15 +35,21 @@ test('E2E Movie Add', async ({ page }) => {
     await expect(searchButton).toBeEnabled({ timeout: 10000 });
     await searchButton.click();
 
-    // Check if the movie is displayed by verifying the title
-    const movieItem = page.locator('.movies .movie_item', { hasText: 'Test Movie Title' });
-    await expect(movieItem).toBeVisible({ timeout: 20000 });
+    // Wait for search results to load (with a longer wait for dynamic content)
+    await page.waitForSelector('.movie_item', { state: 'attached', timeout: 15000 });
 
-    // Verify the movie title text
-    const movieTitleLocator = movieItem.locator('.title');
-    const movieTitle = await movieTitleLocator.textContent();
-    console.log('Movie Title: ', movieTitle);
-    expect(movieTitle).toContain('Test Movie Title');
+    // Check if the movie is displayed by verifying the title
+    const addedMovie = page.locator('.movie_item', { hasText: 'Test Movie Title' }).first();
+    await addedMovie.waitFor({ state: 'visible', timeout: 15000 });
+    await expect(addedMovie).toBeVisible({ timeout: 10000 });
+
+    // Click the movie
+    await addedMovie.click();
+    await page.waitForURL(/movieDetails\.html\?id=\d+/, { timeout: 5000 });
+
+    // Verify that the movie synopsis is displayed
+    const movieSynopsis = page.locator('#movie-overview');
+    await expect(movieSynopsis).toHaveText('This is a test movie synopsis.', { timeout: 20000 });
 
     // Log a success message
     console.log('Test passed: Movie "Test Movie Title" successfully added and displayed!');

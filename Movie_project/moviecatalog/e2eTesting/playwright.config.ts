@@ -33,11 +33,11 @@ export default defineConfig({
 
   /* Shared settings for all the projects below. */
   use: {
-    /* Set the base URL for your tests (optional, for easier linking). */
-    // baseURL: 'http://127.0.0.1:3000',
-
-    /* Collect trace when retrying failed tests. */
     trace: 'on-first-retry',
+    headless: false,
+    launchOptions: {
+      slowMo: 1000, // Slow down actions by 50ms
+    },
   },
 
   /* Configure projects for multiple browsers. */
@@ -48,10 +48,4 @@ export default defineConfig({
     },
   ],
 
-  /* Optionally, run a local dev server before starting the tests. */
-  // webServer: {
-  //   command: 'npm run start', // Adjust the command to start your local server.
-  //   url: 'http://127.0.0.1:3000', // The URL of your dev server.
-  //   reuseExistingServer: !process.env.CI, // Reuse existing server if it's not CI.
-  // },
 });
