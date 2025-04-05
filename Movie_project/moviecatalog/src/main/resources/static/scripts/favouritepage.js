@@ -44,23 +44,31 @@ $(document).ready(function() {
 
     function createMovieCard(movie) {
         let posterSrc = movie.poster_path;
+
+        // Dynamically get the base URL (for local or production)
+        const baseUrl = window.location.protocol + "//" + window.location.host;
+
+        // If there's no poster, use a default poster image
         if (!posterSrc) {
             posterSrc = "../userimg/default-poster.jpg";
-        } else if (posterSrc.startsWith('/userimg/')) {
-            posterSrc = `http://localhost:8080${posterSrc}`;
-        } else if (!posterSrc.startsWith('http')) {
+        }
+        // If the poster path starts with "/userimg/", use the correct base URL
+        else if (posterSrc.startsWith('/userimg/')) {
+            posterSrc = `${baseUrl}${posterSrc}`;
+        }
+        else if (!posterSrc.startsWith('http')) {
             posterSrc = `https://image.tmdb.org/t/p/w500/${posterSrc}`;
         }
 
         const movieCard = $(`
-            <div class="movie-card" data-movie-id="${movie.movie_id}">
-                <img src="${posterSrc}" alt="${movie.title} Poster" class="movie-poster">
-                <div class="movie-info">
-                    <h3 class="movie-title">${movie.title}</h3>
-                    <button class="remove-favorite-btn">Remove from Favorites</button>
-                </div>
+        <div class="movie-card" data-movie-id="${movie.movie_id}">
+            <img src="${posterSrc}" alt="${movie.title} Poster" class="movie-poster">
+            <div class="movie-info">
+                <h3 class="movie-title">${movie.title}</h3>
+                <button class="remove-favorite-btn">Remove from Favorites</button>
             </div>
-        `);
+        </div>
+    `);
 
         movieCard.find('.remove-favorite-btn').click(function() {
             removeFavoriteMovie(movie.movie_id);
@@ -72,6 +80,7 @@ $(document).ready(function() {
 
         return movieCard;
     }
+
 
     function removeFavoriteMovie(movieId) {
         $.ajax({

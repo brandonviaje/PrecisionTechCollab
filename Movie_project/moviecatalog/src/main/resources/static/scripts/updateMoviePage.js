@@ -45,18 +45,23 @@ $(document).ready(function() {
 
         movies.forEach(function(media) {
             const { title, name, poster_path, movie_id } = media;
+
+            // Dynamically get the base URL (for local or production)
+            const baseUrl = window.location.protocol + "//" + window.location.host;
+
+            // Set the image source dynamically based on the base URL
             const imageSrc = poster_path && poster_path.startsWith("/userimg/")
-                ? `http://localhost:8080${poster_path}`
+                ? `${baseUrl}${poster_path}` // Use the correct base URL for both local and deployed environments
                 : `https://image.tmdb.org/t/p/original/${poster_path}`;
 
             const movieElement = $(`
-                <div class="movie-result" data-id="${movie_id}">
-                    <div class="movie-photo-container">
-                        <img src="${imageSrc}" class="movie-poster" alt="${title || name}">
-                    </div>
-                    <div class="movie-title">${title || name}</div>
+            <div class="movie-result" data-id="${movie_id}">
+                <div class="movie-photo-container">
+                    <img src="${imageSrc}" class="movie-poster" alt="${title || name}">
                 </div>
-            `);
+                <div class="movie-title">${title || name}</div>
+            </div>
+        `);
 
             $('#search-results').append(movieElement);
 
@@ -66,4 +71,5 @@ $(document).ready(function() {
             });
         });
     }
+
 });

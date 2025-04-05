@@ -124,7 +124,13 @@ function fetchGenres() {
 
 function createMovieCard(movie) {
     const { title, poster_path, movie_id } = movie;
-    const imageSrc = poster_path.startsWith("/userimg/") ? `http://localhost:8080${poster_path}` : `https://image.tmdb.org/t/p/original/${poster_path}`;
+
+    // Dynamically get the base URL (for local or production)
+    const baseUrl = window.location.protocol + "//" + window.location.host;
+
+    // Set the image source dynamically based on the base URL
+    const imageSrc = poster_path.startsWith("/userimg/") ? `${baseUrl}${poster_path}` : `https://image.tmdb.org/t/p/original/${poster_path}`;
+
     return `
     <div class="movie_item">
         <div class="movie-photo-container">
@@ -136,6 +142,7 @@ function createMovieCard(movie) {
     </div>
     `;
 }
+
 
 $(document).ready(function () {
     fetchMovies();

@@ -42,22 +42,24 @@ $(document).ready(function() {
         movies.forEach(function(media) {
             const { title, name, poster_path, movie_id } = media;
 
+            const baseUrl = window.location.protocol + "//" + window.location.host;
             const imageSrc = poster_path && poster_path.startsWith("/userimg/")
-                ? `http://localhost:8080${poster_path}`
-                : `https://image.tmdb.org/t/p/original/${poster_path}`;
+                ? `${baseUrl}${poster_path}` // Handle local server paths using dynamic base URL
+                : `https://image.tmdb.org/t/p/original/${poster_path}`; // Handle external links (TMDB)
 
             const movieElement = `
-                <div class="movie-result" data-id="${movie_id}" data-title="${title || name}">
-                    <div class="movie-photo-container">
-                        <img src="${imageSrc}" class="movie-poster" alt="${title || name}">
-                    </div>
-                    <div class="movie-title">${title || name}</div>
-                    <button class="delete-button">Delete</button>
+            <div class="movie-result" data-id="${movie_id}" data-title="${title || name}">
+                <div class="movie-photo-container">
+                    <img src="${imageSrc}" class="movie-poster" alt="${title || name}">
                 </div>
-            `;
+                <div class="movie-title">${title || name}</div>
+                <button class="delete-button">Delete</button>
+            </div>
+        `;
             $('#search-results').append(movieElement);
         });
     }
+
 
     // Handle delete button click using .on()
     $('#search-results').on('click', '.delete-button', function() {

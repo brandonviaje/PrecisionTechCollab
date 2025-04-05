@@ -34,12 +34,15 @@ $(document).ready(function () {
             let posterSrc = poster_path;
             if (!posterSrc) {
                 console.warn("No poster path found for the movie");
-                posterSrc = "/path/to/default/poster.jpg"; // Default poster if missing
+                posterSrc = "/path/to/default/poster.jpg";
             } else if (posterSrc.startsWith('/userimg/')) {
-                posterSrc = `http://localhost:8080${posterSrc}`; // Handle local server paths
+                // Dynamically determine the base URL
+                const baseUrl = window.location.protocol + "//" + window.location.host;
+                posterSrc = `${baseUrl}${posterSrc}`;
             } else if (!posterSrc.startsWith('http')) {
-                posterSrc = `https://image.tmdb.org/t/p/w500/${posterSrc}`; // Handle external links
+                posterSrc = `https://image.tmdb.org/t/p/w500/${posterSrc}`; // Handle external links (TMDB)
             }
+
             $("#movie-poster").attr("src", posterSrc);
             const genreNames = Array.isArray(genres) ? genres.join(', ') : genres;
             $("#movie-genres").text(genreNames);

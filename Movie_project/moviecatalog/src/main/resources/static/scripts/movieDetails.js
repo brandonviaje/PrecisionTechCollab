@@ -14,11 +14,14 @@ $(document).ready(function() {
                 $('#movie-release-date').text(release_date);
                 $('#movie-genres').text(genres);
 
-                // Set the movie poster (assuming local server serves images)
+                // Set the movie poster (dynamically determine the base URL)
                 let posterSrc = "";
 
+                // Dynamically get the base URL (for local or production)
+                const baseUrl = window.location.protocol + "//" + window.location.host;
+
                 if (poster_path && poster_path.startsWith("/userimg/")) {
-                    posterSrc = `http://localhost:8080${poster_path}`; // Assuming the server serves the image at localhost:8080
+                    posterSrc = `${baseUrl}${poster_path}`;
                 }
                 else if (poster_path) {
                     posterSrc = `https://image.tmdb.org/t/p/w500/${poster_path}`;
