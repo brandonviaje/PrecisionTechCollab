@@ -37,7 +37,14 @@ This hybrid approach ensures that we thoroughly test individual components (unit
 
 ## How to Run Tests
 
+### Prerequisites
+Before running the tests, make sure you have the following installed:
+1. **Maven** (for unit and integration tests)
+2. **Node.js** (for system tests with Playwright)
+
 ### Unit & Integration Tests
+
+Run the following command in your terminal to execute the unit and integration tests:
 ```bash
 mvn clean test
 ```
