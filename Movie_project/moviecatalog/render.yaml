@@ -1,12 +1,12 @@
 services:
   - type: web
-    env: docker
+    name: moviecatalog-service
+    runtime: docker
     dockerfilePath: Dockerfile
     plan: free
-    instances: 1
-    ports:
-      - 8080
-    autoDeploy: true
+    healthCheckPath: /actuator/health
     envVars:
       - key: SPRING_PROFILES_ACTIVE
-        value: dev
+      - key: SUPABASE_URL
+      - key: SUPABASE_API_KEY
+    autoDeploy: true
