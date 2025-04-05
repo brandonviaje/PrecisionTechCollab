@@ -53,7 +53,7 @@ You can interact with the movie catalog and manage your movies through our web i
   - Enter the following URL: http://localhost:8080/index.html
 
 ### User Documentation
-For admin login details, please refer to the **user documentation** provided in the project. This includes information such as admin usernames and passwords.
+For admin login details, please refer to the **userdocs/user-and-admin-functionality.md** provided in the project. This includes information such as admin usernames and passwords.
 
 ### Recording
 ![Demo Recording](https://github.com/user-attachments/assets/130b8d3c-688e-4b61-bfe7-68263ec09d87)
