@@ -5,7 +5,7 @@ This document outlines the testing strategy, tools, and test cases used in the p
 
 # Testing Strategy
 
-We follow a **hybrid testing approach**, combining **unit tests** with **integration-style tests** to ensure robustness at every layer of the system.
+We follow a **hybrid testing approach** for our backend, combining **unit tests** with **integration-style tests** to ensure robustness at every layer of the system.
 
 ## Unit Tests (UT)
 - Focus on testing individual service classes and logic in isolation, ensuring that each component performs as expected under normal and edge-case scenarios.
