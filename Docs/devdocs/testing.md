@@ -21,7 +21,7 @@ By integrating **MockWebServer**, we can perform high-level tests for the commun
 ## System Tests (ST)
 - End-to-end tests using **Playwright** simulate user behavior by interacting with the actual UI and ensuring the system performs as expected from the user's perspective. This layer is essential for validating overall functionality and user interactions.
 
-## Tools Used
+## Tools/Frameworks Used
 
 | Layer         | Tool(s)                    |
 |---------------|----------------------------|
@@ -44,73 +44,64 @@ To run system tests with Playwright, follow the steps below:
 
 1. **Open your project in your IDE**
    
-  - Launch your preferred IDE and open the project directory.
-  
-  - **Enter the following commands in your git bash terminal for this project:**
+    - Launch your preferred IDE and open the project directory.
+    
+    - **Enter the following commands in your git bash terminal for this project:**
 
 2. **Navigate to the test folder for system tests**:
-```bash
-cd Movie_project/moviecatalog/e2eTesting
-```
+    ```bash
+    cd Movie_project/moviecatalog/e2eTesting
+    ```
 
 3. **Install the required dependencies:**:
-```bash
-npm install
-```
+    ```bash
+    npm install
+    ```
 4. **Install Playwright:**:
-
-```bash
-npx playwright install
-```
+    ```bash
+    npx playwright install
+    ```
 
 ### Unit & Integration Tests
 
 1. **Open your project in your IDE**
 
-  Launch your preferred IDE and open the project directory.
-  
-  Run the following command in your terminal to execute the unit and integration tests:
+    - Launch your preferred IDE and open the project directory.
+    
+    - Run the following command in your terminal to execute the unit and integration tests:
 
 2. Change to the moviecatalog directory
-
-  ```bash
-  cd Movie_project/moviecatalog
-  ```
-
+    ```bash
+    cd Movie_project/moviecatalog
+    ```
 3. Enter the following Maven command into your terminal, or use the corresponding option in IntelliJ IDEA to run the tests:
-
-  ```bash
-  mvn clean test
-  ```
-
+    ```bash
+    mvn clean test
+    ```
 Your unit/integration style tests should start running!
 
 ### System Tests
 
 1. **Ensure Spring Boot is Running**
-   ```bash
-   cd Movie_project/moviecatalog
-   mvn clean install
-   mvn spring-boot:run
-   ```
-
-2. Navigate back to the PrecisionTechCollab root folder.
-  ```bash
-  cd e2eTesting
-  ```
-
+     ```bash
+     cd Movie_project/moviecatalog
+     mvn clean install
+     mvn spring-boot:run
+     ```
+2. Navigate to the e2eTesting folder.
+    ```bash
+    cd e2eTesting
+    ```
 3. **Run the desired test inside of the file**
    
-  You can run your Playwright test using either the terminal or your IDE.
+    You can run your Playwright test using either the terminal or your IDE.
 
-  - Using the Terminal: To run a specific test file, use the following command (replace movieTest.spec.js with the name of your test file):
-    
-  ```bash
-  npx playwright test movieTest.spec.js
-  ```
-  - Using Your IDE: In your IDE, you can run a specific test by:
-
-    - Right-clicking on the test file you want to execute.
-    - Selecting Run to execute the test. For example, choose:
-      - `movieTest.spec.ts`.
+    - Using the Terminal: To run a specific test file, use the following command (replace movieTest.spec.js with the name of your test file):
+      ```bash
+      npx playwright test movieTest.spec.js
+      ```
+    - Using Your IDE: In your IDE, you can run a specific test by:
+      - Right-clicking on the test file you want to execute.
+      - Selecting Run to execute the test. For example, choose:
+        - `movieTest.spec.ts`.
 
