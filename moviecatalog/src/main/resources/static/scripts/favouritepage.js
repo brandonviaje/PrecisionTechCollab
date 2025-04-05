@@ -2,14 +2,14 @@ import { isUserSignedIn } from './headerfooter.js';
 
 $(document).ready(function() {
     if (!isUserSignedIn()) {
-        showNotificationAndRedirect("Please sign in to view your favorites.", "../html/login.html");
+        showNotificationAndRedirect("Please sign in to view your favorites.", "../components/signIn.html");
         return;
     }
 
     const userName = localStorage.getItem('userName') || localStorage.getItem('username');
 
     if (!userName) {
-        showNotificationAndRedirect("No user logged in.", "../html/login.html");
+        showNotificationAndRedirect("No user logged in.", "../components/signIn.html");
         return;
     }
 
