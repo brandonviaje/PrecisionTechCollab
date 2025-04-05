@@ -88,9 +88,9 @@ Your unit/integration style tests should start running!
      mvn clean install
      mvn spring-boot:run
      ```
-2. Navigate to the e2eTesting folder.
+2. Navigate to the playwright tests folder.
     ```bash
-    cd e2eTesting
+    cd e2eTesting/playwright-tests
     ```
 3. **Run the desired test inside of the file**
    
