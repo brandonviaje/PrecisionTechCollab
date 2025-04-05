@@ -1,5 +1,5 @@
-# PrecisionTechCollab
-## Name: Precision Technology Inc. ™
+# Precision Technology Inc. ™
+## Name: FilmFlix
 
 # How to Run the Project
 
@@ -10,6 +10,14 @@ Before running the project, ensure you have the following installed:
 - **Spring Boot**
 
 ## Step-by-Step Guide
+
+### Option 1: Online Deployable
+
+The project is deployed and can be accessed directly at: [Precision Tech Movie Catalog](https://precisiontechcollab.onrender.com/index.html)
+
+You can interact with the catalog and manage movies through the deployed web interface.
+
+### Option 2: Run Locally
 
 ### 1. Open the Project in IntelliJ
 - Click on **code** and click on download zip
@@ -30,6 +38,9 @@ Before running the project, ensure you have the following installed:
 ### 4. Access the Application
 - Allow the application to start and once the application is running, open a web browser.
 - Enter the following URL: http://localhost:8080/index.html
+
+### Developer Documentation
+For admin login details and further configuration instructions, please refer to the **developer documentation** provided in the project. This includes sensitive information such as admin usernames and passwords, as well as environment-specific configurations.
 
 ### Recording
 <p align="center">
