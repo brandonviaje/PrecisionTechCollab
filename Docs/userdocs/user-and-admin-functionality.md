@@ -33,6 +33,14 @@
   - **Removing** movies from the database
   - **Accessing high-contrast mode** for accessibility
 
+## Admin Login Credentials
+
+If you want to sign in as an admin, navigate to our header, sign in dropdown menu, then select sign in as admin. 
+
+After, enter the admin credentials:
+  `username: admin`
+  `password: admin`
+  
 ---
 
 > 🔐 Note: Only registered users and the admin have access to certain interactive and personalization features. Guest users are limited to browsing functionality.
