@@ -27,7 +27,7 @@ Our project is built using the MVC (Model-View-Controller) architecture, which s
 5. The **View** updates the UI accordingly.
 
 ## Diagram
-![Architecture Diagram](https://github.com/user-attachments/assets/262b9191-3d3f-4274-ab09-21155a0a0b1d)
+![Architecture Diagram](https://github.com/user-attachments/assets/391ba4d5-34a4-49c1-9ead-1e5a09ffdccc)
 
 ## Tech Stack
 | Component   | Tech                | Role                        |
