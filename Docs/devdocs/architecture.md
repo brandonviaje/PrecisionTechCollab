@@ -1,7 +1,7 @@
 # System Architecture
 
 ## Overview
-- **Frontend:** HTML, CSS. JavaScript
+- **Frontend:** HTML, CSS, JavaScript
 - **Backend:** Spring Boot (Java)
 - **DataBase:** Supabase
 
