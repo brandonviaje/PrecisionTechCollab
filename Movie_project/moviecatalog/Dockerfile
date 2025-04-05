@@ -5,4 +5,4 @@ RUN mvn clean package -DskipTests
 FROM openjdk:17.0.1-jdk-slim
 COPY --from=build /target/moviecatalog-0.0.1-SNAPSHOT.jar moviecatalog.jar
 EXPOSE 8080
-ENTRYPOINT["java","-jar","moviecatalog.jar"]
+ENTRYPOINT ["java","-jar","moviecatalog.jar"]
