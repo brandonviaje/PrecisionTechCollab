@@ -44,10 +44,54 @@ Before running the tests, make sure you have the following installed:
 
 ### Unit & Integration Tests
 
+1. **Open your project in your IDE**
+
+Launch your preferred IDE and open the project directory.
+
 Run the following command in your terminal to execute the unit and integration tests:
+
+2. Change to the moviecatalog directory
+
+```bash
+cd Movie_project/moviecatalog
+```
+
+3. Enter the following Maven command into your terminal, or use the corresponding option in IntelliJ IDEA to run the tests:
+
 ```bash
 mvn clean test
 ```
 
+Your unit/integration style tests should run and pass!
+
 ### System Tests
+
+  To run system tests with Playwright, follow the steps below:
+
+1. **Open your project in your IDE**
+   
+Launch your preferred IDE and open the project directory.
+
+**Enter the following commands in your git bash terminal for this project:**
+
+2. **Navigate to the test folder**:
+```bash
+cd e2eTesting
+```
+
+3. **Install the required dependencies, run the following command**:
+```bash
+npm install
+```
+4. **Run npx playwright install to install Playwright browsers**:
+
+```bash
+npx playwright install
+```
+
+5. **Run the desired test**  
+   - Right-click on the test file you want to run.
+   - Select **Run** to execute the test. For example, select:
+     - `movieTest.spec.ts`
+
 
