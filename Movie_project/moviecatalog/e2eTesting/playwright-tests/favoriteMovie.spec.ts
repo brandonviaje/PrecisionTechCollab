@@ -47,9 +47,15 @@ test('E2E Favourite Movie', async ({ page }) => {
     // Wait for the page to fully load before proceeding
     await page.waitForLoadState('load');
 
-    // Ensure the movie title is correct (optional check)
-    const movieTitle = page.locator('.movie-title');
-    await expect(movieTitle).toHaveText('300');  // Assuming the title added to favorites is '300'
+    // Wait for the movie cards to be visible
+    const movieCards = page.locator('.movie-card');
+
+    // Iterate through each movie card and check for the title "300"
+    const titles = await movieCards.locator('.movie-title').allTextContents();
+    const isMovie300Present = titles.includes('300');
+
+    // Assert that "300" is one of the titles
+    expect(isMovie300Present).toBe(true);
 
     // Success message
     console.log('Test passed: Movie "300" successfully added to favorites!');
