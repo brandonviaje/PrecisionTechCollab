@@ -32,7 +32,7 @@ This hybrid approach ensures that we thoroughly test individual components (unit
 |---------------|----------------------------|
 | Unit Tests    | JUnit 5, Mockito           |
 | Integration   | JUnit 5, MockWebServer     |
-| System Tests  | Playwright (TyprScript)    |
+| System Tests  | Playwright (TypeScript)    |
 
 
 ## How to Run Tests
