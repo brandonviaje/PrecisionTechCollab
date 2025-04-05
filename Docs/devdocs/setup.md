@@ -24,7 +24,7 @@ cd PrecisionTechCollab
 ### 2. Change the directory
 
 ```bash
-cd Movie_project/moviecatalog
+cd moviecatalog
 ```
 
 ### 3. Build the JAR File
