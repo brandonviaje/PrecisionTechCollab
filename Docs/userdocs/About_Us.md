@@ -37,7 +37,7 @@ Developers: **All**
 
 - Project Planning Board: GitHub Boards
 
-- Database Technology: N/A
+- Database Technology: SupaBase
 
 - The group members identified above have discussed and agreed upon the following articles on completing and delivering their group project for CSCI 2040U.
 
