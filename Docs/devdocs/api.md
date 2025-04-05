@@ -44,7 +44,7 @@ The Movie API supports the following operations:
 - **Path Variables:**
   - `movieId` (path parameter, required): The ID of the movie to remove from favourites.
 - **Request Parameters:**
-  - `username` (query parameter, required): The username of the user who wants to remove the movie.
+  - `username`: The username of the user who wants to remove the movie.
 - **Response:**
   - **200 OK:** "Movie removed from favorites successfully"
   - **404 Not Found:** "Movie not found in favorites for user: {username}"
@@ -65,15 +65,15 @@ The Movie API supports the following operations:
 - **Endpoint:** `POST /movies`
 - **Description:** Adds a new movie to the catalog.
 - **Request Parameters:**
-  - `title` (form-data, required): The title of the movie.
-  - `releaseDate` (form-data, required): The release date of the movie.
-  - `poster` (form-data, required): The movie poster image file.
-  - `genres` (form-data, required): Comma-separated list of genres.
-  - `synopsis` (form-data, required): The synopsis of the movie.
-  - `pgRating` (form-data, required): The PG rating of the movie.
-  - `productionCompanies` (form-data, required): The production companies involved.
-  - `runtime` (form-data, required): The runtime of the movie in minutes.
-  - `spokenLanguages` (form-data, required): Comma-separated list of spoken languages.
+  - `title`: The title of the movie.
+  - `releaseDate`: The release date of the movie.
+  - `poster`: The movie poster image file.
+  - `genres`: Comma-separated list of genres.
+  - `synopsis`: The synopsis of the movie.
+  - `pgRating`: The PG rating of the movie.
+  - `productionCompanies`: The production companies involved.
+  - `runtime`: The runtime of the movie in minutes.
+  - `spokenLanguages`: Comma-separated list of spoken languages.
 - **Response:**
   - **200 OK:** "Movie added successfully with poster at {posterPath}"
 
@@ -83,9 +83,9 @@ The Movie API supports the following operations:
 - **Endpoint:** `GET /movies`
 - **Description:** Filters movies by genre, PG rating, and spoken languages.
 - **Request Parameters:**
-  - `genre` (query parameter, optional): The genre of the movie.
-  - `pg_rating` (query parameter, optional): The PG rating of the movie.
-  - `spoken_languages` (query parameter, optional): The spoken languages of the movie.
+  - `genre`: The genre of the movie.
+  - `pg_rating`: The PG rating of the movie.
+  - `spoken_languages`: The spoken languages of the movie.
 - **Response:**
   - **200 OK:** List of filtered movies.
 
@@ -95,7 +95,7 @@ The Movie API supports the following operations:
 - **Endpoint:** `GET /movies/search`
 - **Description:** Searches movies by title.
 - **Request Parameters:**
-  - `title` (query parameter, required): The title of the movie to search.
+  - `title`: The title of the movie to search.
 - **Response:**
   - **200 OK:** List of movies matching the search.
 
@@ -105,7 +105,7 @@ The Movie API supports the following operations:
 - **Endpoint:** `GET /movies/{movieId}`
 - **Description:** Retrieves detailed information for a specific movie by their movie ID.
 - **Path Variables:**
-  - `movieId` (path parameter, required): The ID of the movie to retrieve details for.
+  - `movieId`: The ID of the movie to retrieve details for.
 - **Response:**
   - **200 OK:** Movie details.
 
@@ -115,7 +115,7 @@ The Movie API supports the following operations:
 - **Endpoint:** `DELETE /movies/delete/{movieId}`
 - **Description:** Deletes a movie from the catalog.
 - **Path Variables:**
-  - `movieId` (path parameter, required): The ID of the movie to delete.
+  - `movieId`: The ID of the movie to delete.
 - **Response:**
   - **200 OK:** "The movie has been deleted."
   - **404 Not Found:** "The movie was not found."
@@ -126,9 +126,9 @@ The Movie API supports the following operations:
 - **Endpoint:** `PATCH /movies/{movieId}/update`
 - **Description:** Updates details of an existing movie.
 - **Path Variables:**
-  - `movieId` (path parameter, required): The ID of the movie to update.
+  - `movieId`: The ID of the movie to update.
 - **Request Parameters:**
-  - `title`, `releaseDate`, `genres`, `synopsis`, `pgRating`, `productionCompanies`, `runtime`, `spokenLanguages`, `poster` (all optional, form-data): The fields to update.
+  - `title`, `releaseDate`, `genres`, `synopsis`, `pgRating`, `productionCompanies`, `runtime`, `spokenLanguages`, `poster`: The fields to update.
 - **Response:**
   - **200 OK:** "Movie updated successfully!"
   - **404 Not Found:** "Movie not found for the given ID."
