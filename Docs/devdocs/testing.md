@@ -50,7 +50,7 @@ To run system tests with Playwright, follow the steps below:
 
 2. **Navigate to the test folder for system tests**:
     ```bash
-    cd Movie_project/moviecatalog/e2eTesting
+    cd moviecatalog/e2eTesting
     ```
 
 3. **Install the required dependencies:**:
@@ -72,7 +72,7 @@ To run system tests with Playwright, follow the steps below:
 
 2. Change to the moviecatalog directory
     ```bash
-    cd Movie_project/moviecatalog
+    cd moviecatalog
     ```
 3. Enter the following Maven command into your terminal, or use the corresponding option in IntelliJ IDEA to run the tests:
     ```bash
@@ -84,7 +84,7 @@ Your unit/integration style tests should start running!
 
 1. **Ensure Spring Boot is Running**
      ```bash
-     cd Movie_project/moviecatalog
+     cd moviecatalog
      mvn clean install
      mvn spring-boot:run
      ```
