@@ -1,5 +1,16 @@
 # Precision Technology Inc. ™
+
+![Image](https://github.com/user-attachments/assets/a1954cca-dbfe-4ded-81a4-0329b46125e4)
+
 ## Name: FilmFlix
+
+<div style="text-align: justify;">
+FilmFlix is a movie database cataloguing system designed to manage and display a vast collection of movies. It enables users to search, filter, and view detailed information about movies, including genres, release dates, and movie descriptions. Users can also add their favorite movies to a personal list for easy access.
+</div>
+<br>
+<div style="text-align: justify;">
+Admins have enhanced privileges, allowing them to manage the entire movie database. They can add new movies, edit existing movie details, and delete movies that are no longer relevant. The system makes navigation smooth between different user roles, with user-friendly interfaces for browsing and managing movie content.
+</div>
 
 # How to Run the Project
 
