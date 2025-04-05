@@ -29,7 +29,7 @@ The project is deployed and can be accessed directly at: [Precision Tech Movie C
 You can interact with the movie catalog and manage your movies through our web interface.
 
 **Note:**
-  - **If the website hasn't been accessed for a while, it may take a few moments for the server to start. Kindly be patient while it wakes up.**
+  - **If the website hasn't been accessed for a while, it may take a few moments for the server to start. Kindly be patient while it wakes up and loads the website link.**
   - **When browsing the movie library, loading times may vary as all movies need to be fetched. Please allow a moment for the content to fully load.**
 ### Option 2: Run Locally
 
