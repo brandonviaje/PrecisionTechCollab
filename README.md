@@ -52,9 +52,6 @@ You can interact with the movie catalog and manage your movies through our web i
   - Allow the application to start and once the application is running, open a web browser.
   - Enter the following URL: http://localhost:8080/index.html
 
-### User Documentation
-For admin login details, please refer to the **userdocs/user-and-admin-functionality.md** provided in the project. This includes information such as admin usernames and passwords.
-
 ### Recording
 ![Demo Recording](https://github.com/user-attachments/assets/130b8d3c-688e-4b61-bfe7-68263ec09d87)
 
