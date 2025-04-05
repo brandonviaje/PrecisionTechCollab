@@ -42,7 +42,6 @@ You can interact with the movie catalog and manage your movies through our web i
   - Locate the **Maven** tool window (usually on the right sidebar).
   - Search for **Lifecycle** and expand the section.
   - Click **Clean** and wait for the process to complete.
-  - Then, click **Install** and allow Maven to build the project.
   
   ### 3. Start the Spring Boot Application
   - In the **Maven** tool window, navigate to:
@@ -57,9 +56,7 @@ You can interact with the movie catalog and manage your movies through our web i
 For admin login details, please refer to the **user documentation** provided in the project. This includes information such as admin usernames and passwords.
 
 ### Recording
-<p align="center">
-  <img src="./iteration1demo.gif"  alt="SetUp Demo"/>
-</p>
+![Demo Recording](https://github.com/user-attachments/assets/130b8d3c-688e-4b61-bfe7-68263ec09d87)
 
 # Sources 
 This project uses the dataset by **TMDB Movies Dataset (2023)**. Details, including metadata, genres, release data, and other relevant information seen in the project, are from the dataset.
