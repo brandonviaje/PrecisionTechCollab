@@ -15,32 +15,35 @@ Before running the project, ensure you have the following installed:
 
 The project is deployed and can be accessed directly at: [Precision Tech Movie Catalog](https://precisiontechcollab.onrender.com/index.html)
 
-You can interact with the catalog and manage movies through the deployed web interface.
+You can interact with the movie catalog and manage your movies through our web interface.
 
+**Note:**
+  - **If the website hasn't been accessed for a while, it may take a few moments for the server to start. Kindly be patient while it wakes up.**
+  - **When browsing the movie library, loading times may vary as all movies need to be fetched. Please allow a moment for the content to fully load.**
 ### Option 2: Run Locally
 
-### 1. Open the Project in IntelliJ
-- Click on **code** and click on download zip
-- Unzip the folder and launch **IntelliJ IDEA**.
-- Load the project into the IDE.
+  ### 1. Open the Project in IntelliJ
+  - Click on **code** and click on download zip
+  - Unzip the folder and launch **IntelliJ IDEA**.
+  - Load the project into the IDE.
+  
+  ### 2. Run Maven Lifecycle Commands
+  - Locate the **Maven** tool window (usually on the right sidebar).
+  - Search for **Lifecycle** and expand the section.
+  - Click **Clean** and wait for the process to complete.
+  - Then, click **Install** and allow Maven to build the project.
+  
+  ### 3. Start the Spring Boot Application
+  - In the **Maven** tool window, navigate to:
+    - **Plugins** → **Spring Boot**
+    - Click **spring-boot:run** to start the application.
+  
+  ### 4. Access the Application
+  - Allow the application to start and once the application is running, open a web browser.
+  - Enter the following URL: http://localhost:8080/index.html
 
-### 2. Run Maven Lifecycle Commands
-- Locate the **Maven** tool window (usually on the right sidebar).
-- Search for **Lifecycle** and expand the section.
-- Click **Clean** and wait for the process to complete.
-- Then, click **Install** and allow Maven to build the project.
-
-### 3. Start the Spring Boot Application
-- In the **Maven** tool window, navigate to:
-  - **Plugins** → **Spring Boot**
-  - Click **spring-boot:run** to start the application.
-
-### 4. Access the Application
-- Allow the application to start and once the application is running, open a web browser.
-- Enter the following URL: http://localhost:8080/index.html
-
-### Developer Documentation
-For admin login details and further configuration instructions, please refer to the **developer documentation** provided in the project. This includes sensitive information such as admin usernames and passwords, as well as environment-specific configurations.
+### User Documentation
+For admin login details, please refer to the **user documentation** provided in the project. This includes information such as admin usernames and passwords.
 
 ### Recording
 <p align="center">
