@@ -14,10 +14,8 @@ $(document).ready(function() {
                 $('#movie-release-date').text(release_date);
                 $('#movie-genres').text(genres);
 
-                // Set the movie poster (dynamically determine the base URL)
+                // Set the movie poster
                 let posterSrc = "";
-
-                // Dynamically get the base URL (for local or production)
                 const baseUrl = window.location.protocol + "//" + window.location.host;
 
                 if (poster_path && poster_path.startsWith("/userimg/")) {
