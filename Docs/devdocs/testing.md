@@ -62,7 +62,7 @@ To run system tests with Playwright, follow the steps below:
     npx playwright install
     ```
 
-### Unit & Integration Tests
+## Unit & Integration Tests
 
 1. **Open your project in your IDE**
 
@@ -80,7 +80,7 @@ To run system tests with Playwright, follow the steps below:
     ```
 Your unit/integration style tests should start running!
 
-### System Tests
+## System Tests
 
 1. **Ensure Spring Boot is Running**
      ```bash
